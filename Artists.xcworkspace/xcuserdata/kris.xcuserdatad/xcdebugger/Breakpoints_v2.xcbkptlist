@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "16FFC699-FA9D-422B-9D45-8B403EADAB70"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1E763BCB-6407-4E8E-A5B0-133F6B4590A4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Artists/ViewController/FavoriteArtist.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "showAlert(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1E763BCB-6407-4E8E-A5B0-133F6B4590A4 - e16e8fcbdbd82b9c"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Artists.FavoriteArtist.showAlert(__C.UITapGestureRecognizer) -&gt; ()"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kris/Desktop/Swift/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B/Artists/Artists/ViewController/FavoriteArtist.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "1982">
+               </Location>
+               <Location
+                  uuid = "1E763BCB-6407-4E8E-A5B0-133F6B4590A4 - 1ce1f645ee2a26b7"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UIAlertAction) -&gt; () in Artists.FavoriteArtist.showAlert(__C.UITapGestureRecognizer) -&gt; ()"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kris/Desktop/Swift/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8B/Artists/Artists/ViewController/FavoriteArtist.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "80287B93-3DE9-46B5-8970-FBF34C262FA2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Artists/ViewController/EventsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "showMap(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C8BA7699-0FB5-432A-906A-156960FCCCFD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Artists/ViewController/MapEvents.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "10"
+            endingLineNumber = "10"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

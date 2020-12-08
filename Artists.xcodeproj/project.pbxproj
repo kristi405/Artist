@@ -3,27 +3,65 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		010D53F02565486700110595 /* EventsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010D53EF2565486700110595 /* EventsCell.swift */; };
+		0112857C256D64BE00C9557A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0112857B256D64BE00C9557A /* MapViewController.swift */; };
+		0112857E256D6E2A00C9557A /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0112857D256D6E2A00C9557A /* MapManager.swift */; };
+		011A2087256BA6F8008E456B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A2086256BA6F8008E456B /* WebViewController.swift */; };
+		012DF4E1255EE78F005D6D15 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012DF4E0255EE78F005D6D15 /* EventsViewController.swift */; };
+		013D031E255AADB1005AE518 /* FavoriteArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013D031D255AADB1005AE518 /* FavoriteArtists.swift */; };
+		0142FE9725592EE70041672E /* FavoriteArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142FE9625592EE70041672E /* FavoriteArtist.swift */; };
+		0142FE992559370A0041672E /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142FE982559370A0041672E /* FavoriteCell.swift */; };
+		0142FE9B25596B4E0041672E /* UIButton+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142FE9A25596B4E0041672E /* UIButton+extension.swift */; };
+		0142FE9E255976AE0041672E /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142FE9D255976AE0041672E /* EventModel.swift */; };
+		0142FEA0255979E80041672E /* CurrentEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142FE9F255979E80041672E /* CurrentEvent.swift */; };
+		01689D852563DF430054129D /* CustomTapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01689D842563DF430054129D /* CustomTapGesture.swift */; };
 		01978DDF25558DB500CA17FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978DDE25558DB500CA17FD /* AppDelegate.swift */; };
 		01978DE125558DB500CA17FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978DE025558DB500CA17FD /* SceneDelegate.swift */; };
-		01978DE325558DB500CA17FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978DE225558DB500CA17FD /* ViewController.swift */; };
 		01978DE625558DB500CA17FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01978DE425558DB500CA17FD /* Main.storyboard */; };
 		01978DE825558DB700CA17FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01978DE725558DB700CA17FD /* Assets.xcassets */; };
 		01978DEB25558DB700CA17FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01978DE925558DB700CA17FD /* LaunchScreen.storyboard */; };
+		01978DF325558E1C00CA17FD /* SearchArtistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978DF225558E1C00CA17FD /* SearchArtistsViewController.swift */; };
+		01978DF725558EAB00CA17FD /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978DF625558EAB00CA17FD /* ArtistCell.swift */; };
+		01978DF9255595CD00CA17FD /* ArtistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978DF8255595CD00CA17FD /* ArtistModel.swift */; };
+		01978DFF255599FD00CA17FD /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978DFE255599FD00CA17FD /* NetworkServices.swift */; };
+		01978E0125559A3F00CA17FD /* CurrentArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978E0025559A3F00CA17FD /* CurrentArtist.swift */; };
+		01E7BEA3257E19E80058A9CE /* MapEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E7BEA2257E19E80058A9CE /* MapEvents.swift */; };
+		156961595B3B333F72A02D1E /* Pods_Artists.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF977FC7C093542802B9017 /* Pods_Artists.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		010D53EF2565486700110595 /* EventsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCell.swift; sourceTree = "<group>"; };
+		0112857B256D64BE00C9557A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		0112857D256D6E2A00C9557A /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
+		011A2086256BA6F8008E456B /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		012DF4E0255EE78F005D6D15 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
+		013D031D255AADB1005AE518 /* FavoriteArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtists.swift; sourceTree = "<group>"; };
+		0142FE9625592EE70041672E /* FavoriteArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtist.swift; sourceTree = "<group>"; };
+		0142FE982559370A0041672E /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
+		0142FE9A25596B4E0041672E /* UIButton+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+extension.swift"; sourceTree = "<group>"; };
+		0142FE9D255976AE0041672E /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
+		0142FE9F255979E80041672E /* CurrentEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentEvent.swift; sourceTree = "<group>"; };
+		01689D842563DF430054129D /* CustomTapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTapGesture.swift; sourceTree = "<group>"; };
 		01978DDB25558DB500CA17FD /* Artists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01978DDE25558DB500CA17FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01978DE025558DB500CA17FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		01978DE225558DB500CA17FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		01978DE525558DB500CA17FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		01978DE725558DB700CA17FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01978DEA25558DB700CA17FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01978DEC25558DB700CA17FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01978DF225558E1C00CA17FD /* SearchArtistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistsViewController.swift; sourceTree = "<group>"; };
+		01978DF625558EAB00CA17FD /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
+		01978DF8255595CD00CA17FD /* ArtistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistModel.swift; sourceTree = "<group>"; };
+		01978DFE255599FD00CA17FD /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
+		01978E0025559A3F00CA17FD /* CurrentArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentArtist.swift; sourceTree = "<group>"; };
+		01E7BEA2257E19E80058A9CE /* MapEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEvents.swift; sourceTree = "<group>"; };
+		6CF977FC7C093542802B9017 /* Pods_Artists.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Artists.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91868C16F9BFCD5035C6A826 /* Pods-Artists.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artists.debug.xcconfig"; path = "Target Support Files/Pods-Artists/Pods-Artists.debug.xcconfig"; sourceTree = "<group>"; };
+		A799E4FBA39A0BF87FEBC798 /* Pods-Artists.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artists.release.xcconfig"; path = "Target Support Files/Pods-Artists/Pods-Artists.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +69,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				156961595B3B333F72A02D1E /* Pods_Artists.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		013D031A255A8C66005AE518 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0142FE9C255976960041672E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0142FE9A25596B4E0041672E /* UIButton+extension.swift */,
+				01689D842563DF430054129D /* CustomTapGesture.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		01978DD225558DB500CA17FD = {
 			isa = PBXGroup;
 			children = (
 				01978DDD25558DB500CA17FD /* Artists */,
 				01978DDC25558DB500CA17FD /* Products */,
+				A89835019FD4CC0A8DA50DF0 /* Pods */,
+				AB73F487A1E968AC5D97BCA1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,13 +115,79 @@
 			children = (
 				01978DDE25558DB500CA17FD /* AppDelegate.swift */,
 				01978DE025558DB500CA17FD /* SceneDelegate.swift */,
-				01978DE225558DB500CA17FD /* ViewController.swift */,
+				01978DFD255599CD00CA17FD /* Services */,
+				01978DFC2555985100CA17FD /* ViewController */,
+				01978DFB2555984300CA17FD /* Model */,
+				01978DFA2555983C00CA17FD /* Cell */,
+				0142FE9C255976960041672E /* Extension */,
+				013D031A255A8C66005AE518 /* Protocols */,
 				01978DE425558DB500CA17FD /* Main.storyboard */,
 				01978DE725558DB700CA17FD /* Assets.xcassets */,
 				01978DE925558DB700CA17FD /* LaunchScreen.storyboard */,
 				01978DEC25558DB700CA17FD /* Info.plist */,
 			);
 			path = Artists;
+			sourceTree = "<group>";
+		};
+		01978DFA2555983C00CA17FD /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				01978DF625558EAB00CA17FD /* ArtistCell.swift */,
+				0142FE982559370A0041672E /* FavoriteCell.swift */,
+				010D53EF2565486700110595 /* EventsCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		01978DFB2555984300CA17FD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				01978DF8255595CD00CA17FD /* ArtistModel.swift */,
+				01978E0025559A3F00CA17FD /* CurrentArtist.swift */,
+				0142FE9D255976AE0041672E /* EventModel.swift */,
+				0142FE9F255979E80041672E /* CurrentEvent.swift */,
+				013D031D255AADB1005AE518 /* FavoriteArtists.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		01978DFC2555985100CA17FD /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				01978DF225558E1C00CA17FD /* SearchArtistsViewController.swift */,
+				0142FE9625592EE70041672E /* FavoriteArtist.swift */,
+				012DF4E0255EE78F005D6D15 /* EventsViewController.swift */,
+				011A2086256BA6F8008E456B /* WebViewController.swift */,
+				01E7BEA2257E19E80058A9CE /* MapEvents.swift */,
+				0112857B256D64BE00C9557A /* MapViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		01978DFD255599CD00CA17FD /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				01978DFE255599FD00CA17FD /* NetworkServices.swift */,
+				0112857D256D6E2A00C9557A /* MapManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A89835019FD4CC0A8DA50DF0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				91868C16F9BFCD5035C6A826 /* Pods-Artists.debug.xcconfig */,
+				A799E4FBA39A0BF87FEBC798 /* Pods-Artists.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		AB73F487A1E968AC5D97BCA1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6CF977FC7C093542802B9017 /* Pods_Artists.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +197,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01978DEF25558DB700CA17FD /* Build configuration list for PBXNativeTarget "Artists" */;
 			buildPhases = (
+				CFB094943A1FA5293FD1C208 /* [CP] Check Pods Manifest.lock */,
 				01978DD725558DB500CA17FD /* Sources */,
 				01978DD825558DB500CA17FD /* Frameworks */,
 				01978DD925558DB500CA17FD /* Resources */,
+				D7D671C681490F7D8926ECAC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,14 +258,73 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CFB094943A1FA5293FD1C208 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Artists-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7D671C681490F7D8926ECAC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Artists/Pods-Artists-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Artists/Pods-Artists-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Artists/Pods-Artists-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		01978DD725558DB500CA17FD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01978DE325558DB500CA17FD /* ViewController.swift in Sources */,
+				010D53F02565486700110595 /* EventsCell.swift in Sources */,
+				01E7BEA3257E19E80058A9CE /* MapEvents.swift in Sources */,
+				011A2087256BA6F8008E456B /* WebViewController.swift in Sources */,
+				0112857E256D6E2A00C9557A /* MapManager.swift in Sources */,
+				01978E0125559A3F00CA17FD /* CurrentArtist.swift in Sources */,
+				01978DFF255599FD00CA17FD /* NetworkServices.swift in Sources */,
+				0142FEA0255979E80041672E /* CurrentEvent.swift in Sources */,
+				0142FE9B25596B4E0041672E /* UIButton+extension.swift in Sources */,
+				0142FE9725592EE70041672E /* FavoriteArtist.swift in Sources */,
+				0112857C256D64BE00C9557A /* MapViewController.swift in Sources */,
 				01978DDF25558DB500CA17FD /* AppDelegate.swift in Sources */,
 				01978DE125558DB500CA17FD /* SceneDelegate.swift in Sources */,
+				01978DF9255595CD00CA17FD /* ArtistModel.swift in Sources */,
+				0142FE9E255976AE0041672E /* EventModel.swift in Sources */,
+				0142FE992559370A0041672E /* FavoriteCell.swift in Sources */,
+				01978DF725558EAB00CA17FD /* ArtistCell.swift in Sources */,
+				01978DF325558E1C00CA17FD /* SearchArtistsViewController.swift in Sources */,
+				013D031E255AADB1005AE518 /* FavoriteArtists.swift in Sources */,
+				012DF4E1255EE78F005D6D15 /* EventsViewController.swift in Sources */,
+				01689D852563DF430054129D /* CustomTapGesture.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +466,7 @@
 		};
 		01978DF025558DB700CA17FD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91868C16F9BFCD5035C6A826 /* Pods-Artists.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +485,7 @@
 		};
 		01978DF125558DB700CA17FD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A799E4FBA39A0BF87FEBC798 /* Pods-Artists.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
