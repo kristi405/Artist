@@ -1,11 +1,3 @@
-//
-//  ArtistModel.swift
-//  Artists
-//
-//  Created by kris on 06/11/2020.
-//  Copyright © 2020 kris. All rights reserved.
-//
-
 import UIKit
 
 struct Artist: Decodable {
@@ -32,7 +24,7 @@ struct Artist: Decodable {
             case url
         }
 
-    // MARK: - Options
+// MARK: - Options
     struct Options: Codable {
         let displayListenUnit: Bool?
 

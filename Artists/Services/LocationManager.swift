@@ -1,27 +1,20 @@
-//
-//  MapManager.swift
-//  Artists
-//
-//  Created by kris on 24/11/2020.
-//  Copyright © 2020 kris. All rights reserved.
-//
-
 import Foundation
 import MapKit
 
-class MapManager {
+final class LocationManager {
     
-    let locationManager = CLLocationManager()
+    // MARK:  Properties
+    private let locationManager = CLLocationManager()
     private var placeCoordinate: CLLocationCoordinate2D?
     private let regionInMeters = 1000.00
     
+    // set a marker on the map
     func setupEventMark(event: Event, mapView: MKMapView) {
 
         guard let location = event.venue?.city else {return}
         
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(location) { (placemarks, error) in
-            
             if let error = error {
                 print(error)
                 return
@@ -45,6 +38,7 @@ class MapManager {
         }
     }
     
+    // showing the user's location on the map
     func showUserLocation(mapView: MKMapView) {
            if let location = locationManager.location?.coordinate {
                       let region = MKCoordinateRegion.init(center: location,
@@ -54,7 +48,7 @@ class MapManager {
            }
        }
     
-    // Определение центра отображаемой области карты
+    // Determining the center of the displayed map area
     func getCenterLocation(for mapView: MKMapView) -> CLLocation {
            
            let latitude = mapView.centerCoordinate.latitude

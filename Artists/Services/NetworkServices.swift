@@ -1,16 +1,8 @@
-//
-//  NetworkServices.swift
-//  Artists
-//
-//  Created by kris on 06/11/2020.
-//  Copyright © 2020 kris. All rights reserved.
-//
-
 import Foundation
 
-class NetworkServices {
+final class NetworkServices {
     
-// Получаем данные по артисту
+// Getting data on the artist
     func fetchArtist(artist: String, complition: @escaping (CurrentArtist)->()) {
         let urlString = "https://rest.bandsintown.com/artists/\(artist)?app_id=ccd11757-c148-4587-a813-7e887084b536"
         guard let url = URL(string: urlString) else {return}
@@ -39,7 +31,7 @@ class NetworkServices {
         return nil
     }
     
-// Получаем данные по событиям
+// We get data on events
     func fetchEvent(artist: String, date: String, complition: @escaping ([Event])->()) {
         let urlString = "https://rest.bandsintown.com/artists/\(artist)/events?app_id=ccd11757-c148-4587-a813-7e887084b536&date=\(date)"
         guard let url = URL(string: urlString) else {return}

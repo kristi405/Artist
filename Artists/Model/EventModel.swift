@@ -1,11 +1,3 @@
-//
-//  EventModel.swift
-//  Artists
-//
-//  Created by kris on 09/11/2020.
-//  Copyright © 2020 kris. All rights reserved.
-//
-
 import UIKit
 
 struct Event: Decodable {

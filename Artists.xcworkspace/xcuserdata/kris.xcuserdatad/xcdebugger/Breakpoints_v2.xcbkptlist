@@ -14,9 +14,9 @@
             filePath = "Artists/ViewController/FavoriteArtist.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "showAlert(_:)"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "showAlertEvent(indexPath:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -55,22 +55,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "80287B93-3DE9-46B5-8970-FBF34C262FA2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Artists/ViewController/EventsViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "showMap(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C8BA7699-0FB5-432A-906A-156960FCCCFD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -80,8 +64,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "10"
             endingLineNumber = "10"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "MapEvents"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
