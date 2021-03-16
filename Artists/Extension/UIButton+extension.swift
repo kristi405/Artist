@@ -46,5 +46,5 @@ extension UIButton {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.titleLabel?.textAlignment = .natural
-    }
+    }   
 }

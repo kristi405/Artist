@@ -4,13 +4,14 @@ import RealmSwift
 
 final class SearchViewController: UIViewController {
     
-    // MARK:  Properties
-    private var artistsRealm = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
-    private var artists = [Artist]()
+// MARK:  Properties
+    private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
     private var currentArtistFavorite: CurrentArtist?
     private var onComplition: ((CurrentArtist) -> Void)?
-    private var favoriteArtists: FavoriteArtists?
+    private var favoriteVC = FavoriteArtist()
+    private lazy var timer = AutosearchTimer { [weak self] in self?.performSearch() }
+    var text: String?
     
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var label: UILabel!
@@ -29,19 +30,24 @@ final class SearchViewController: UIViewController {
         searchArtist()
         setupSearchController()
     }
+    
 // MARK:  Business logic
     // Add to favorites
     @IBAction func buttonPressed(_ sender: UIButton) {
         if !isContains() {
-            saveArtist()
+            favoriteVC.saveArtist()
             sender.setRedImage()
-            print("добавлено в фавориты")
+            sender.setTitle("Удалить из фаворитов", for: .normal)
+        } else {
+            favoriteVC.deleteArtist()
+            sender.setImage()
+            sender.setTitle("Добавить в фавориты", for: .normal)
         }
     }
     
     // Check if the artist has been added to favorites
     private func isContains() -> Bool {
-        for artist in artistsRealm {
+        for artist in artists {
             if currentArtistFavorite?.name == artist.name {
                 return true
             }
@@ -53,6 +59,7 @@ final class SearchViewController: UIViewController {
     private func searchArtist() {
         self.onComplition = { currentArtist in
             self.currentArtistFavorite = currentArtist
+            self.favoriteVC.currentArtist = currentArtist
             self.networkServices.fetchArtist(artist: currentArtist.name ?? "Введите имя", complition: { currentArtist in
                 self.configureView(artist: currentArtist)
             })
@@ -86,20 +93,6 @@ final class SearchViewController: UIViewController {
     }
     
     // MARK:  Business logic
-    // Save the object to the base Realm
-    private func saveArtist() {
-        let realm = try! Realm()
-        
-        try! realm.write {
-            let newArtist = FavoriteArtists()
-            newArtist.name = currentArtistFavorite?.name
-            newArtist.image = currentArtistFavorite?.imageURL
-            
-            realm.add(newArtist)
-            self.favoriteArtists = newArtist
-        }
-    }
-    
     // Install SearchController
     private func setupSearchController() {
         
@@ -119,18 +112,31 @@ final class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Checking the number of entered characters in the search string
-        if searchText.count <= Int(Numbers.searchTextCount.rawValue) {
+        searchBar.placeholder = "Нужно ввести имя"
+        timer.activate()
+        self.text = searchText
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        performSearch()
+    }
+    
+    func performSearch() {
+        timer.cancel()
+        guard let text = self.text else {return}
+        if text.count <= Int(Numbers.searchTextCount.rawValue) {
             label.isHidden = true
             image.isHidden = true
             button.isHidden = true
+            button.setTitle("Добавить в фавориты", for: .normal)
             button.setImage()
-            searchBar.placeholder = "Нужно ввести имя"
         } else {
             label.isHidden = false
             image.isHidden = false
             button.isHidden = false
-            self.networkServices.fetchArtist(artist: searchText, complition: { currentArtist in
-                 self.onComplition?(currentArtist)
+            self.networkServices.fetchArtist(artist: text, complition: { currentArtist in
+                print(text)
+                self.onComplition?(currentArtist)
             })
         }
     }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		010D53F02565486700110595 /* EventsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010D53EF2565486700110595 /* EventsCell.swift */; };
+		010F96B0260108B60052C48E /* AutoserchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010F96AF260108B60052C48E /* AutoserchTimer.swift */; };
 		0112857E256D6E2A00C9557A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0112857D256D6E2A00C9557A /* LocationManager.swift */; };
 		011A2087256BA6F8008E456B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011A2086256BA6F8008E456B /* WebViewController.swift */; };
 		012DF4E1255EE78F005D6D15 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012DF4E0255EE78F005D6D15 /* EventsViewController.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		010D53EF2565486700110595 /* EventsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCell.swift; sourceTree = "<group>"; };
+		010F96AF260108B60052C48E /* AutoserchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoserchTimer.swift; sourceTree = "<group>"; };
 		0112857D256D6E2A00C9557A /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		011A2086256BA6F8008E456B /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		012DF4E0255EE78F005D6D15 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				01F029B2259F85B8004AB24F /* SearchViewController.swift */,
+				010F96AF260108B60052C48E /* AutoserchTimer.swift */,
 			);
 			path = SearchViewController;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				01978DE925558DB700CA17FD /* LaunchScreen.storyboard */,
+				01978DEC25558DB700CA17FD /* Info.plist */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -174,7 +178,6 @@
 		01978DDD25558DB500CA17FD /* Artists */ = {
 			isa = PBXGroup;
 			children = (
-				01978DDE25558DB500CA17FD /* AppDelegate.swift */,
 				01978DFD255599CD00CA17FD /* Services */,
 				01978DFB2555984300CA17FD /* Model */,
 				017B6B1625E15F1F0089B89D /* View */,
@@ -183,7 +186,6 @@
 				013D031A255A8C66005AE518 /* Protocols */,
 				017B6B1425E15EA70089B89D /* Resources */,
 				017B6B1525E15ECB0089B89D /* SupportFiles */,
-				01978DEC25558DB700CA17FD /* Info.plist */,
 			);
 			path = Artists;
 			sourceTree = "<group>";
@@ -214,6 +216,7 @@
 		01978DFD255599CD00CA17FD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				01978DDE25558DB500CA17FD /* AppDelegate.swift */,
 				01978DFE255599FD00CA17FD /* NetworkServices.swift */,
 				0112857D256D6E2A00C9557A /* LocationManager.swift */,
 			);
@@ -362,6 +365,7 @@
 				0142FE9B25596B4E0041672E /* UIButton+extension.swift in Sources */,
 				0142FE9725592EE70041672E /* FavoriteArtist.swift in Sources */,
 				01978DDF25558DB500CA17FD /* AppDelegate.swift in Sources */,
+				010F96B0260108B60052C48E /* AutoserchTimer.swift in Sources */,
 				01978DF9255595CD00CA17FD /* ArtistModel.swift in Sources */,
 				0142FE9E255976AE0041672E /* EventModel.swift in Sources */,
 				0142FE992559370A0041672E /* FavoriteCell.swift in Sources */,
@@ -515,7 +519,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CFTJPS6ZYY;
-				INFOPLIST_FILE = Artists/Info.plist;
+				INFOPLIST_FILE = Artists/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -523,7 +527,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = test.Artists;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -534,7 +538,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CFTJPS6ZYY;
-				INFOPLIST_FILE = Artists/Info.plist;
+				INFOPLIST_FILE = Artists/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -542,7 +546,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = test.Artists;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

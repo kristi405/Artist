@@ -3,11 +3,13 @@ import RealmSwift
 
 final class FavoriteArtist: UICollectionViewController {
     
-    // MARK:  Properties
+// MARK:  Properties
     private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
     private var widthItem: CGFloat = .zero
     private var favoriteCell = FavoriteCell()
+    private var favoriteArtist = FavoriteArtists()
+    var currentArtist: CurrentArtist?
     
     enum Numbers: CGFloat {
         case spacingVertical = 30
@@ -17,6 +19,11 @@ final class FavoriteArtist: UICollectionViewController {
         case spasingBetweenItems = 20
         case one = 1
         case five = 5
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -57,6 +64,28 @@ final class FavoriteArtist: UICollectionViewController {
             let artist = self.artists[indexPath.row]
             realm.delete(artist)
             collectionView.reloadData()
+        }
+    }
+    
+    func deleteArtist() {
+        let realm = try! Realm()
+        
+        try! realm.write {
+            let newArtist = favoriteArtist
+            realm.delete(newArtist)
+        }
+    }
+    
+    // save to the database Realm
+    func saveArtist() {
+        let realm = try! Realm()
+        
+        try! realm.write {
+            let newArtist = FavoriteArtists()
+            newArtist.name = currentArtist?.name
+            newArtist.image = currentArtist?.imageURL
+            realm.add(newArtist)
+            self.favoriteArtist = newArtist
         }
     }
     
@@ -138,7 +167,6 @@ extension FavoriteArtist {
     
 // MARK:  UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        collectionView.reloadData()
         return artists.count
     }
     
@@ -147,6 +175,7 @@ extension FavoriteArtist {
         
         if let favoriteArtistCell = cell as? FavoriteCell {
             setupConstraints(cell: favoriteArtistCell, image: favoriteArtistCell.imageFavoriteArtist, label: favoriteArtistCell.labelFavoriteArtist)
+            
             favoriteCell.configureCell(cell: favoriteArtistCell, indexPath: indexPath)
             
             let tapGesture = CustomTapGesture(target: self, action: #selector(showAlert(_:)))
@@ -158,7 +187,7 @@ extension FavoriteArtist {
 }
 
 
- //MARK: - UICollectionViewDelegateFlowLayout
+//MARK: - UICollectionViewDelegateFlowLayout
 extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
     
     // Setting cell sizes
@@ -169,7 +198,7 @@ extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
         widthItem = freeWidth / item
         return CGSize(width: widthItem, height: widthItem)
     }
-
+    
     // Set the distance between cells
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: Numbers.spacingVertical.rawValue,

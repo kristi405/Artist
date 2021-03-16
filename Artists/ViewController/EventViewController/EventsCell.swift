@@ -5,7 +5,7 @@ final class EventsCell: UITableViewCell {
     private var eventVC: EventsViewController?
     private var events: [Event]?
     
-    private var dataLabel = UILabel()
+      private var dataLabel = UILabel()
     private var countryLabel = UILabel()
     private var cityLabel = UILabel()
     private var mapButton = UIButton()
@@ -13,17 +13,17 @@ final class EventsCell: UITableViewCell {
     private var goOverButton = UIButton()
     private var buttonStackView = UIStackView()
 
-    private enum Numbers: CGFloat {
-        case stackViewSpacing = 20
-        case buttonStackViewSpacing = 10
-        case shadowWidth = 1
-        case shadowHight = 0.5
-        case stackViewTopAnchor = 17
-        case stackViewLeadingAnchor = 15
-        case stackViewTrailingAnchor = -185
-        case buttonStackViewBottomAnchor = -20
-        case buttonStackViewTrailingAnchor = -45
-    }
+private enum Numbers: CGFloat {
+    case stackViewSpacing = 20
+    case buttonStackViewSpacing = 10
+    case shadowWidth = 1
+    case shadowHight = 0.5
+    case stackViewTopAnchor = 17
+    case stackViewLeadingAnchor = 15
+    case stackViewTrailingAnchor = -185
+    case buttonStackViewBottomAnchor = -20
+    case buttonStackViewTrailingAnchor = -45
+}
     
     func configureCell(cell: EventsCell, indexPath: IndexPath, events: [Event], eventVC: EventsViewController) {
         
