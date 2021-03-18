@@ -4,7 +4,7 @@ final class AutosearchTimer {
 
     private enum Const {
         static let longAutosearchDelay: TimeInterval = 2.0
-        static let shortAutosearchDelay: TimeInterval = 0.6
+        static let shortAutosearchDelay: TimeInterval = 0.75
     }
     
     private let shortInterval: TimeInterval
@@ -27,11 +27,11 @@ final class AutosearchTimer {
     
     func activate() {
         shortTimer?.invalidate()
-        shortTimer = Timer.scheduledTimer(withTimeInterval: shortInterval, repeats: false) { _ in
+        shortTimer = Timer.scheduledTimer(withTimeInterval: shortInterval, repeats: false) {_ in
             self.fire()
         }
         if longTimer == nil {
-            longTimer = Timer.scheduledTimer(withTimeInterval: longInterval, repeats: false) { _ in
+            longTimer = Timer.scheduledTimer(withTimeInterval: longInterval, repeats: false) {_ in
                 self.fire()
             }
         }

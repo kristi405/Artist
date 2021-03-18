@@ -4,7 +4,7 @@ extension UIButton {
     
     func setImage() {
         let buttonImage = UIImageView()
-        buttonImage.image = #imageLiteral(resourceName: "WHeart")
+        buttonImage.image = #imageLiteral(resourceName: "whiteHeart")
         buttonImage.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(buttonImage)
         NSLayoutConstraint.activate([
@@ -46,5 +46,13 @@ extension UIButton {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15)
         button.titleLabel?.textAlignment = .natural
-    }   
+    }
+    
+    func searchVCBattons(button: UIButton) {
+        button.isHidden = true
+        button.layer.borderWidth = 0.5
+        button.layer.shadowColor = UIColor.blue.cgColor
+        button.layer.shadowRadius = 10
+        button.layer.borderColor = UIColor.blue.cgColor
+    }
 }

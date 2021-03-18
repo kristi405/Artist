@@ -8,7 +8,7 @@ final class FavoriteArtist: UICollectionViewController {
     private var networkServices = NetworkServices()
     private var widthItem: CGFloat = .zero
     private var favoriteCell = FavoriteCell()
-    private var favoriteArtist = FavoriteArtists()
+    var favoriteArtist = FavoriteArtists()
     var currentArtist: CurrentArtist?
     
     enum Numbers: CGFloat {
@@ -71,8 +71,11 @@ final class FavoriteArtist: UICollectionViewController {
         let realm = try! Realm()
         
         try! realm.write {
-            let newArtist = favoriteArtist
-            realm.delete(newArtist)
+            for artist in artists {
+                if currentArtist?.name == artist.name {
+                    realm.delete(artist)
+                }
+            }
         }
     }
     
@@ -100,24 +103,21 @@ final class FavoriteArtist: UICollectionViewController {
         let allEvent = UIAlertAction(title: "Все", style: .default) { _ in
             self.networkServices.fetchEvent(artist: self.artists[indexPath.row].name!, date: "all") { currentEvent in
                 DispatchQueue.main.async {
-                    let eventVC = EventsViewController(currentEvent: currentEvent)
-                    self.present(eventVC, animated: true, completion: nil)
+                    self.presentEventVC(with: currentEvent)
                 }
             }
         }
         let pastEvent = UIAlertAction(title: "Прошедшие", style: .default) { (past) in
             self.networkServices.fetchEvent(artist: self.artists[indexPath.row].name!, date: "past") { currentEvent in
                 DispatchQueue.main.async {
-                    let eventVC = EventsViewController(currentEvent: currentEvent)
-                    self.present(eventVC, animated: true, completion: nil)
+                    self.presentEventVC(with: currentEvent)
                 }
             }
         }
         let upcomingEvent = UIAlertAction(title: "Предстоящие", style: .default) { (upcoming) in
             self.networkServices.fetchEvent(artist: self.artists[indexPath.row].name!, date: "upcoming") { currentEvent in
                 DispatchQueue.main.async {
-                    let eventVC = EventsViewController(currentEvent: currentEvent)
-                    self.present(eventVC, animated: true, completion: nil)
+                    self.presentEventVC(with: currentEvent)
                 }
             }
         }
@@ -128,8 +128,15 @@ final class FavoriteArtist: UICollectionViewController {
         alertEvent.addAction(pastEvent)
         alertEvent.addAction(upcomingEvent)
         alertEvent.addAction(cencelButton)
+        
         alertEvent.view.addSubview(UIView())
         present(alertEvent, animated: false, completion: nil)
+    }
+    
+    private func presentEventVC(with currentEvent: [Event]) {
+        let eventVC = EventsViewController(currentEvent: currentEvent)
+        let navVC = UINavigationController(rootViewController: eventVC)
+        self.present(navVC, animated: true, completion: nil)
     }
     
     // Choosing an option for a favorite

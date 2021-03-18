@@ -1,7 +1,7 @@
 import Foundation
 
 final class NetworkServices {
-    
+
 // Getting data on the artist
     func fetchArtist(artist: String, complition: @escaping (CurrentArtist)->()) {
         let urlString = "https://rest.bandsintown.com/artists/\(artist)?app_id=ccd11757-c148-4587-a813-7e887084b536"

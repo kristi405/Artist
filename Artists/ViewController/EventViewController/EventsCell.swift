@@ -43,7 +43,7 @@ private enum Numbers: CGFloat {
         cityLabel.shadowColor = .gray
         cityLabel.shadowOffset = CGSize(width: Numbers.shadowHight.rawValue, height: Numbers.shadowHight.rawValue)
         
-        mapButton.setImage(#imageLiteral(resourceName: "pin-map-7"), for: .normal)
+        mapButton.setImage(#imageLiteral(resourceName: "pinMap-1"), for: .normal)
         
         goOverButton.setGoOverImage()
         goOverButton.customButton(button: goOverButton)

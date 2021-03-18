@@ -4,24 +4,25 @@ import RealmSwift
 
 final class SearchViewController: UIViewController {
     
-// MARK:  Properties
+    enum Numbers: CGFloat {
+       case searchTextCount = 2
+    }
+    
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var webButton: UIButton!
+    
+    // MARK:  Properties
     private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
     private var currentArtistFavorite: CurrentArtist?
     private var onComplition: ((CurrentArtist) -> Void)?
     private var favoriteVC = FavoriteArtist()
-    private lazy var timer = AutosearchTimer { [weak self] in self?.performSearch() }
-    var text: String?
-    
-    @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var button: UIButton!
-
-    enum Numbers: CGFloat {
-        case borderWidth = 0.5
-        case shadowRadius = 10
-        case searchTextCount = 2
-     }
+    private var text: String?
+    private lazy var timer = AutosearchTimer {
+        self.performSearch()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,13 @@ final class SearchViewController: UIViewController {
         }
     }
     
+    @IBAction func showWeb(_ sender: UIButton) {
+        let webVC = WebViewController()
+        webVC.eventURL = currentArtistFavorite?.url ?? "Введите url"
+        present(webVC, animated: true, completion: nil)
+    }
+    
+    
     // Check if the artist has been added to favorites
     private func isContains() -> Bool {
         for artist in artists {
@@ -58,21 +66,15 @@ final class SearchViewController: UIViewController {
     // Send a request to find an artist
     private func searchArtist() {
         self.onComplition = { currentArtist in
-            self.currentArtistFavorite = currentArtist
             self.favoriteVC.currentArtist = currentArtist
-            self.networkServices.fetchArtist(artist: currentArtist.name ?? "Введите имя", complition: { currentArtist in
-                self.configureView(artist: currentArtist)
-            })
+            self.configureView(artist: currentArtist)
         }
     }
     
     // Customizing the button
     private func customBatton() {
-        button.isHidden = true
-        button.layer.borderWidth = Numbers.borderWidth.rawValue
-        button.layer.shadowColor = UIColor.blue.cgColor
-        button.layer.shadowRadius = Numbers.shadowRadius.rawValue
-        button.layer.borderColor = UIColor.blue.cgColor
+        button.searchVCBattons(button: button)
+        webButton.searchVCBattons(button: webButton)
         button.setImage()
     }
     
@@ -117,10 +119,6 @@ extension SearchViewController: UISearchBarDelegate {
         self.text = searchText
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        performSearch()
-    }
-    
     func performSearch() {
         timer.cancel()
         guard let text = self.text else {return}
@@ -128,15 +126,26 @@ extension SearchViewController: UISearchBarDelegate {
             label.isHidden = true
             image.isHidden = true
             button.isHidden = true
-            button.setTitle("Добавить в фавориты", for: .normal)
-            button.setImage()
+            webButton.isHidden = true
+            self.currentArtistFavorite = nil
         } else {
             label.isHidden = false
             image.isHidden = false
             button.isHidden = false
+            webButton.isHidden = false
             self.networkServices.fetchArtist(artist: text, complition: { currentArtist in
                 print(text)
                 self.onComplition?(currentArtist)
+                self.currentArtistFavorite = currentArtist
+                DispatchQueue.main.async {
+                    if !self.isContains() {
+                        self.button.setTitle("Добавить в фавориты", for: .normal)
+                        self.button.setImage()
+                    } else {
+                        self.button.setTitle("Удалить из фаворитов", for: .normal)
+                        self.button.setRedImage()
+                    }
+                }
             })
         }
     }
