@@ -10,7 +10,6 @@ final class LocationManager {
     
     // set a marker on the map
     func setupEventMark(event: Event, mapView: MKMapView) {
-
         guard let location = event.venue?.city else {return}
         
         let geocoder = CLGeocoder()
@@ -40,22 +39,19 @@ final class LocationManager {
     
     // showing the user's location on the map
     func showUserLocation(mapView: MKMapView) {
-           if let location = locationManager.location?.coordinate {
-                      let region = MKCoordinateRegion.init(center: location,
-                                                           latitudinalMeters: regionInMeters,
-                                                           longitudinalMeters: regionInMeters)
-                      mapView.setRegion(region, animated: true)
-           }
-       }
+        if let location = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion.init(center: location,
+                                                 latitudinalMeters: regionInMeters,
+                                                 longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
+        }
+    }
     
     // Determining the center of the displayed map area
     func getCenterLocation(for mapView: MKMapView) -> CLLocation {
-           
-           let latitude = mapView.centerCoordinate.latitude
-           let longitude = mapView.centerCoordinate.longitude
-           
-           return CLLocation(latitude: latitude, longitude: longitude)
-       }
-    
-    
+        let latitude = mapView.centerCoordinate.latitude
+        let longitude = mapView.centerCoordinate.longitude
+        
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
 }

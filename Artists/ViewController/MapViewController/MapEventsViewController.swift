@@ -4,22 +4,21 @@ import CoreLocation
 
 final class MapEvents: UIViewController {
     
-// MARK:  Properties
+    private enum Const {
+        static let horizontalSpasingCancelButton: CGFloat = 320
+        static let verticalSpasingCancelButton: CGFloat = 20
+        static let widthCancelButton: CGFloat = 25
+    }
+    
+    // MARK:  Properties
     private var locationManager: CLLocationManager?
     private var currentLocation: CLLocation?
-    private let regionInMeters: Double = 1000
     private var mapView: MKMapView?
     private let mapManager = LocationManager()
     private let annotationIdentifier = "annotationIdentifier"
     var event: Event!
-        
-    enum Numbers: CGFloat {
-        case horizontalSpasingCancelButton = 320
-        case verticalSpasingCancelButton = 20
-        case widthCancelButton = 25
-    }
     
-// MARK:  Life cycle
+    // MARK:  Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,22 +44,25 @@ final class MapEvents: UIViewController {
     
     // Draw cancelButton
     private func setupCancelButton() {
-        let cancelButton = UIButton(frame: CGRect(x: Numbers.horizontalSpasingCancelButton.rawValue, y: Numbers.verticalSpasingCancelButton.rawValue, width: Numbers.widthCancelButton.rawValue, height: Numbers.widthCancelButton.rawValue))
+        let cancelButton = UIButton(frame: CGRect(x: Const.horizontalSpasingCancelButton,
+                                                  y: Const.verticalSpasingCancelButton,
+                                                  width: Const.widthCancelButton,
+                                                  height: Const.widthCancelButton))
         cancelButton.setImage(#imageLiteral(resourceName: "cancel"), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         cancelButton.isHidden = false
         mapView?.addSubview(cancelButton)
     }
-
-    @IBAction func cancelTapped() {
+    
+    @IBAction private func cancelTapped() {
         self.dismiss(animated: true)
     }
 }
- 
+
 
 // MARK: - Extensions
 extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         defer { currentLocation = locations.last }
         
@@ -71,7 +73,6 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
         guard !(annotation is MKUserLocation) else {return nil}
         
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? MKPinAnnotationView
@@ -80,7 +81,7 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
             annotationView?.canShowCallout = true
         }
-
+        
         return annotationView
     }
     

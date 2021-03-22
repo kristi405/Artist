@@ -1,33 +1,33 @@
 import UIKit
 
 struct Artist: Decodable {
-     
-        var thumbURL: String?
-        var mbid, supportURL: String?
-        var facebookPageURL: String?
-        var imageURL: String?
-        var name: String?
-        var options: Options?
-        var id: String?
-        var trackerCount, upcomingEventCount: Int?
-        var url: String?
-
-        enum CodingKeys: String, CodingKey {
-            case thumbURL = "thumb_url"
-            case mbid
-            case supportURL = "support_url"
-            case facebookPageURL = "facebook_page_url"
-            case imageURL = "image_url"
-            case name, options, id
-            case trackerCount = "tracker_count"
-            case upcomingEventCount = "upcoming_event_count"
-            case url
-        }
-
-// MARK: - Options
+    
+    var thumbURL: String?
+    var mbid, supportURL: String?
+    var facebookPageURL: String?
+    var imageURL: String?
+    var name: String?
+    var options: Options?
+    var id: String?
+    var trackerCount, upcomingEventCount: Int?
+    var url: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case thumbURL = "thumb_url"
+        case mbid
+        case supportURL = "support_url"
+        case facebookPageURL = "facebook_page_url"
+        case imageURL = "image_url"
+        case name, options, id
+        case trackerCount = "tracker_count"
+        case upcomingEventCount = "upcoming_event_count"
+        case url
+    }
+    
+    // MARK: - Options
     struct Options: Codable {
         let displayListenUnit: Bool?
-
+        
         enum CodingKeys: String, CodingKey {
             case displayListenUnit = "display_listen_unit"
         }

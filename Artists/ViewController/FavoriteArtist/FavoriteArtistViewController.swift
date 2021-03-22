@@ -3,56 +3,38 @@ import RealmSwift
 
 final class FavoriteArtist: UICollectionViewController {
     
-// MARK:  Properties
+    // MARK:  Properties
     private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
-    private var widthItem: CGFloat = .zero
     private var favoriteCell = FavoriteCell()
     var favoriteArtist = FavoriteArtists()
     var currentArtist: CurrentArtist?
-    
-    enum Numbers: CGFloat {
-        case spacingVertical = 30
-        case spacingHorizontal = 10
-        case item = 2.0
-        case spasing = 40
-        case spasingBetweenItems = 20
-        case one = 1
-        case five = 5
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-// MARK:  Business logic
+    // MARK:  Business logic
     // setting сonstraints for image and label
     private func setupConstraints(cell: FavoriteCell, image: UIImageView, label: UILabel) {
-
         image.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
-
             image.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
             image.topAnchor.constraint(equalTo: cell.topAnchor),
             image.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
-            image.widthAnchor.constraint(equalToConstant: widthItem),
-            image.heightAnchor.constraint(equalToConstant: widthItem - (widthItem / Numbers.five.rawValue))
+            image.widthAnchor.constraint(equalToConstant: Const.widthItem),
+            image.heightAnchor.constraint(equalToConstant: Const.widthItem - (Const.widthItem / Const.five))
         ])
-
+        
         NSLayoutConstraint.activate([
-
             label.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
-            label.topAnchor.constraint(equalTo: image.bottomAnchor, constant: Numbers.spacingHorizontal.rawValue),
+            label.topAnchor.constraint(equalTo: image.bottomAnchor, constant: Const.spacingHorizontal),
             label.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
             label.bottomAnchor.constraint(equalTo: cell.bottomAnchor),
-            label.widthAnchor.constraint(equalToConstant: widthItem)
+            label.widthAnchor.constraint(equalToConstant: Const.widthItem)
         ])
     }
     
@@ -67,7 +49,7 @@ final class FavoriteArtist: UICollectionViewController {
         }
     }
     
-    func deleteArtist() {
+    func deleteArtistFromButton() {
         let realm = try! Realm()
         
         try! realm.write {
@@ -94,7 +76,6 @@ final class FavoriteArtist: UICollectionViewController {
     
     // Сhoose the time of the event: all, past, upcoming
     private func showAlertEvent(indexPath: IndexPath) {
-        
         let attributedString = NSAttributedString(string: artists[indexPath.row].name!,
                                                   attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .largeTitle), NSAttributedString.Key.foregroundColor: UIColor.black])
         let alertEvent = UIAlertController(title: self.artists[indexPath.row].name!, message: "Выберите время события", preferredStyle: .actionSheet)
@@ -140,7 +121,7 @@ final class FavoriteArtist: UICollectionViewController {
     }
     
     // Choosing an option for a favorite
-    @IBAction func showAlert(_ sender: UITapGestureRecognizer) {
+    @IBAction private func showAlert(_ sender: UITapGestureRecognizer) {
         if let sender = sender as? CustomTapGesture {
             guard let indexPath = sender.indexPath else {return}
             let attributedString = NSAttributedString(string: artists[indexPath.row].name ?? "nil",
@@ -172,9 +153,9 @@ final class FavoriteArtist: UICollectionViewController {
 // MARK: - Extensions
 extension FavoriteArtist {
     
-// MARK:  UICollectionViewDataSource
+    // MARK:  UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return artists.count
+        artists.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -197,21 +178,32 @@ extension FavoriteArtist {
 //MARK: - UICollectionViewDelegateFlowLayout
 extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
     
+    private enum Const {
+        static let spacingVertical: CGFloat = 30.0
+        static let spacingHorizontal: CGFloat = 10
+        static var widthItem: CGFloat = .zero
+        static let item: CGFloat = 2.0
+        static let spasing: CGFloat = 40
+        static let spasingBetweenItems: CGFloat = 20
+        static let one: CGFloat = 1
+        static let five: CGFloat = 5
+    }
+    
     // Setting cell sizes
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        let item = Numbers.item.rawValue
-        let spasing = Numbers.spasingBetweenItems.rawValue * (item + Numbers.one.rawValue)
+        let item = Const.item
+        let spasing = Const.spasingBetweenItems * (item + Const.one)
         let freeWidth = collectionView.frame.width - spasing
-        widthItem = freeWidth / item
-        return CGSize(width: widthItem, height: widthItem)
+        Const.widthItem = freeWidth / item
+        return CGSize(width: Const.widthItem, height: Const.widthItem)
     }
     
     // Set the distance between cells
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: Numbers.spacingVertical.rawValue,
-                     left: Numbers.spasing.rawValue / (Numbers.item.rawValue + Numbers.one.rawValue),
-                     bottom: Numbers.spacingVertical.rawValue,
-                     right: Numbers.spasing.rawValue / (Numbers.item.rawValue + Numbers.one.rawValue))
+        UIEdgeInsets(top: Const.spacingVertical,
+                     left: Const.spasing / (Const.item + Const.one),
+                     bottom: Const.spacingVertical,
+                     right: Const.spasing / (Const.item + Const.one))
     }
 }
 

@@ -1,7 +1,7 @@
 import UIKit
 
 final class AutosearchTimer {
-
+    
     private enum Const {
         static let longAutosearchDelay: TimeInterval = 2.0
         static let shortAutosearchDelay: TimeInterval = 0.75
@@ -12,14 +12,13 @@ final class AutosearchTimer {
     private let callback: () -> Void
     private var shortTimer: Timer?
     private var longTimer: Timer?
-
-
+    
     init(short: TimeInterval = Const.shortAutosearchDelay, long: TimeInterval = Const.longAutosearchDelay, callback: @escaping () -> Void) {
-        shortInterval = short
-        longInterval = long
+        self.shortInterval = short
+        self.longInterval = long
         self.callback = callback
     }
-
+    
     private func fire() {
         cancel()
         callback()
@@ -36,7 +35,7 @@ final class AutosearchTimer {
             }
         }
     }
-
+    
     func cancel() {
         shortTimer?.invalidate()
         longTimer?.invalidate()

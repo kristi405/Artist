@@ -3,37 +3,40 @@ import WebKit
 
 final class WebViewController: UIViewController {
     
-// MARK:  Properties
+    private enum Const {
+        static let topProgressView: CGFloat = 2
+        static let widthProgressView: CGFloat = 414
+        static let heightProgressView: CGFloat = 15
+        static let withDuration: CGFloat = 0.5
+        static let alphaProgressView: CGFloat = 1
+    }
+    
+    // MARK:  Properties
     private var progressView: UIProgressView?
     private var webView: WKWebView?
     var eventURL = ""
     
-    enum Numbers: CGFloat {
-        case topProgressView = 2
-        case widthProgressView = 414
-        case heightProgressView = 15
-        case withDuration = 0.5
-        case alphaProgressView = 1
-    }
-    
-// MARK:  Life cycle
+    // MARK:  Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        let progressView = UIProgressView(frame: CGRect(x: .zero, y: Numbers.topProgressView.rawValue, width: Numbers.widthProgressView.rawValue, height: Numbers.heightProgressView.rawValue))
+        let progressView = UIProgressView(frame: CGRect(x: .zero,
+                                                        y: Const.topProgressView,
+                                                        width: Const.widthProgressView,
+                                                        height: Const.heightProgressView))
         progressView.backgroundColor = .white
         webView?.addSubview(progressView)
         self.progressView = progressView
         
         webView?.allowsBackForwardNavigationGestures = true
         webView?.addObserver(self,
-                            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-                            options: .new,
-                            context: nil)
+                             forKeyPath: #keyPath(WKWebView.estimatedProgress),
+                             options: .new,
+                             context: nil)
         webView?.navigationDelegate = self
         fetchWebView()
     }
     
-// MARK:  Business logic
+    // MARK:  Business logic
     // Define webView
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
@@ -62,14 +65,14 @@ final class WebViewController: UIViewController {
     
     // Display progressView
     private func showProgressView() {
-        UIView.animate(withDuration: TimeInterval(Numbers.withDuration.rawValue), delay: .zero, options: .curveEaseInOut, animations: {
-            self.progressView?.alpha = Numbers.alphaProgressView.rawValue
+        UIView.animate(withDuration: TimeInterval(Const.withDuration), delay: .zero, options: .curveEaseInOut, animations: {
+            self.progressView?.alpha = Const.alphaProgressView
         }, completion: nil)
     }
     
     // Hide progressView
     private func hideProgressView() {
-        UIView.animate(withDuration: TimeInterval(Numbers.withDuration.rawValue), delay: .zero, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: TimeInterval(Const.withDuration), delay: .zero, options: .curveEaseInOut, animations: {
             self.progressView?.alpha = .zero
         }, completion: nil)
     }
@@ -78,15 +81,15 @@ final class WebViewController: UIViewController {
 
 // MARK: - Extensions WKNavigationDelegate
 extension WebViewController: WKNavigationDelegate {
-
+    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-       showProgressView()
+        showProgressView()
     }
-
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressView()
     }
-
+    
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         hideProgressView()
     }

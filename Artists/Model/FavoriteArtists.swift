@@ -1,6 +1,7 @@
 import RealmSwift
 
 class FavoriteArtists: Object {
+    
     @objc dynamic var name: String?
     @objc dynamic var image: String?
     
