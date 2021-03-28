@@ -9,6 +9,18 @@ final class FavoriteArtist: UICollectionViewController {
     private var favoriteCell = FavoriteCell()
     var favoriteArtist = FavoriteArtists()
     var currentArtist: CurrentArtist?
+    private var realm: Realm {
+        get {
+            do {
+                let realm = try Realm()
+                return realm
+            }
+            catch let error as NSError {
+                print(error.localizedDescription)
+            }
+            return self.realm
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,22 +52,24 @@ final class FavoriteArtist: UICollectionViewController {
     
     // Removing an artist from the database Realm
     private func deleteFavoriteArtist(indexPath: IndexPath) {
-        let realm = try! Realm()
         
-        try! realm.write {
-            let artist = self.artists[indexPath.row]
-            realm.delete(artist)
-            collectionView.reloadData()
+        do {
+            try? realm.write {
+                let artist = self.artists[indexPath.row]
+                realm.delete(artist)
+                collectionView.reloadData()
+            }
         }
     }
     
     func deleteArtistFromButton() {
-        let realm = try! Realm()
         
-        try! realm.write {
-            for artist in artists {
-                if currentArtist?.name == artist.name {
-                    realm.delete(artist)
+        do {
+            try? realm.write {
+                for artist in artists {
+                    if currentArtist?.name == artist.name {
+                        realm.delete(artist)
+                    }
                 }
             }
         }
@@ -63,14 +77,15 @@ final class FavoriteArtist: UICollectionViewController {
     
     // save to the database Realm
     func saveArtist() {
-        let realm = try! Realm()
         
-        try! realm.write {
-            let newArtist = FavoriteArtists()
-            newArtist.name = currentArtist?.name
-            newArtist.image = currentArtist?.imageURL
-            realm.add(newArtist)
-            self.favoriteArtist = newArtist
+        do {
+            try? realm.write {
+                let newArtist = FavoriteArtists()
+                newArtist.name = currentArtist?.name
+                newArtist.image = currentArtist?.imageURL
+                realm.add(newArtist)
+                self.favoriteArtist = newArtist
+            }
         }
     }
     

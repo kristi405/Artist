@@ -92,8 +92,8 @@
 		017B6B0F25E15DEE0089B89D /* SearchViewController */ = {
 			isa = PBXGroup;
 			children = (
-				01F029B2259F85B8004AB24F /* SearchViewController.swift */,
-				010F96AF260108B60052C48E /* AutoserchTimer.swift */,
+				01D84B252610E104009053D4 /* Controllers */,
+				01D84B262610E115009053D4 /* AutosearchTimer */,
 			);
 			path = SearchViewController;
 			sourceTree = "<group>";
@@ -101,8 +101,8 @@
 		017B6B1025E15E000089B89D /* FavoriteArtist */ = {
 			isa = PBXGroup;
 			children = (
-				0142FE9625592EE70041672E /* FavoriteArtistViewController.swift */,
-				0142FE982559370A0041672E /* FavoriteCell.swift */,
+				01D84B272610E12D009053D4 /* Controllers */,
+				01D84B2C2610E15F009053D4 /* Cells */,
 			);
 			path = FavoriteArtist;
 			sourceTree = "<group>";
@@ -110,8 +110,8 @@
 		017B6B1125E15E290089B89D /* EventViewController */ = {
 			isa = PBXGroup;
 			children = (
-				012DF4E0255EE78F005D6D15 /* EventsViewController.swift */,
-				010D53EF2565486700110595 /* EventsCell.swift */,
+				01D84B282610E134009053D4 /* Controllers */,
+				01D84B2B2610E14F009053D4 /* Cells */,
 			);
 			path = EventViewController;
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 		017B6B1225E15E5B0089B89D /* WebViewController */ = {
 			isa = PBXGroup;
 			children = (
-				011A2086256BA6F8008E456B /* WebViewController.swift */,
+				01D84B292610E13C009053D4 /* Controllers */,
 			);
 			path = WebViewController;
 			sourceTree = "<group>";
@@ -127,7 +127,7 @@
 		017B6B1325E15E720089B89D /* MapViewController */ = {
 			isa = PBXGroup;
 			children = (
-				01E7BEA2257E19E80058A9CE /* MapEventsViewController.swift */,
+				01D84B2A2610E143009053D4 /* Controllers */,
 			);
 			path = MapViewController;
 			sourceTree = "<group>";
@@ -140,13 +140,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		017B6B1525E15ECB0089B89D /* SupportFiles */ = {
+		017B6B1525E15ECB0089B89D /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
 				01978DE925558DB700CA17FD /* LaunchScreen.storyboard */,
 				01978DEC25558DB700CA17FD /* Info.plist */,
 			);
-			path = SupportFiles;
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		017B6B1625E15F1F0089B89D /* View */ = {
@@ -178,14 +178,11 @@
 		01978DDD25558DB500CA17FD /* Artists */ = {
 			isa = PBXGroup;
 			children = (
-				01978DFD255599CD00CA17FD /* Services */,
-				01978DFB2555984300CA17FD /* Model */,
-				017B6B1625E15F1F0089B89D /* View */,
-				01978DFC2555985100CA17FD /* ViewController */,
-				0142FE9C255976960041672E /* Extension */,
-				013D031A255A8C66005AE518 /* Protocols */,
+				01D84B2D2610E185009053D4 /* ApplicationLayer */,
+				01D84B2E2610E1B5009053D4 /* BusinessLayer */,
+				01D84B2F2610E1FE009053D4 /* PresentationLayer */,
 				017B6B1425E15EA70089B89D /* Resources */,
-				017B6B1525E15ECB0089B89D /* SupportFiles */,
+				017B6B1525E15ECB0089B89D /* SupportingFiles */,
 			);
 			path = Artists;
 			sourceTree = "<group>";
@@ -216,11 +213,102 @@
 		01978DFD255599CD00CA17FD /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				01978DDE25558DB500CA17FD /* AppDelegate.swift */,
 				01978DFE255599FD00CA17FD /* NetworkServices.swift */,
 				0112857D256D6E2A00C9557A /* LocationManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		01D84B252610E104009053D4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				01F029B2259F85B8004AB24F /* SearchViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		01D84B262610E115009053D4 /* AutosearchTimer */ = {
+			isa = PBXGroup;
+			children = (
+				010F96AF260108B60052C48E /* AutoserchTimer.swift */,
+			);
+			path = AutosearchTimer;
+			sourceTree = "<group>";
+		};
+		01D84B272610E12D009053D4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0142FE9625592EE70041672E /* FavoriteArtistViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		01D84B282610E134009053D4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				012DF4E0255EE78F005D6D15 /* EventsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		01D84B292610E13C009053D4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				011A2086256BA6F8008E456B /* WebViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		01D84B2A2610E143009053D4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				01E7BEA2257E19E80058A9CE /* MapEventsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		01D84B2B2610E14F009053D4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				010D53EF2565486700110595 /* EventsCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		01D84B2C2610E15F009053D4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0142FE982559370A0041672E /* FavoriteCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		01D84B2D2610E185009053D4 /* ApplicationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				01978DDE25558DB500CA17FD /* AppDelegate.swift */,
+			);
+			path = ApplicationLayer;
+			sourceTree = "<group>";
+		};
+		01D84B2E2610E1B5009053D4 /* BusinessLayer */ = {
+			isa = PBXGroup;
+			children = (
+				01978DFB2555984300CA17FD /* Model */,
+				01978DFD255599CD00CA17FD /* Services */,
+			);
+			path = BusinessLayer;
+			sourceTree = "<group>";
+		};
+		01D84B2F2610E1FE009053D4 /* PresentationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				01978DFC2555985100CA17FD /* ViewController */,
+				017B6B1625E15F1F0089B89D /* View */,
+				0142FE9C255976960041672E /* Extension */,
+				013D031A255A8C66005AE518 /* Protocols */,
+			);
+			path = PresentationLayer;
 			sourceTree = "<group>";
 		};
 		A89835019FD4CC0A8DA50DF0 /* Pods */ = {

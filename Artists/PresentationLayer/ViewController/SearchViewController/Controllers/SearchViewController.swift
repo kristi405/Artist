@@ -18,7 +18,6 @@ final class SearchViewController: UIViewController {
     private lazy var timer = AutosearchTimer {
         self.performSearch()
     }
-    private let searchTextCount = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +32,11 @@ final class SearchViewController: UIViewController {
     @IBAction private func buttonPressed(_ sender: UIButton) {
         if !isContains() {
             favoriteVC.saveArtist()
-            sender.setRedImage()
+            sender.setImage(image: Const.redHeart, leadingAnchor: Const.buttonImageLeadingAnchor, topAnchor: Const.buttonImageTopAnchor, heightAnchor: Const.buttonImageHaight)
             sender.setTitle("Удалить из фаворитов", for: .normal)
         } else {
             favoriteVC.deleteArtistFromButton()
-            sender.setImage()
+            sender.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, topAnchor: Const.topAnchor, heightAnchor: Const.heightAnchor)
             sender.setTitle("Добавить в фавориты", for: .normal)
         }
     }
@@ -116,7 +115,7 @@ extension SearchViewController: UISearchBarDelegate {
     private func performSearch() {
         timer.cancel()
         guard let text = self.text else {return}
-        if text.count <= searchTextCount {
+        if text.count <= Const.searchTextCount {
             label.isHidden = true
             image.isHidden = true
             button.isHidden = true
@@ -134,14 +133,28 @@ extension SearchViewController: UISearchBarDelegate {
                 DispatchQueue.main.async {
                     if !self.isContains() {
                         self.button.setTitle("Добавить в фавориты", for: .normal)
-                        self.button.setImage()
+                        self.button.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, topAnchor: Const.topAnchor, heightAnchor: Const.heightAnchor)
                     } else {
                         self.button.setTitle("Удалить из фаворитов", for: .normal)
-                        self.button.setRedImage()
+                        self.button.setImage(image: Const.redHeart, leadingAnchor: Const.buttonImageLeadingAnchor, topAnchor: Const.buttonImageTopAnchor, heightAnchor: Const.buttonImageHaight)
                     }
                 }
             })
         }
+    }
+}
+
+extension SearchViewController {
+    private enum Const {
+        static let searchTextCount = 2
+        static let buttonImageLeadingAnchor: CGFloat = 9.6
+        static let buttonImageTopAnchor: CGFloat = 5.1
+        static let buttonImageHaight: CGFloat = 29.6
+        static let leadingAnchor: CGFloat = 9.8
+        static let topAnchor: CGFloat = 4.9
+        static let heightAnchor: CGFloat = 28.5
+        static let whiteHeart: UIImage = #imageLiteral(resourceName: "whHeart")
+        static let redHeart: UIImage = #imageLiteral(resourceName: "redHeart")
     }
 }
 
