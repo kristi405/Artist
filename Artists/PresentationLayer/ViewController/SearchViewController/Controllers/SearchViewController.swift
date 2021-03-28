@@ -2,13 +2,15 @@ import UIKit
 import RealmSwift
 
 final class SearchViewController: UIViewController {
+    // MARK: IBOutlets
     
     @IBOutlet weak private var image: UIImageView!
     @IBOutlet weak private var label: UILabel!
     @IBOutlet weak private var button: UIButton!
     @IBOutlet weak private var webButton: UIButton!
     
-    // MARK:  Properties
+    // MARK: Private Properties
+    
     private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
     private var currentArtistFavorite: CurrentArtist?
@@ -19,6 +21,8 @@ final class SearchViewController: UIViewController {
         self.performSearch()
     }
     
+    // MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,7 +31,8 @@ final class SearchViewController: UIViewController {
         setupSearchController()
     }
     
-    // MARK:  Business logic
+    // MARK: Actions with buttons
+    
     // Add to favorites
     @IBAction private func buttonPressed(_ sender: UIButton) {
         if !isContains() {
@@ -47,16 +52,7 @@ final class SearchViewController: UIViewController {
         present(webVC, animated: true, completion: nil)
     }
     
-    
-    // Check if the artist has been added to favorites
-    private func isContains() -> Bool {
-        for artist in artists {
-            if currentArtistFavorite?.name == artist.name {
-                return true
-            }
-        }
-        return false
-    }
+    // MARK: BusinessLogic
     
     // Send a request to find an artist
     private func searchArtist() {
@@ -64,12 +60,6 @@ final class SearchViewController: UIViewController {
             self.favoriteVC.currentArtist = currentArtist
             self.configureView(artist: currentArtist)
         }
-    }
-    
-    //     Customizing the button
-    private func customBatton() {
-        button.searchVCBattons(button: button)
-        webButton.searchVCBattons(button: webButton)
     }
     
     // Displaying artist data on the screen
@@ -88,7 +78,24 @@ final class SearchViewController: UIViewController {
         }
     }
     
-    // MARK:  Business logic
+    // Check if the artist has been added to favorites
+    private func isContains() -> Bool {
+        for artist in artists {
+            if currentArtistFavorite?.name == artist.name {
+                return true
+            }
+        }
+        return false
+    }
+    
+    // Customizing the button
+    private func customBatton() {
+        button.searchVCBattons(button: button)
+        webButton.searchVCBattons(button: webButton)
+    }
+    
+    // MARK: Setup UISearchController
+    
     // Install SearchController
     private func setupSearchController() {
         let searchController = UISearchController(searchResultsController: nil)
@@ -103,7 +110,7 @@ final class SearchViewController: UIViewController {
 }
 
 
-// MARK:  Extension UISearchBarDelegate
+// MARK: - Extension UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Checking the number of entered characters in the search string
@@ -112,6 +119,7 @@ extension SearchViewController: UISearchBarDelegate {
         self.text = searchText
     }
     
+    // logic of request artist and view of search screan
     private func performSearch() {
         timer.cancel()
         guard let text = self.text else {return}
@@ -144,6 +152,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - Constants
 extension SearchViewController {
     private enum Const {
         static let searchTextCount = 2

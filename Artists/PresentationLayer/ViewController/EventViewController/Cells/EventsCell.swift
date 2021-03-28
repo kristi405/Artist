@@ -1,8 +1,8 @@
 import UIKit
 
 final class EventsCell: UITableViewCell {
+    // MARK: Private Properties
     
-    // MARK:  Properties
     private var eventVC: EventsViewController?
     private var events: [Event]?
     private var dataLabel = UILabel()
@@ -13,8 +13,9 @@ final class EventsCell: UITableViewCell {
     private var goOverButton = UIButton()
     private var buttonStackView = UIStackView()
     
+    // MARK:  Public Methods
+    
     func configureCell(cell: EventsCell, indexPath: IndexPath, events: [Event], eventVC: EventsViewController) {
-        
         self.eventVC = eventVC
         self.events = events
         let event = events[indexPath.row]
@@ -66,6 +67,8 @@ final class EventsCell: UITableViewCell {
         mapButton.addGestureRecognizer(tapGestureMap)
     }
     
+    // MARK:  IBActions
+    
     @IBAction private func showWeb(_ sender: UITapGestureRecognizer) {
         if let sender = sender as? CustomTapGesture {
             guard let indexPath = sender.indexPath else {return}
@@ -89,7 +92,9 @@ final class EventsCell: UITableViewCell {
     }
 }
 
+// MARK:  Extansions
 extension EventsCell {
+    // Constants
     private enum Const {
         static let stackViewSpacing: CGFloat = 20
         static let buttonStackViewSpacing: CGFloat = 10

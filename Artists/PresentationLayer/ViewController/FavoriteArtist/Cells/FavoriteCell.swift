@@ -2,11 +2,16 @@ import UIKit
 import RealmSwift
 
 final class FavoriteCell: UICollectionViewCell {
+    // MARK: IBOutlets
     
     @IBOutlet weak var imageFavoriteArtist: UIImageView!
     @IBOutlet weak var labelFavoriteArtist: UILabel!
     
+    // MARK: Private Properties
+    
     private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
+    
+    // MARK:  Public Methods
     
     func configureCell(cell: FavoriteCell, indexPath: IndexPath) {
         let artist = artists[indexPath.row]

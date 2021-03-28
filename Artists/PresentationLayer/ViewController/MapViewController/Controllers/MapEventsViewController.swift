@@ -3,6 +3,7 @@ import MapKit
 import CoreLocation
 
 final class MapEvents: UIViewController {
+    // MARK: Constants
     
     private enum Const {
         static let horizontalSpasingCancelButton: CGFloat = 320
@@ -10,15 +11,19 @@ final class MapEvents: UIViewController {
         static let widthCancelButton: CGFloat = 25
     }
     
-    // MARK:  Properties
+    // MARK: Private Properties
     private var locationManager: CLLocationManager?
     private var currentLocation: CLLocation?
     private var mapView: MKMapView?
     private let mapManager = LocationManager()
     private let annotationIdentifier = "annotationIdentifier"
+    
+    // MARK: Public Properties
+    
     var event: Event!
     
-    // MARK:  Life cycle
+    // MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +47,14 @@ final class MapEvents: UIViewController {
         setupCancelButton()
     }
     
+    // MARK: IBActions
+    
+    @IBAction private func cancelTapped() {
+        self.dismiss(animated: true)
+    }
+    
+    // MARK:  Private Methods
+    
     // Draw cancelButton
     private func setupCancelButton() {
         let cancelButton = UIButton(frame: CGRect(x: Const.horizontalSpasingCancelButton,
@@ -53,16 +66,13 @@ final class MapEvents: UIViewController {
         cancelButton.isHidden = false
         mapView?.addSubview(cancelButton)
     }
-    
-    @IBAction private func cancelTapped() {
-        self.dismiss(animated: true)
-    }
 }
 
 
-// MARK: - Extensions
+// MARK: - Extensions CLLocationManager Delegate and MKMapView Delegate
 extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
     
+    // Show User location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         defer { currentLocation = locations.last }
         
@@ -81,7 +91,6 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
             annotationView?.canShowCallout = true
         }
-        
         return annotationView
     }
     

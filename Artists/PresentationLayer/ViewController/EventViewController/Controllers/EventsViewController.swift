@@ -2,6 +2,7 @@ import UIKit
 import RealmSwift
 
 final class EventsViewController: UITableViewController {
+    // MARK: Constants
     
     private enum Const {
         static let borderWidth: CGFloat = 0.3
@@ -9,12 +10,15 @@ final class EventsViewController: UITableViewController {
         static let heightForRow: CGFloat = 140
     }
     
-    // MARK:  Properties
+    // MARK: Private Properties
+    
     private var networkServices = NetworkServices()
     private var events = [Event]()
     private var eventURL: String?
     private var eventName: String?
     private var eventCell = EventsCell()
+    
+    // MARK:  Initializers
     
     init(currentEvent: [Event]) {
         self.events = currentEvent
@@ -26,13 +30,25 @@ final class EventsViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(EventsCell.self, forCellReuseIdentifier: "Cell")
     }
+    
+    // MARK:  Private Methods
+    
+    private func castomCell(cell: EventsCell) {
+        eventCell.layer.borderWidth = Const.borderWidth
+        eventCell.layer.borderColor = UIColor.gray.cgColor
+        eventCell.layer.shadowColor = UIColor.gray.cgColor
+        eventCell.layer.shadowRadius = Const.shadowRadius
+    }
 }
 
-// MARK: - Extansions, Table view data source
+
+// MARK: - Extansion Table view data source
 extension EventsViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,13 +62,6 @@ extension EventsViewController {
             eventCell.configureCell(cell: eventCell, indexPath: indexPath, events: self.events, eventVC: self)
         }
         return cell
-    }
-    
-    private func castomCell(cell: EventsCell) {
-        eventCell.layer.borderWidth = Const.borderWidth
-        eventCell.layer.borderColor = UIColor.gray.cgColor
-        eventCell.layer.shadowColor = UIColor.gray.cgColor
-        eventCell.layer.shadowRadius = Const.shadowRadius
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

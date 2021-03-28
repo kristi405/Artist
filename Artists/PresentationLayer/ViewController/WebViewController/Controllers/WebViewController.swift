@@ -2,6 +2,7 @@ import UIKit
 import WebKit
 
 final class WebViewController: UIViewController {
+    // MARK: Constants
     
     private enum Const {
         static let topProgressView: CGFloat = 2
@@ -11,12 +12,17 @@ final class WebViewController: UIViewController {
         static let alphaProgressView: CGFloat = 1
     }
     
-    // MARK:  Properties
+    // MARK: Private Properties
+    
     private var progressView: UIProgressView?
     private var webView: WKWebView?
+    
+    // MARK: Public Properties
+    
     var eventURL = ""
     
-    // MARK:  Life cycle
+    // MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let progressView = UIProgressView(frame: CGRect(x: .zero,
@@ -36,20 +42,13 @@ final class WebViewController: UIViewController {
         fetchWebView()
     }
     
-    // MARK:  Business logic
+    // MARK:  Override Methods
+    
     // Define webView
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         view = webView
-    }
-    
-    // Send a request
-    private func fetchWebView() {
-        guard let url = URL(string: eventURL) else {return}
-        let request = URLRequest(url: url)
-        
-        webView?.load(request)
     }
     
     // Installing the observer for loading webView
@@ -61,6 +60,16 @@ final class WebViewController: UIViewController {
         if keyPath == "estimatedProgress" {
             progressView?.progress = Float(webView?.estimatedProgress ?? .zero)
         }
+    }
+    
+    // MARK:  Private Methods
+    
+    // Send a request
+    private func fetchWebView() {
+        guard let url = URL(string: eventURL) else {return}
+        let request = URLRequest(url: url)
+        
+        webView?.load(request)
     }
     
     // Display progressView

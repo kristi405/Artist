@@ -1,6 +1,7 @@
 import UIKit
 
 extension UIButton {
+    // MARK: Constants
     
     private enum Const {
         static let goToButtonLeadingAnchor: CGFloat = 65
@@ -10,6 +11,7 @@ extension UIButton {
         static let goTo: UIImage = #imageLiteral(resourceName: "goOver")
     }
     
+    // Set image on button on the search screan
     func setImage(image: UIImage, leadingAnchor: CGFloat, topAnchor: CGFloat, heightAnchor: CGFloat) {
         let buttonImage = UIImageView()
         buttonImage.image = image
@@ -23,6 +25,7 @@ extension UIButton {
         ])
     }
     
+    // Set image on button on event screan
     func setGoOverImage() {
         let buttonImage = UIImageView()
         buttonImage.image = Const.goTo
@@ -35,6 +38,8 @@ extension UIButton {
             buttonImage.widthAnchor.constraint(equalToConstant: Const.goToButtonHaightAnchor)
         ])
     }
+    
+    // MARK: Custom button
     
     func customButton(button: UIButton) {
         button.setTitle("Перейти", for: .normal)

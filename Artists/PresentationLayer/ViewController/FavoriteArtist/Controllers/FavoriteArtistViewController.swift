@@ -2,13 +2,11 @@ import UIKit
 import RealmSwift
 
 final class FavoriteArtist: UICollectionViewController {
+    // MARK:  Private Properties
     
-    // MARK:  Properties
     private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
     private var favoriteCell = FavoriteCell()
-    var favoriteArtist = FavoriteArtists()
-    var currentArtist: CurrentArtist?
     private var realm: Realm {
         get {
             do {
@@ -22,12 +20,50 @@ final class FavoriteArtist: UICollectionViewController {
         }
     }
     
+    // MARK:  Public Properties
+    
+    var favoriteArtist = FavoriteArtists()
+    var currentArtist: CurrentArtist?
+    
+    // MARK: Lifecycle
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
     }
     
-    // MARK:  Business logic
+    // MARK: IBActions
+    
+    // Choosing an option for a favorite
+      @IBAction private func showAlert(_ sender: UITapGestureRecognizer) {
+          if let sender = sender as? CustomTapGesture {
+              guard let indexPath = sender.indexPath else {return}
+              let attributedString = NSAttributedString(string: artists[indexPath.row].name ?? "nil",
+                                                        attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black])
+              
+              let ac = UIAlertController(title: "", message: "Выберите действие", preferredStyle: .alert)
+              ac.setValue(attributedString, forKey: "attributedTitle")
+              
+              let showDetale = UIAlertAction(title: "Показать события", style: .default) { show in
+                  self.showAlertEvent(indexPath: indexPath)
+              }
+              
+              let deleteAction = UIAlertAction(title: "Удалить", style: .default) { delete in
+                  self.deleteFavoriteArtist(indexPath: indexPath)
+              }
+              
+              let cencelButton = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+              
+              ac.addAction(showDetale)
+              ac.addAction(deleteAction)
+              ac.addAction(cencelButton)
+              
+              self.present(ac, animated: true, completion: nil)
+          }
+      }
+    
+    // MARK:  Private Methods
+    
     // setting сonstraints for image and label
     private func setupConstraints(cell: FavoriteCell, image: UIImageView, label: UILabel) {
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -52,39 +88,11 @@ final class FavoriteArtist: UICollectionViewController {
     
     // Removing an artist from the database Realm
     private func deleteFavoriteArtist(indexPath: IndexPath) {
-        
         do {
             try? realm.write {
                 let artist = self.artists[indexPath.row]
                 realm.delete(artist)
                 collectionView.reloadData()
-            }
-        }
-    }
-    
-    func deleteArtistFromButton() {
-        
-        do {
-            try? realm.write {
-                for artist in artists {
-                    if currentArtist?.name == artist.name {
-                        realm.delete(artist)
-                    }
-                }
-            }
-        }
-    }
-    
-    // save to the database Realm
-    func saveArtist() {
-        
-        do {
-            try? realm.write {
-                let newArtist = FavoriteArtists()
-                newArtist.name = currentArtist?.name
-                newArtist.image = currentArtist?.imageURL
-                realm.add(newArtist)
-                self.favoriteArtist = newArtist
             }
         }
     }
@@ -135,40 +143,40 @@ final class FavoriteArtist: UICollectionViewController {
         self.present(navVC, animated: true, completion: nil)
     }
     
-    // Choosing an option for a favorite
-    @IBAction private func showAlert(_ sender: UITapGestureRecognizer) {
-        if let sender = sender as? CustomTapGesture {
-            guard let indexPath = sender.indexPath else {return}
-            let attributedString = NSAttributedString(string: artists[indexPath.row].name ?? "nil",
-                                                      attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black])
-            
-            let ac = UIAlertController(title: "", message: "Выберите действие", preferredStyle: .alert)
-            ac.setValue(attributedString, forKey: "attributedTitle")
-            
-            let showDetale = UIAlertAction(title: "Показать события", style: .default) { show in
-                self.showAlertEvent(indexPath: indexPath)
+    // MARK:  Public Methods
+    
+    // delete Artist from search screan
+    func deleteArtistFromButton() {
+        do {
+            try? realm.write {
+                for artist in artists {
+                    if currentArtist?.name == artist.name {
+                        realm.delete(artist)
+                    }
+                }
             }
-            
-            let deleteAction = UIAlertAction(title: "Удалить", style: .default) { delete in
-                self.deleteFavoriteArtist(indexPath: indexPath)
+        }
+    }
+    
+    // save to the database Realm
+    func saveArtist() {
+        do {
+            try? realm.write {
+                let newArtist = FavoriteArtists()
+                newArtist.name = currentArtist?.name
+                newArtist.image = currentArtist?.imageURL
+                realm.add(newArtist)
+                self.favoriteArtist = newArtist
             }
-            
-            let cencelButton = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
-            
-            ac.addAction(showDetale)
-            ac.addAction(deleteAction)
-            ac.addAction(cencelButton)
-            
-            self.present(ac, animated: true, completion: nil)
         }
     }
 }
 
 
-// MARK: - Extensions
+// MARK: - Extensions UICollectionView DataSource
 extension FavoriteArtist {
-    
     // MARK:  UICollectionViewDataSource
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         artists.count
     }
@@ -193,6 +201,7 @@ extension FavoriteArtist {
 //MARK: - UICollectionViewDelegateFlowLayout
 extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
     
+    // Constants
     private enum Const {
         static let spacingVertical: CGFloat = 30.0
         static let spacingHorizontal: CGFloat = 10
