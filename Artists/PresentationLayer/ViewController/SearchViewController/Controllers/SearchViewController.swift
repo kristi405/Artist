@@ -26,6 +26,11 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = Const.color
+        navigationController?.navigationBar.barTintColor = Const.color
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+        tabBarController?.tabBar.barTintColor = Const.tabBarColor
         customBatton()
         searchArtist()
         setupSearchController()
@@ -46,6 +51,7 @@ final class SearchViewController: UIViewController {
         }
     }
     
+    // Show web screan
     @IBAction private func showWeb(_ sender: UIButton) {
         let webVC = WebViewController()
         webVC.eventURL = currentArtistFavorite?.url ?? "Введите url"
@@ -104,6 +110,7 @@ final class SearchViewController: UIViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Нужно ввести имя"
+        searchController.searchBar.searchTextField.backgroundColor = .white
         
         searchController.searchBar.delegate = self
     }
@@ -114,7 +121,6 @@ final class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Checking the number of entered characters in the search string
-        searchBar.placeholder = "Нужно ввести имя"
         timer.activate()
         self.text = searchText
     }
@@ -159,11 +165,13 @@ extension SearchViewController {
         static let buttonImageLeadingAnchor: CGFloat = 9.6
         static let buttonImageTopAnchor: CGFloat = 5.1
         static let buttonImageHaight: CGFloat = 29.6
-        static let leadingAnchor: CGFloat = 9.8
+        static let leadingAnchor: CGFloat = 10.2
         static let topAnchor: CGFloat = 4.9
         static let heightAnchor: CGFloat = 28.5
         static let whiteHeart: UIImage = #imageLiteral(resourceName: "whHeart")
         static let redHeart: UIImage = #imageLiteral(resourceName: "redHeart")
+        static let color = #colorLiteral(red: 0.828555796, green: 0.9254013334, blue: 1, alpha: 1)
+        static let tabBarColor = #colorLiteral(red: 0.678006619, green: 0.8272836034, blue: 0.9998829961, alpha: 1)
     }
 }
 

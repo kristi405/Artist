@@ -32,6 +32,15 @@ final class FavoriteArtist: UICollectionViewController {
         collectionView.reloadData()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationController?.navigationBar.barTintColor = Const.color
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+        collectionView.backgroundColor = Const.color
+    }
+    
     // MARK: IBActions
     
     // Choosing an option for a favorite
@@ -211,6 +220,7 @@ extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
         static let spasingBetweenItems: CGFloat = 20
         static let one: CGFloat = 1
         static let five: CGFloat = 5
+        static let color = #colorLiteral(red: 0.828555796, green: 0.9254013334, blue: 1, alpha: 1)
     }
     
     // Setting cell sizes

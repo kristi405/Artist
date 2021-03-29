@@ -6,7 +6,7 @@ final class MapEvents: UIViewController {
     // MARK: Constants
     
     private enum Const {
-        static let horizontalSpasingCancelButton: CGFloat = 320
+        static let horizontalSpasingCancelButton: CGFloat = 340
         static let verticalSpasingCancelButton: CGFloat = 20
         static let widthCancelButton: CGFloat = 25
     }
@@ -61,6 +61,7 @@ final class MapEvents: UIViewController {
                                                   y: Const.verticalSpasingCancelButton,
                                                   width: Const.widthCancelButton,
                                                   height: Const.widthCancelButton))
+        
         cancelButton.setImage(#imageLiteral(resourceName: "cancel"), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
         cancelButton.isHidden = false

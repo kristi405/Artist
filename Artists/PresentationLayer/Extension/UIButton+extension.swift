@@ -6,9 +6,10 @@ extension UIButton {
     private enum Const {
         static let goToButtonLeadingAnchor: CGFloat = 65
         static let goToButtonHaightAnchor: CGFloat = 15
-        static let borderWidth: CGFloat = 0.5
+        static let borderWidth: CGFloat = 0.3
         static let shadowRadius: CGFloat = 10
         static let goTo: UIImage = #imageLiteral(resourceName: "goOver")
+        static let cornerRadius: CGFloat = 10
     }
     
     // Set image on button on the search screan
@@ -19,7 +20,7 @@ extension UIButton {
         self.addSubview(buttonImage)
         NSLayoutConstraint.activate([
             buttonImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingAnchor),
-            buttonImage.topAnchor.constraint(equalTo: self.topAnchor, constant: topAnchor),
+            buttonImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             buttonImage.heightAnchor.constraint(equalToConstant: heightAnchor),
             buttonImage.widthAnchor.constraint(equalToConstant: heightAnchor)
         ])
@@ -50,9 +51,11 @@ extension UIButton {
     
     func searchVCBattons(button: UIButton) {
         button.isHidden = true
+        button.backgroundColor = #colorLiteral(red: 0.678006619, green: 0.8272836034, blue: 0.9998829961, alpha: 1)
         button.layer.borderWidth = Const.borderWidth
         button.layer.shadowColor = UIColor.blue.cgColor
         button.layer.shadowRadius = Const.shadowRadius
         button.layer.borderColor = UIColor.blue.cgColor
+        button.layer.cornerRadius = Const.cornerRadius
     }
 }

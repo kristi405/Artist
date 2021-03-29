@@ -8,6 +8,7 @@ final class EventsViewController: UITableViewController {
         static let borderWidth: CGFloat = 0.3
         static let shadowRadius: CGFloat = 8
         static let heightForRow: CGFloat = 140
+        static let color = #colorLiteral(red: 0.828555796, green: 0.9254013334, blue: 1, alpha: 1)
     }
     
     // MARK: Private Properties
@@ -17,6 +18,7 @@ final class EventsViewController: UITableViewController {
     private var eventURL: String?
     private var eventName: String?
     private var eventCell = EventsCell()
+    private var cancelButton = UIButton()
     
     // MARK:  Initializers
     
@@ -34,10 +36,19 @@ final class EventsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.barTintColor = Const.color
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
         self.tableView.register(EventsCell.self, forCellReuseIdentifier: "Cell")
+        cancelButton.backgroundColor = .red
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButton))
     }
     
     // MARK:  Private Methods
+    
+    @IBAction private func backButton() {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     private func castomCell(cell: EventsCell) {
         eventCell.layer.borderWidth = Const.borderWidth
@@ -59,6 +70,7 @@ extension EventsViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         if let eventCell = cell as? EventsCell {
             castomCell(cell: eventCell)
+            eventCell.backgroundColor = Const.color
             eventCell.configureCell(cell: eventCell, indexPath: indexPath, events: self.events, eventVC: self)
         }
         return cell
