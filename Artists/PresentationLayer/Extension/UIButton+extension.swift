@@ -13,13 +13,14 @@ extension UIButton {
     }
     
     // Set image on button on the search screan
-    func setImage(image: UIImage, leadingAnchor: CGFloat, topAnchor: CGFloat, heightAnchor: CGFloat) {
+    func setImage(image: UIImage, leadingAnchor: CGFloat, heightAnchor: CGFloat) {
         let buttonImage = UIImageView()
         buttonImage.image = image
         buttonImage.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(buttonImage)
+        guard let titleLabel = self.titleLabel else {return}
         NSLayoutConstraint.activate([
-            buttonImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingAnchor),
+            buttonImage.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: leadingAnchor),
             buttonImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             buttonImage.heightAnchor.constraint(equalToConstant: heightAnchor),
             buttonImage.widthAnchor.constraint(equalToConstant: heightAnchor)

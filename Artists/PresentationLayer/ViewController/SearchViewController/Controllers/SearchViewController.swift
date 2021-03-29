@@ -31,6 +31,7 @@ final class SearchViewController: UIViewController {
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         tabBarController?.tabBar.barTintColor = Const.tabBarColor
+        image.contentMode = .scaleAspectFill
         customBatton()
         searchArtist()
         setupSearchController()
@@ -42,11 +43,11 @@ final class SearchViewController: UIViewController {
     @IBAction private func buttonPressed(_ sender: UIButton) {
         if !isContains() {
             favoriteVC.saveArtist()
-            sender.setImage(image: Const.redHeart, leadingAnchor: Const.buttonImageLeadingAnchor, topAnchor: Const.buttonImageTopAnchor, heightAnchor: Const.buttonImageHaight)
+            sender.setImage(image: Const.redHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
             sender.setTitle("Удалить из фаворитов", for: .normal)
         } else {
             favoriteVC.deleteArtistFromButton()
-            sender.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, topAnchor: Const.topAnchor, heightAnchor: Const.heightAnchor)
+            sender.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
             sender.setTitle("Добавить в фавориты", for: .normal)
         }
     }
@@ -136,21 +137,21 @@ extension SearchViewController: UISearchBarDelegate {
             webButton.isHidden = true
             self.currentArtistFavorite = nil
         } else {
-            label.isHidden = false
-            image.isHidden = false
-            button.isHidden = false
-            webButton.isHidden = false
             self.networkServices.fetchArtist(artist: text, complition: { currentArtist in
                 print(text)
                 self.onComplition?(currentArtist)
                 self.currentArtistFavorite = currentArtist
                 DispatchQueue.main.async {
+                    self.label.isHidden = false
+                    self.image.isHidden = false
+                    self.button.isHidden = false
+                    self.webButton.isHidden = false
                     if !self.isContains() {
                         self.button.setTitle("Добавить в фавориты", for: .normal)
-                        self.button.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, topAnchor: Const.topAnchor, heightAnchor: Const.heightAnchor)
+                        self.button.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
                     } else {
                         self.button.setTitle("Удалить из фаворитов", for: .normal)
-                        self.button.setImage(image: Const.redHeart, leadingAnchor: Const.buttonImageLeadingAnchor, topAnchor: Const.buttonImageTopAnchor, heightAnchor: Const.buttonImageHaight)
+                        self.button.setImage(image: Const.redHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
                     }
                 }
             })
@@ -162,14 +163,10 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController {
     private enum Const {
         static let searchTextCount = 2
-        static let buttonImageLeadingAnchor: CGFloat = 9.6
-        static let buttonImageTopAnchor: CGFloat = 5.1
-        static let buttonImageHaight: CGFloat = 29.6
-        static let leadingAnchor: CGFloat = 10.2
-        static let topAnchor: CGFloat = 4.9
-        static let heightAnchor: CGFloat = 28.5
+        static let leadingAnchor: CGFloat = -4
+        static let heightAnchor: CGFloat = 28
         static let whiteHeart: UIImage = #imageLiteral(resourceName: "whHeart")
-        static let redHeart: UIImage = #imageLiteral(resourceName: "redHeart")
+        static let redHeart: UIImage = #imageLiteral(resourceName: "redHeart1")
         static let color = #colorLiteral(red: 0.828555796, green: 0.9254013334, blue: 1, alpha: 1)
         static let tabBarColor = #colorLiteral(red: 0.678006619, green: 0.8272836034, blue: 0.9998829961, alpha: 1)
     }
