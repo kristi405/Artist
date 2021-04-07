@@ -27,6 +27,8 @@
 		01978DFF255599FD00CA17FD /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978DFE255599FD00CA17FD /* NetworkServices.swift */; };
 		01978E0125559A3F00CA17FD /* CurrentArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01978E0025559A3F00CA17FD /* CurrentArtist.swift */; };
 		01E7BEA3257E19E80058A9CE /* MapEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E7BEA2257E19E80058A9CE /* MapEventsViewController.swift */; };
+		01EE093D261E13FD001C330C /* ParsingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EE093C261E13FD001C330C /* ParsingService.swift */; };
+		01EE093F261E150B001C330C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EE093E261E150B001C330C /* GlobalConstants.swift */; };
 		01F029B3259F85B8004AB24F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F029B2259F85B8004AB24F /* SearchViewController.swift */; };
 		156961595B3B333F72A02D1E /* Pods_Artists.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF977FC7C093542802B9017 /* Pods_Artists.framework */; };
 /* End PBXBuildFile section */
@@ -54,6 +56,8 @@
 		01978DFE255599FD00CA17FD /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		01978E0025559A3F00CA17FD /* CurrentArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentArtist.swift; sourceTree = "<group>"; };
 		01E7BEA2257E19E80058A9CE /* MapEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEventsViewController.swift; sourceTree = "<group>"; };
+		01EE093C261E13FD001C330C /* ParsingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingService.swift; sourceTree = "<group>"; };
+		01EE093E261E150B001C330C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		01F029B2259F85B8004AB24F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		6CF977FC7C093542802B9017 /* Pods_Artists.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Artists.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91868C16F9BFCD5035C6A826 /* Pods-Artists.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artists.debug.xcconfig"; path = "Target Support Files/Pods-Artists/Pods-Artists.debug.xcconfig"; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 			isa = PBXGroup;
 			children = (
 				01978DFE255599FD00CA17FD /* NetworkServices.swift */,
+				01EE093E261E150B001C330C /* GlobalConstants.swift */,
+				01EE093C261E13FD001C330C /* ParsingService.swift */,
 				0112857D256D6E2A00C9557A /* LocationManager.swift */,
 			);
 			path = Services;
@@ -444,6 +450,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				010D53F02565486700110595 /* EventsCell.swift in Sources */,
+				01EE093D261E13FD001C330C /* ParsingService.swift in Sources */,
+				01EE093F261E150B001C330C /* GlobalConstants.swift in Sources */,
 				0196A7C425DED69700329FEB /* StackView+extancion.swift in Sources */,
 				01E7BEA3257E19E80058A9CE /* MapEventsViewController.swift in Sources */,
 				011A2087256BA6F8008E456B /* WebViewController.swift in Sources */,

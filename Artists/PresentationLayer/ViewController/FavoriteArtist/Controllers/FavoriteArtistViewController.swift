@@ -4,7 +4,7 @@ import RealmSwift
 final class FavoriteArtist: UICollectionViewController {
     // MARK:  Private Properties
     
-    private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
+    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
     private var favoriteCell = FavoriteCell()
     private var realm: Realm {
@@ -47,21 +47,22 @@ final class FavoriteArtist: UICollectionViewController {
       @IBAction private func showAlert(_ sender: UITapGestureRecognizer) {
           if let sender = sender as? CustomTapGesture {
               guard let indexPath = sender.indexPath else {return}
-              let attributedString = NSAttributedString(string: artists[indexPath.row].name ?? "nil",
+            guard let artists = artists else {return}
+            let attributedString = NSAttributedString(string: artists[indexPath.row].name ?? Const.all,
                                                         attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black])
               
-              let ac = UIAlertController(title: "", message: "Выберите действие", preferredStyle: .alert)
+            let ac = UIAlertController(title: "", message: Const.chooseAction, preferredStyle: .alert)
               ac.setValue(attributedString, forKey: "attributedTitle")
               
-              let showDetale = UIAlertAction(title: "Показать события", style: .default) { show in
+            let showDetale = UIAlertAction(title: Const.showEvent, style: .default) { show in
                   self.showAlertEvent(indexPath: indexPath)
               }
               
-              let deleteAction = UIAlertAction(title: "Удалить", style: .default) { delete in
+            let deleteAction = UIAlertAction(title: Const.delete, style: .default) { delete in
                   self.deleteFavoriteArtist(indexPath: indexPath)
               }
               
-              let cencelButton = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+            let cencelButton = UIAlertAction(title: Const.cancel, style: .cancel, handler: nil)
               
               ac.addAction(showDetale)
               ac.addAction(deleteAction)
@@ -77,6 +78,8 @@ final class FavoriteArtist: UICollectionViewController {
     private func setupConstraints(cell: FavoriteCell, image: UIImageView, label: UILabel) {
         image.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFill
+        label.textColor = .black
         
         NSLayoutConstraint.activate([
             image.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
@@ -99,7 +102,8 @@ final class FavoriteArtist: UICollectionViewController {
     private func deleteFavoriteArtist(indexPath: IndexPath) {
         do {
             try? realm.write {
-                let artist = self.artists[indexPath.row]
+                guard let artists = artists else {return}
+                let artist = artists[indexPath.row]
                 realm.delete(artist)
                 collectionView.reloadData()
             }
@@ -108,34 +112,35 @@ final class FavoriteArtist: UICollectionViewController {
     
     // Сhoose the time of the event: all, past, upcoming
     private func showAlertEvent(indexPath: IndexPath) {
-        let attributedString = NSAttributedString(string: artists[indexPath.row].name!,
+        guard let artists = artists else {return}
+        let attributedString = NSAttributedString(string: artists[indexPath.row].name ?? Const.all,
                                                   attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .largeTitle), NSAttributedString.Key.foregroundColor: UIColor.black])
-        let alertEvent = UIAlertController(title: self.artists[indexPath.row].name!, message: "Выберите время события", preferredStyle: .actionSheet)
+        let alertEvent = UIAlertController(title: artists[indexPath.row].name!, message: Const.nameAlert, preferredStyle: .actionSheet)
         alertEvent.setValue(attributedString, forKey: "attributedTitle")
         
-        let allEvent = UIAlertAction(title: "Все", style: .default) { _ in
-            self.networkServices.fetchEvent(artist: self.artists[indexPath.row].name!, date: "all") { currentEvent in
+        let allEvent = UIAlertAction(title: Const.all, style: .default) { _ in
+            self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.all) { currentEvent in
                 DispatchQueue.main.async {
                     self.presentEventVC(with: currentEvent)
                 }
             }
         }
-        let pastEvent = UIAlertAction(title: "Прошедшие", style: .default) { (past) in
-            self.networkServices.fetchEvent(artist: self.artists[indexPath.row].name!, date: "past") { currentEvent in
+        let pastEvent = UIAlertAction(title: Const.past, style: .default) { (past) in
+            self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.past) { currentEvent in
                 DispatchQueue.main.async {
                     self.presentEventVC(with: currentEvent)
                 }
             }
         }
-        let upcomingEvent = UIAlertAction(title: "Предстоящие", style: .default) { (upcoming) in
-            self.networkServices.fetchEvent(artist: self.artists[indexPath.row].name!, date: "upcoming") { currentEvent in
+        let upcomingEvent = UIAlertAction(title: Const.upcoming, style: .default) { (upcoming) in
+            self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.upcoming) { currentEvent in
                 DispatchQueue.main.async {
                     self.presentEventVC(with: currentEvent)
                 }
             }
         }
         
-        let cencelButton = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        let cencelButton = UIAlertAction(title: Const.cancel, style: .cancel, handler: nil)
         
         alertEvent.addAction(allEvent)
         alertEvent.addAction(pastEvent)
@@ -158,6 +163,7 @@ final class FavoriteArtist: UICollectionViewController {
     func deleteArtistFromButton() {
         do {
             try? realm.write {
+                guard let artists = artists else {return}
                 for artist in artists {
                     if currentArtist?.name == artist.name {
                         realm.delete(artist)
@@ -187,7 +193,8 @@ extension FavoriteArtist {
     // MARK:  UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        artists.count
+        guard let artists = artists else {return 1}
+        return artists.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -220,7 +227,15 @@ extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
         static let spasingBetweenItems: CGFloat = 20
         static let one: CGFloat = 1
         static let five: CGFloat = 5
-        static let color = #colorLiteral(red: 0.828555796, green: 0.9254013334, blue: 1, alpha: 1)
+        static let color = UIColor(named: "Color")
+        static let all: String = "all"
+        static let past: String = "past"
+        static let upcoming: String = "upcoming"
+        static let cancel: String = "Отмена"
+        static let nameAlert: String = "Выберите время события"
+        static let showEvent: String = "Показать событие"
+        static let delete: String = "Удалить"
+        static let chooseAction: String = "Выберите действие"
     }
     
     // Setting cell sizes

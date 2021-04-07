@@ -10,6 +10,7 @@ extension UIButton {
         static let shadowRadius: CGFloat = 10
         static let goTo: UIImage = #imageLiteral(resourceName: "goOver")
         static let cornerRadius: CGFloat = 10
+        static let goToText: String = "Перейти"
     }
     
     // Set image on button on the search screan
@@ -44,7 +45,7 @@ extension UIButton {
     // MARK: Custom button
     
     func customButton(button: UIButton) {
-        button.setTitle("Перейти", for: .normal)
+        button.setTitle(Const.goToText, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: Const.goToButtonHaightAnchor)
         button.titleLabel?.textAlignment = .natural
@@ -52,7 +53,7 @@ extension UIButton {
     
     func searchVCBattons(button: UIButton) {
         button.isHidden = true
-        button.backgroundColor = #colorLiteral(red: 0.678006619, green: 0.8272836034, blue: 0.9998829961, alpha: 1)
+        button.backgroundColor = UIColor(named: "BackgroundColor")
         button.layer.borderWidth = Const.borderWidth
         button.layer.shadowColor = UIColor.blue.cgColor
         button.layer.shadowRadius = Const.shadowRadius

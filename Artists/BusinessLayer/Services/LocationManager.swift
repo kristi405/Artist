@@ -2,11 +2,15 @@ import Foundation
 import MapKit
 
 final class LocationManager {
+    // MARK: Constants
+    
+    private enum Const {
+        static let regionInMeters: CLLocationDistance = 1000.00
+    }
     
     // MARK:  Properties
     private let locationManager = CLLocationManager()
     private var placeCoordinate: CLLocationCoordinate2D?
-    private let regionInMeters = 1000.00
     
     // set a marker on the map
     func setupEventMark(event: Event, mapView: MKMapView) {
@@ -41,8 +45,8 @@ final class LocationManager {
     func showUserLocation(mapView: MKMapView) {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion.init(center: location,
-                                                 latitudinalMeters: regionInMeters,
-                                                 longitudinalMeters: regionInMeters)
+                                                 latitudinalMeters: Const.regionInMeters,
+                                                 longitudinalMeters: Const.regionInMeters)
             mapView.setRegion(region, animated: true)
         }
     }

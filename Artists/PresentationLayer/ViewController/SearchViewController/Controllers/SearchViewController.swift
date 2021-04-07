@@ -11,7 +11,7 @@ final class SearchViewController: UIViewController {
     
     // MARK: Private Properties
     
-    private var artists = try! Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
+    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
     private var currentArtistFavorite: CurrentArtist?
     private var onComplition: ((CurrentArtist) -> Void)?
@@ -29,9 +29,8 @@ final class SearchViewController: UIViewController {
         view.backgroundColor = Const.color
         navigationController?.navigationBar.barTintColor = Const.color
         navigationController?.navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
         tabBarController?.tabBar.barTintColor = Const.tabBarColor
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFit
         customBatton()
         searchArtist()
         setupSearchController()
@@ -44,11 +43,11 @@ final class SearchViewController: UIViewController {
         if !isContains() {
             favoriteVC.saveArtist()
             sender.setImage(image: Const.redHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
-            sender.setTitle("Удалить из фаворитов", for: .normal)
+            sender.setTitle(Const.removeFromFavorits, for: .normal)
         } else {
             favoriteVC.deleteArtistFromButton()
             sender.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
-            sender.setTitle("Добавить в фавориты", for: .normal)
+            sender.setTitle(Const.addToFavorits, for: .normal)
         }
     }
     
@@ -76,7 +75,7 @@ final class SearchViewController: UIViewController {
         }
         //Get data from url
         DispatchQueue.global().async {
-            guard let dataUrl = URL(string: artist.imageURL!) else {return}
+            guard let dataUrl = URL(string: artist.imageURL ?? "url") else {return}
             guard let imageData = try? Data(contentsOf: dataUrl) else {return}
             
             DispatchQueue.main.async {
@@ -87,6 +86,7 @@ final class SearchViewController: UIViewController {
     
     // Check if the artist has been added to favorites
     private func isContains() -> Bool {
+        guard let artists = artists else {return true}
         for artist in artists {
             if currentArtistFavorite?.name == artist.name {
                 return true
@@ -110,7 +110,7 @@ final class SearchViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Нужно ввести имя"
+        searchController.searchBar.placeholder = Const.enterTheName
         searchController.searchBar.searchTextField.backgroundColor = .white
         
         searchController.searchBar.delegate = self
@@ -147,10 +147,10 @@ extension SearchViewController: UISearchBarDelegate {
                     self.button.isHidden = false
                     self.webButton.isHidden = false
                     if !self.isContains() {
-                        self.button.setTitle("Добавить в фавориты", for: .normal)
+                        self.button.setTitle(Const.addToFavorits, for: .normal)
                         self.button.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
                     } else {
-                        self.button.setTitle("Удалить из фаворитов", for: .normal)
+                        self.button.setTitle(Const.removeFromFavorits, for: .normal)
                         self.button.setImage(image: Const.redHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
                     }
                 }
@@ -163,12 +163,15 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController {
     private enum Const {
         static let searchTextCount = 2
+        static let addToFavorits = "Добавить в фавориты"
+        static let removeFromFavorits = "Удалить из фаворитов"
+        static let enterTheName = "Нужно ввести имя"
         static let leadingAnchor: CGFloat = -4
         static let heightAnchor: CGFloat = 28
         static let whiteHeart: UIImage = #imageLiteral(resourceName: "whHeart")
         static let redHeart: UIImage = #imageLiteral(resourceName: "redHeart1")
-        static let color = #colorLiteral(red: 0.828555796, green: 0.9254013334, blue: 1, alpha: 1)
-        static let tabBarColor = #colorLiteral(red: 0.678006619, green: 0.8272836034, blue: 0.9998829961, alpha: 1)
+        static let color = UIColor(named: "Color")
+        static let tabBarColor = UIColor(named: "BackgroundColor")
     }
 }
 
