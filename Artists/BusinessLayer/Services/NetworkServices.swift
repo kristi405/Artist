@@ -1,10 +1,10 @@
 import Foundation
 
 final class NetworkServices {
-    
     // MARK: Getting data on the artist
+    
     func fetchArtist(artist: String, complition: @escaping (CurrentArtist)->()) {
-        let urlString = GlobalConstants.returnArtistURL(artist: artist)
+        let urlString = returnArtistURL(artist: artist)
         guard let url = URL(string: urlString) else {return}
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data, response, error in
@@ -18,7 +18,7 @@ final class NetworkServices {
     
     // MARK: We get data on events
     func fetchEvent(artist: String, date: String, complition: @escaping ([Event])->()) {
-        let urlString = GlobalConstants.returnEventURL(artist: artist, date: date)
+        let urlString = returnEventURL(artist: artist, date: date)
         guard let url = URL(string: urlString) else {return}
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data, response, error in
@@ -28,5 +28,14 @@ final class NetworkServices {
             }
         }
         task.resume()
+    }
+    
+    // MARK: URL formation
+    func returnArtistURL(artist: String) -> String {
+        return GlobalConstants.baseURL + "/artists/\(artist)?app_id=\(GlobalConstants.apiKey)"
+    }
+    
+    func returnEventURL(artist: String, date: String) -> String {
+        return GlobalConstants.baseURL + "/artists/\(artist)/events?app_id=\(GlobalConstants.apiKey)&date=\(date)"
     }
 }

@@ -218,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				01978DFE255599FD00CA17FD /* NetworkServices.swift */,
-				01EE093E261E150B001C330C /* GlobalConstants.swift */,
 				01EE093C261E13FD001C330C /* ParsingService.swift */,
 				0112857D256D6E2A00C9557A /* LocationManager.swift */,
 			);
@@ -293,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				01978DDE25558DB500CA17FD /* AppDelegate.swift */,
+				01EE093E261E150B001C330C /* GlobalConstants.swift */,
 			);
 			path = ApplicationLayer;
 			sourceTree = "<group>";

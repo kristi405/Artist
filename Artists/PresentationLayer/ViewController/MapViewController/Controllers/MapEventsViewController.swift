@@ -6,7 +6,7 @@ final class MapEvents: UIViewController {
     // MARK: Constants
     
     private enum Const {
-        static let horizontalSpasingCancelButton: CGFloat = 340
+        static let horizontalSpasingCancelButton: CGFloat = 360
         static let verticalSpasingCancelButton: CGFloat = 20
         static let widthCancelButton: CGFloat = 25
     }
@@ -20,7 +20,7 @@ final class MapEvents: UIViewController {
     
     // MARK: Public Properties
     
-    var event: Event!
+    var event: Event?
     
     // MARK: Lifecycle
     
@@ -43,6 +43,7 @@ final class MapEvents: UIViewController {
             locationManager?.requestWhenInUseAuthorization()
             locationManager?.startUpdatingLocation()
         }
+        guard let event = event else {return}
         mapManager.setupEventMark(event: event, mapView: mapView)
         setupCancelButton()
     }
