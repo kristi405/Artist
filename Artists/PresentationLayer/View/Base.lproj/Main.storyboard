@@ -249,6 +249,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rHb-Ta-QDF">
+                                <rect key="frame" x="348" y="733" width="46" height="30"/>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.72563386169999999" blue="0.93459105460000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0lb-UF-kdg"/>
+                                    <constraint firstAttribute="width" constant="46" id="MWr-Kf-0t5"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                            </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1ln-77-kge">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                             </mapView>
@@ -258,11 +267,18 @@
                             <constraint firstItem="1ln-77-kge" firstAttribute="trailing" secondItem="Ddj-j2-2wC" secondAttribute="trailing" id="3Op-8l-6Bh"/>
                             <constraint firstItem="1ln-77-kge" firstAttribute="top" secondItem="Ddj-j2-2wC" secondAttribute="top" id="4tR-6b-WP4"/>
                             <constraint firstItem="1ln-77-kge" firstAttribute="leading" secondItem="Ddj-j2-2wC" secondAttribute="leading" id="HRt-nk-0kJ"/>
+                            <constraint firstItem="rHb-Ta-QDF" firstAttribute="top" secondItem="Ddj-j2-2wC" secondAttribute="top" constant="733" id="IhE-ql-Qnk"/>
                             <constraint firstItem="1ln-77-kge" firstAttribute="bottom" secondItem="Ddj-j2-2wC" secondAttribute="bottom" id="f67-sc-kcV"/>
+                            <constraint firstItem="rHb-Ta-QDF" firstAttribute="leading" secondItem="Ddj-j2-2wC" secondAttribute="leading" constant="348" id="nnO-Cd-G8T"/>
+                            <constraint firstItem="Ddj-j2-2wC" firstAttribute="bottom" secondItem="rHb-Ta-QDF" secondAttribute="bottom" constant="45" id="xyc-Xp-YzJ"/>
+                            <constraint firstItem="Ddj-j2-2wC" firstAttribute="trailing" secondItem="rHb-Ta-QDF" secondAttribute="trailing" constant="20" id="zQd-f1-shT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ddj-j2-2wC"/>
                     </view>
                     <navigationItem key="navigationItem" id="UcD-Mi-x7B"/>
+                    <connections>
+                        <outlet property="mapView" destination="1ln-77-kge" id="o7l-eO-KLb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zzG-8J-MjN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
