@@ -3,17 +3,12 @@ import MapKit
 import CoreLocation
 
 final class MapEvents: UIViewController {
-    // MARK: Constants
-    
-    private enum Const {
-        static let horizontalSpasingCancelButton: CGFloat = 360
-        static let verticalSpasingCancelButton: CGFloat = 20
-        static let widthCancelButton: CGFloat = 25
-    }
+   // MARK: IBOutlets
     
     @IBOutlet weak var mapView: MKMapView!
     
     // MARK: Private Properties
+    
     private var locationManager: CLLocationManager?
     private var currentLocation: CLLocation?
     private let mapManager = LocationManager()
@@ -41,7 +36,26 @@ final class MapEvents: UIViewController {
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         
-        let sourceLocation = CLLocationCoordinate2D(latitude: 53, longitude: 29)
+        // Check for Location Services
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager?.requestWhenInUseAuthorization()
+            locationManager?.startUpdatingLocation()
+        }
+        guard let event = event else {return}
+        mapManager.setupEventMark(event: event, mapView: mapView)
+        setupCancelButton()
+        setupRoteButton()
+    }
+    
+    // MARK: IBActions
+    
+    @IBAction private func cancelTapped() {
+        self.dismiss(animated: true)
+    }
+    
+    // Button of build a route on the map
+    @IBAction private func showRote() {
+        let sourceLocation = CLLocationCoordinate2D(latitude: Const.latitude, longitude: Const.longitude)
         
         if let latitudeString = event?.venue?.latitude {
             let latitudeDouble = Double(latitudeString)
@@ -57,21 +71,6 @@ final class MapEvents: UIViewController {
         guard let longitude = self.longitude else {return}
         let destinationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         showRoutOnMap(pickupCoordinate: sourceLocation, destinationCoordinate: destinationCoordinate)
-        
-        // Check for Location Services
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager?.requestWhenInUseAuthorization()
-            locationManager?.startUpdatingLocation()
-        }
-        guard let event = event else {return}
-        mapManager.setupEventMark(event: event, mapView: mapView)
-        setupCancelButton()
-    }
-    
-    // MARK: IBActions
-    
-    @IBAction private func cancelTapped() {
-        self.dismiss(animated: true)
     }
     
     // MARK:  Private Methods
@@ -80,16 +79,29 @@ final class MapEvents: UIViewController {
     private func setupCancelButton() {
         let cancelButton = UIButton(frame: CGRect(x: Const.horizontalSpasingCancelButton,
                                                   y: Const.verticalSpasingCancelButton,
-                                                  width: Const.widthCancelButton,
-                                                  height: Const.widthCancelButton))
+                                                  width: Const.widthButton,
+                                                  height: Const.widthButton))
         
-        cancelButton.setImage(#imageLiteral(resourceName: "cancel"), for: .normal)
+        cancelButton.setMapButtonsStyle(button: cancelButton, image: #imageLiteral(resourceName: "cancel"))
         cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
-        cancelButton.isHidden = false
         mapView?.addSubview(cancelButton)
     }
     
-    func showRoutOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
+    // Draw rote Button
+    private func setupRoteButton() {
+        let roteButton = UIButton(frame: CGRect(x: Const.horizontalSpasingCancelButton,
+                                                y: Const.verticalSpasingRouteButton,
+                                                  width: Const.widthButton,
+                                                  height: Const.widthButton))
+        
+       
+        roteButton.setMapButtonsStyle(button: roteButton, image: #imageLiteral(resourceName: "route"))
+        roteButton.addTarget(self, action: #selector(showRote), for: .touchUpInside)
+        mapView?.addSubview(roteButton)
+    }
+    
+    // Build route on the map
+    private func showRoutOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
         let sourcePlacemark = MKPlacemark(coordinate: pickupCoordinate)
         let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
         
@@ -119,9 +131,7 @@ final class MapEvents: UIViewController {
         
         diraction.calculate { (response, error) in
             guard let response = response else {
-                if let error = error {
-                    print(error.localizedDescription)
-                }
+                self.showErrorAlert()
                 return
             }
             let route = response.routes[0]
@@ -132,10 +142,19 @@ final class MapEvents: UIViewController {
             self.mapView?.setRegion(MKCoordinateRegion(rect), animated: true)
         }
     }
+    
+    // show alert if we can not build the route
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "Ошибка", message: "Невозможно построить маршрут", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 
 // MARK: - Extensions CLLocationManager Delegate and MKMapView Delegate
+
 extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
     
     // Show User location
@@ -160,13 +179,27 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
         return annotationView
     }
     
+    // Style of line on the map
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = .blue
-        renderer.lineWidth = 5.0
+        renderer.lineWidth = Const.lineWidth
         
         return renderer
     }
-    
+}
+
+// MARK: Constants
+
+extension MapEvents {
+    private enum Const {
+        static let horizontalSpasingCancelButton: CGFloat = 360
+        static let verticalSpasingCancelButton: CGFloat = 30
+        static let verticalSpasingRouteButton: CGFloat = 720
+        static let widthButton: CGFloat = 35
+        static let lineWidth: CGFloat = 5.0
+        static let latitude: Double = 53
+        static let longitude: Double = 29
+    }
 }
 

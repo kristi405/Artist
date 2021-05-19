@@ -11,7 +11,12 @@ extension UIButton {
         static let goTo: UIImage = #imageLiteral(resourceName: "goOver")
         static let cornerRadius: CGFloat = 10
         static let goToText: String = "Перейти"
+        static let shadowRadiusButton: CGFloat = 3
+        static let shadowOpasity: Float = 5
+        static let cornerRadiusButton: CGFloat = 15
     }
+    
+    // MARK: Set Buttons
     
     // Set image on button on the search screan
     func setImage(image: UIImage, leadingAnchor: CGFloat, heightAnchor: CGFloat) {
@@ -59,5 +64,15 @@ extension UIButton {
         button.layer.shadowRadius = Const.shadowRadius
         button.layer.borderColor = UIColor.blue.cgColor
         button.layer.cornerRadius = Const.cornerRadius
+    }
+    
+    func setMapButtonsStyle(button: UIButton, image: UIImage) {
+        button.backgroundColor = .white
+        button.layer.shadowRadius = Const.shadowRadiusButton
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.shadowOpacity = Const.shadowOpasity
+        button.layer.cornerRadius = Const.cornerRadiusButton
+        button.setImage(image, for: .normal)
+        button.isHidden = false
     }
 }
