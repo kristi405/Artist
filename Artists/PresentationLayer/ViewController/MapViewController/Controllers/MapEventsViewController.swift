@@ -193,9 +193,9 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
 
 extension MapEvents {
     private enum Const {
-        static let horizontalSpasingCancelButton: CGFloat = 360
+        static let horizontalSpasingCancelButton: CGFloat = 300
         static let verticalSpasingCancelButton: CGFloat = 30
-        static let verticalSpasingRouteButton: CGFloat = 720
+        static let verticalSpasingRouteButton: CGFloat = 520
         static let widthButton: CGFloat = 35
         static let lineWidth: CGFloat = 5.0
         static let latitude: Double = 53
