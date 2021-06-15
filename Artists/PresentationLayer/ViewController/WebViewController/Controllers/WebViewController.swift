@@ -5,17 +5,14 @@ final class WebViewController: UIViewController {
     // MARK: Constants
     
     private enum Const {
-        static let topProgressView: CGFloat = 2
-        static let widthProgressView: CGFloat = 414
-        static let heightProgressView: CGFloat = 15
         static let withDuration: CGFloat = 0.5
         static let alphaProgressView: CGFloat = 1
     }
     
-    // MARK: Private Properties
+    // MARK: IBOutlets
     
-    private var progressView: UIProgressView?
-    private var webView: WKWebView?
+    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var webView: WKWebView!
     
     // MARK: Public Properties
     
@@ -25,31 +22,19 @@ final class WebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let progressView = UIProgressView(frame: CGRect(x: .zero,
-                                                        y: Const.topProgressView,
-                                                        width: Const.widthProgressView,
-                                                        height: Const.heightProgressView))
-        progressView.backgroundColor = .white
-        webView?.addSubview(progressView)
-        self.progressView = progressView
         
-        webView?.allowsBackForwardNavigationGestures = true
-        webView?.addObserver(self,
+        fetchWebView()
+        webView.addObserver(self,
                              forKeyPath: #keyPath(WKWebView.estimatedProgress),
                              options: .new,
                              context: nil)
-        webView?.navigationDelegate = self
-        fetchWebView()
+        webView.navigationDelegate = self
+        UIView.animate(withDuration: 3) {
+            self.progressView.setProgress(1.0, animated: true)
+        }
     }
     
     // MARK:  Override Methods
-    
-    // Define webView
-    override func loadView() {
-        let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        view = webView
-    }
     
     // Installing the observer for loading webView
     override func observeValue(forKeyPath keyPath: String?,
@@ -69,7 +54,7 @@ final class WebViewController: UIViewController {
         guard let url = URL(string: eventURL) else {return}
         let request = URLRequest(url: url)
         
-        webView?.load(request)
+        webView.load(request)
     }
     
     // Display progressView

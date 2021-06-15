@@ -51,11 +51,13 @@ final class SearchViewController: UIViewController {
         }
     }
     
-    // Show web screan
-    @IBAction private func showWeb(_ sender: UIButton) {
-        let webVC = WebViewController()
-        webVC.eventURL = currentArtistFavorite?.url ?? "Введите url"
-        present(webVC, animated: true, completion: nil)
+    // MARK: Navigations segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showWebView" {
+            let webVC = segue.destination as! WebViewController
+            webVC.eventURL = currentArtistFavorite?.url ?? "Введите url"
+        }
     }
     
     // MARK: BusinessLogic
@@ -138,7 +140,6 @@ extension SearchViewController: UISearchBarDelegate {
             self.currentArtistFavorite = nil
         } else {
             self.networkServices.fetchArtist(artist: text, complition: { currentArtist in
-                print(text)
                 self.onComplition?(currentArtist)
                 self.currentArtistFavorite = currentArtist
                 DispatchQueue.main.async {

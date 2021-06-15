@@ -19,6 +19,9 @@ final class FavoriteArtist: UICollectionViewController {
             return self.realm
         }
     }
+    private var mapVC = MapEvents()
+    private var events: [Event]?
+    private var eventVC = EventVC()
     
     // MARK:  Public Properties
     
@@ -118,24 +121,31 @@ final class FavoriteArtist: UICollectionViewController {
         let alertEvent = UIAlertController(title: artists[indexPath.row].name!, message: Const.nameAlert, preferredStyle: .actionSheet)
         alertEvent.setValue(attributedString, forKey: "attributedTitle")
         
-        let allEvent = UIAlertAction(title: Const.all, style: .default) { _ in
+        let allEvent = UIAlertAction(title: Const.allEvents, style: .default) { _ in
             self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.all) { currentEvent in
+                self.events = nil
+                self.events = currentEvent
                 DispatchQueue.main.async {
-                    self.presentEventVC(with: currentEvent)
+                    self.eventVC.imageURL = artists[indexPath.row].image
+                    self.performSegue(withIdentifier: "showEvent", sender: self)
                 }
             }
         }
-        let pastEvent = UIAlertAction(title: Const.past, style: .default) { (past) in
+        let pastEvent = UIAlertAction(title: Const.pastEvents, style: .default) { (past) in
             self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.past) { currentEvent in
+                self.events = nil
+                self.events = currentEvent
                 DispatchQueue.main.async {
-                    self.presentEventVC(with: currentEvent)
+                    self.performSegue(withIdentifier: "showEvent", sender: self)
                 }
             }
         }
-        let upcomingEvent = UIAlertAction(title: Const.upcoming, style: .default) { (upcoming) in
+        let upcomingEvent = UIAlertAction(title: Const.upcomingEvents, style: .default) { (upcoming) in
             self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.upcoming) { currentEvent in
+                self.events = nil
+                self.events = currentEvent
                 DispatchQueue.main.async {
-                    self.presentEventVC(with: currentEvent)
+                    self.performSegue(withIdentifier: "showEvent", sender: self)
                 }
             }
         }
@@ -151,10 +161,12 @@ final class FavoriteArtist: UICollectionViewController {
         present(alertEvent, animated: false, completion: nil)
     }
     
-    private func presentEventVC(with currentEvent: [Event]) {
-        let eventVC = EventsViewController(currentEvent: currentEvent)
-        let navVC = UINavigationController(rootViewController: eventVC)
-        self.present(navVC, animated: true, completion: nil)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showEvent" {
+            let eventVC = segue.destination as! EventVC
+            guard let events = self.events else {return}
+            eventVC.events = events
+        }
     }
     
     // MARK:  Public Methods
@@ -228,6 +240,9 @@ extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
         static let one: CGFloat = 1
         static let five: CGFloat = 5
         static let color = UIColor(named: "Color")
+        static let allEvents: String = "Все"
+        static let pastEvents: String = "Прошедшие"
+        static let upcomingEvents: String = "Предстоящие"
         static let all: String = "all"
         static let past: String = "past"
         static let upcoming: String = "upcoming"

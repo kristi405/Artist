@@ -6,6 +6,7 @@ final class MapEvents: UIViewController {
    // MARK: IBOutlets
     
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var routeButton: UIButton!
     
     // MARK: Private Properties
     
@@ -13,23 +14,21 @@ final class MapEvents: UIViewController {
     private var currentLocation: CLLocation?
     private let mapManager = LocationManager()
     private let annotationIdentifier = "annotationIdentifier"
-    var latitude: Double?
-    var longitude: Double?
+    private var latitude: Double?
+    private var longitude: Double?
     
     // MARK: Public Properties
     
     var event: Event?
+    var artistImage: String?
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let map = MKMapView(frame: CGRect(x: .zero, y: .zero, width: self.view.frame.width, height: self.view.frame.height))
-        self.mapView = map
-        guard let mapView = self.mapView else {return}
-        view.addSubview(mapView)
-        
+        tabBarController?.tabBar.barTintColor = Const.color
+        routeButton.layer.cornerRadius = 7
         mapView.delegate = self
         mapView.showsUserLocation = true
         locationManager = CLLocationManager()
@@ -43,62 +42,31 @@ final class MapEvents: UIViewController {
         }
         guard let event = event else {return}
         mapManager.setupEventMark(event: event, mapView: mapView)
-        setupCancelButton()
-        setupRoteButton()
     }
     
-    // MARK: IBActions
-    
-    @IBAction private func cancelTapped() {
-        self.dismiss(animated: true)
-    }
+    // MARK: Actions
     
     // Button of build a route on the map
     @IBAction private func showRote() {
         let sourceLocation = CLLocationCoordinate2D(latitude: Const.latitude, longitude: Const.longitude)
-        
+
         if let latitudeString = event?.venue?.latitude {
             let latitudeDouble = Double(latitudeString)
             self.latitude = latitudeDouble
         }
-        
+
         if let longitudeString = event?.venue?.longitude {
             let longitudeDouble = Double(longitudeString)
             self.longitude = longitudeDouble
         }
-        
+
         guard let latitude = self.latitude else {return}
         guard let longitude = self.longitude else {return}
         let destinationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         showRoutOnMap(pickupCoordinate: sourceLocation, destinationCoordinate: destinationCoordinate)
     }
     
-    // MARK:  Private Methods
-    
-    // Draw cancelButton
-    private func setupCancelButton() {
-        let cancelButton = UIButton(frame: CGRect(x: Const.horizontalSpasingCancelButton,
-                                                  y: Const.verticalSpasingCancelButton,
-                                                  width: Const.widthButton,
-                                                  height: Const.widthButton))
-        
-        cancelButton.setMapButtonsStyle(button: cancelButton, image: #imageLiteral(resourceName: "cancel"))
-        cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
-        mapView?.addSubview(cancelButton)
-    }
-    
-    // Draw rote Button
-    private func setupRoteButton() {
-        let roteButton = UIButton(frame: CGRect(x: Const.horizontalSpasingCancelButton,
-                                                y: Const.verticalSpasingRouteButton,
-                                                  width: Const.widthButton,
-                                                  height: Const.widthButton))
-        
-       
-        roteButton.setMapButtonsStyle(button: roteButton, image: #imageLiteral(resourceName: "route"))
-        roteButton.addTarget(self, action: #selector(showRote), for: .touchUpInside)
-        mapView?.addSubview(roteButton)
-    }
+    // MARK: Private Methods
     
     // Build route on the map
     private func showRoutOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
@@ -120,7 +88,7 @@ final class MapEvents: UIViewController {
             destinationAnnotation.coordinate = location.coordinate
         }
         
-        self.mapView?.showAnnotations([sourceAnnotation, destinationAnnotation], animated: true)
+        mapView?.showAnnotations([sourceAnnotation, destinationAnnotation], animated: true)
         
         let diractionRequest = MKDirections.Request()
         diractionRequest.source = sourceItem
@@ -143,7 +111,7 @@ final class MapEvents: UIViewController {
         }
     }
     
-    // show alert if we can not build the route
+    // Show alert if we can not build the route
     private func showErrorAlert() {
         let alert = UIAlertController(title: "Ошибка", message: "Невозможно построить маршрут", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -174,7 +142,11 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
         
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            
+            annotationView?.animatesDrop = true
             annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
         }
         return annotationView
     }
@@ -193,13 +165,10 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
 
 extension MapEvents {
     private enum Const {
-        static let horizontalSpasingCancelButton: CGFloat = 300
-        static let verticalSpasingCancelButton: CGFloat = 30
-        static let verticalSpasingRouteButton: CGFloat = 520
-        static let widthButton: CGFloat = 35
-        static let lineWidth: CGFloat = 5.0
+        static let lineWidth: CGFloat = 4.0
         static let latitude: Double = 53
         static let longitude: Double = 29
+        static let color = UIColor(named: "Color")
     }
 }
 
