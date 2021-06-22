@@ -29,7 +29,7 @@
                                 <color key="trackTintColor" name="BackgroundColor"/>
                             </progressView>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ges-c8-C6R">
-                                <rect key="frame" x="0.0" y="95" width="414" height="767"/>
+                                <rect key="frame" x="0.0" y="95" width="414" height="718"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -319,7 +319,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                             </mapView>
                             <button opaque="NO" alpha="0.69999998807907104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdQ-9z-mA1">
-                                <rect key="frame" x="344" y="627" width="35" height="35"/>
+                                <rect key="frame" x="344" y="578" width="35" height="35"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="o2x-eS-LWE"/>
@@ -340,6 +340,7 @@
                             <constraint firstItem="Ddj-j2-2wC" firstAttribute="bottom" secondItem="EdQ-9z-mA1" secondAttribute="bottom" constant="200" id="kPs-7g-JJf"/>
                             <constraint firstItem="Ddj-j2-2wC" firstAttribute="trailing" secondItem="EdQ-9z-mA1" secondAttribute="trailing" constant="35" id="mMk-Qo-kt6"/>
                             <constraint firstItem="dhh-Fb-sGj" firstAttribute="top" secondItem="Ddj-j2-2wC" secondAttribute="top" id="nbO-ec-Ziu"/>
+                            <constraint firstItem="EdQ-9z-mA1" firstAttribute="top" secondItem="Ddj-j2-2wC" secondAttribute="top" priority="999" constant="539" id="pty-FJ-Jiw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="UcD-Mi-x7B"/>
@@ -366,17 +367,18 @@
                     <connections>
                         <segue destination="56E-jA-bA7" kind="relationship" relationship="viewControllers" id="Q12-oo-iNT"/>
                         <segue destination="IqE-Uz-sA6" kind="relationship" relationship="viewControllers" id="0bJ-ik-IYn"/>
+                        <segue destination="7CS-dY-epw" kind="relationship" relationship="viewControllers" id="Cfo-0Z-ga0"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="paf-ud-gru" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2271" y="-235"/>
         </scene>
-        <!--Item-->
+        <!--Favorits-->
         <scene sceneID="KCb-r2-pQD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IqE-Uz-sA6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="heart" id="UtW-eL-KOO"/>
+                    <tabBarItem key="tabBarItem" title="Favorits" image="heart" id="UtW-eL-KOO"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="svC-fG-zec">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -394,6 +396,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="91m-HU-zZG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3300" y="188"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="tOt-PH-rOA">
+            <objects>
+                <viewController id="7CS-dY-epw" customClass="MapViewController" customModule="Artists" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cTy-rk-xM4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="j0A-eK-Qee">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eCa-A1-DO2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="j0A-eK-Qee" firstAttribute="bottom" secondItem="eCa-A1-DO2" secondAttribute="bottom" id="Rnj-4d-cNh"/>
+                            <constraint firstItem="j0A-eK-Qee" firstAttribute="trailing" secondItem="eCa-A1-DO2" secondAttribute="trailing" id="Sp4-ud-CMk"/>
+                            <constraint firstItem="j0A-eK-Qee" firstAttribute="leading" secondItem="eCa-A1-DO2" secondAttribute="leading" id="de4-aV-wyd"/>
+                            <constraint firstItem="j0A-eK-Qee" firstAttribute="top" secondItem="eCa-A1-DO2" secondAttribute="top" id="k9j-AP-rPg"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="pinMap-1" id="rg9-NJ-f8c"/>
+                    <navigationItem key="navigationItem" id="nuo-oq-wM7"/>
+                    <connections>
+                        <outlet property="mapView" destination="j0A-eK-Qee" id="h6w-XX-JH9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sj3-eA-xjj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2270" y="646"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DgJ-B0-O1x">
@@ -436,7 +469,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tt2-hW-eNE"/>
+        <segue reference="tPb-uX-NNv"/>
         <segue reference="OFF-FX-GgF"/>
     </inferredMetricsTieBreakers>
     <resources>

@@ -13,7 +13,6 @@ class EventVC: UITableViewController {
     // MARK:  Public Properties
     
     var events = [Event]()
-    var imageURL: String?
     
     // MARK: Private Properties
     
@@ -63,7 +62,6 @@ class EventVC: UITableViewController {
             guard let indexPath = self.indexPath else {return}
             let mapVC = segue.destination as! MapEvents
             mapVC.event = events[indexPath]
-            mapVC.artistImage = self.imageURL
         } else if segue.identifier == "showWeb" {
             let webVC = segue.destination as! WebViewController
             guard let indexPath = self.indexPath else {return}

@@ -20,6 +20,7 @@ final class SearchViewController: UIViewController {
     private lazy var timer = AutosearchTimer {
         self.performSearch()
     }
+    private var searchController = UISearchController()
     
     // MARK: Lifecycle
     
@@ -114,6 +115,7 @@ final class SearchViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = Const.enterTheName
         searchController.searchBar.searchTextField.backgroundColor = .white
+        self.searchController = searchController
         
         searchController.searchBar.delegate = self
     }
@@ -132,7 +134,10 @@ extension SearchViewController: UISearchBarDelegate {
     private func performSearch() {
         timer.cancel()
         guard let text = self.text else {return}
-        if text.count <= Const.searchTextCount {
+        if text.count == .zero {
+            self.searchController.searchBar.placeholder = Const.enterTheName
+        } else if text.count <= Const.searchTextCount {
+            self.searchController.searchBar.searchTextField.text = Const.enterTheName
             label.isHidden = true
             image.isHidden = true
             button.isHidden = true

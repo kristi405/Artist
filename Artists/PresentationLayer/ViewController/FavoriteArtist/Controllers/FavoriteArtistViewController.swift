@@ -19,7 +19,6 @@ final class FavoriteArtist: UICollectionViewController {
             return self.realm
         }
     }
-    private var mapVC = MapEvents()
     private var events: [Event]?
     private var eventVC = EventVC()
     
@@ -126,7 +125,10 @@ final class FavoriteArtist: UICollectionViewController {
                 self.events = nil
                 self.events = currentEvent
                 DispatchQueue.main.async {
-                    self.eventVC.imageURL = artists[indexPath.row].image
+                    MapViewController.events = currentEvent
+                }
+
+                DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showEvent", sender: self)
                 }
             }

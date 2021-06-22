@@ -20,7 +20,6 @@ final class MapEvents: UIViewController {
     // MARK: Public Properties
     
     var event: Event?
-    var artistImage: String?
     
     // MARK: Lifecycle
     

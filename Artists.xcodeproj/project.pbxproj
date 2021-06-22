@@ -32,6 +32,7 @@
 		6D4FC9AD26530A06006F81F0 /* Pods_Artists.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF977FC7C093542802B9017 /* Pods_Artists.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6D9C21B326613865003F17DE /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9C21B226613865003F17DE /* EventViewController.swift */; };
 		6D9C21B5266138C5003F17DE /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9C21B4266138C5003F17DE /* EventCell.swift */; };
+		6D9C21B7267CF1DD003F17DE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9C21B6267CF1DD003F17DE /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,6 +76,7 @@
 		6CF977FC7C093542802B9017 /* Pods_Artists.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Artists.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D9C21B226613865003F17DE /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		6D9C21B4266138C5003F17DE /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
+		6D9C21B6267CF1DD003F17DE /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		91868C16F9BFCD5035C6A826 /* Pods-Artists.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artists.debug.xcconfig"; path = "Target Support Files/Pods-Artists/Pods-Artists.debug.xcconfig"; sourceTree = "<group>"; };
 		A799E4FBA39A0BF87FEBC798 /* Pods-Artists.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artists.release.xcconfig"; path = "Target Support Files/Pods-Artists/Pods-Artists.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -283,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				01E7BEA2257E19E80058A9CE /* MapEventsViewController.swift */,
+				6D9C21B6267CF1DD003F17DE /* MapViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				0142FE9B25596B4E0041672E /* UIButton+extension.swift in Sources */,
 				0142FE9725592EE70041672E /* FavoriteArtistViewController.swift in Sources */,
 				01978DDF25558DB500CA17FD /* AppDelegate.swift in Sources */,
+				6D9C21B7267CF1DD003F17DE /* MapViewController.swift in Sources */,
 				010F96B0260108B60052C48E /* AutoserchTimer.swift in Sources */,
 				01978DF9255595CD00CA17FD /* ArtistModel.swift in Sources */,
 				0142FE9E255976AE0041672E /* EventModel.swift in Sources */,
