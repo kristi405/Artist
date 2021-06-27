@@ -359,39 +359,40 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "38CE981C-57D8-49C3-8C25-46A3087703EC"
+            uuid = "D5832969-8CF7-4CEA-AA48-4B659296B1DD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "init(events:)"
-            landmarkType = "7">
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "MapViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0C56A814-3115-43BA-97E4-710EA854208C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "6"
+            endingLineNumber = "6"
+            landmarkName = "MapViewController"
+            landmarkType = "3">
             <Locations>
                <Location
-                  uuid = "38CE981C-57D8-49C3-8C25-46A3087703EC - dd6a85dee74d80fb"
+                  uuid = "0C56A814-3115-43BA-97E4-710EA854208C - 85550c64cb638745"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Artists.MapViewController.__allocating_init(events: Swift.Optional&lt;Swift.Array&lt;Artists.Event&gt;&gt;) -&gt; Artists.MapViewController"
-                  moduleName = "Artists"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "11">
-               </Location>
-               <Location
-                  uuid = "38CE981C-57D8-49C3-8C25-46A3087703EC - 4b517c17d65883f9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Artists.MapViewController.init(events: Swift.Optional&lt;Swift.Array&lt;Artists.Event&gt;&gt;) -&gt; Artists.MapViewController"
+                  symbolName = "Artists.MapViewController.mapView.getter : Swift.Optional&lt;__C.MKMapView&gt;"
                   moduleName = "Artists"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
@@ -399,7 +400,130 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "7"
                   endingLineNumber = "7"
-                  offsetFromSymbolStart = "178">
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "0C56A814-3115-43BA-97E4-710EA854208C - 6abcf9317a6d7f49"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Artists.MapViewController.mapView.setter : Swift.Optional&lt;__C.MKMapView&gt;"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "7"
+                  endingLineNumber = "7"
+                  offsetFromSymbolStart = "155">
+               </Location>
+               <Location
+                  uuid = "0C56A814-3115-43BA-97E4-710EA854208C - 441dabfe3c152041"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Artists.MapViewController.mapView.modify : Swift.Optional&lt;__C.MKMapView&gt;"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "0C56A814-3115-43BA-97E4-710EA854208C - 9bbdc56dd77333df"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Artists.MapViewController.mapView.modify : Swift.Optional&lt;__C.MKMapView&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "7"
+                  endingLineNumber = "7"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4CC8D059-3FE6-45B9-86EA-748444C275F1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "MapViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "4CC8D059-3FE6-45B9-86EA-748444C275F1 - 1e20050b35ff7ecc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Artists.MapViewController.test.getter : Swift.Int"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "110">
+               </Location>
+               <Location
+                  uuid = "4CC8D059-3FE6-45B9-86EA-748444C275F1 - 74bfdac9ba6632d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Artists.MapViewController.test.setter : Swift.Int"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "118">
+               </Location>
+               <Location
+                  uuid = "4CC8D059-3FE6-45B9-86EA-748444C275F1 - a4189f19dd622404"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Artists.MapViewController.test.modify : Swift.Int"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "4CC8D059-3FE6-45B9-86EA-748444C275F1 - 4674f460268775d8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Artists.MapViewController.test.modify : Swift.Int with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Artists"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kristi405/Desktop/Projects/Artist/Artists/PresentationLayer/ViewController/MapViewController/Controllers/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "8">
                </Location>
             </Locations>
          </BreakpointContent>

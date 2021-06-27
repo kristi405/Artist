@@ -124,10 +124,13 @@ final class FavoriteArtist: UICollectionViewController {
             self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.all) { currentEvent in
                 self.events = nil
                 self.events = currentEvent
+                
                 DispatchQueue.main.async {
                     MapViewController.events = currentEvent
+                    let _ = MapViewController.shered
+                    
                 }
-
+                
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showEvent", sender: self)
                 }
@@ -137,6 +140,12 @@ final class FavoriteArtist: UICollectionViewController {
             self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.past) { currentEvent in
                 self.events = nil
                 self.events = currentEvent
+                
+                DispatchQueue.main.async {
+                    let _ = MapViewController.shered
+                    MapViewController.events = currentEvent
+                }
+                
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showEvent", sender: self)
                 }
@@ -146,6 +155,12 @@ final class FavoriteArtist: UICollectionViewController {
             self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.upcoming) { currentEvent in
                 self.events = nil
                 self.events = currentEvent
+                
+                DispatchQueue.main.async {
+                    let _ = MapViewController.shered
+                    MapViewController.events = currentEvent
+                }
+                
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showEvent", sender: self)
                 }

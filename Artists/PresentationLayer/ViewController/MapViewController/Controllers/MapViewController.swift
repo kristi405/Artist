@@ -3,45 +3,49 @@ import MapKit
 import CoreLocation
 
 class MapViewController: UIViewController {
+    // MARK: IBOutlets
 
     @IBOutlet weak var mapView: MKMapView!
+    
+    // MARK: Private properties
     
     private var locationManager: CLLocationManager?
     private let mapManager = LocationManager()
     private let annotationIdentifier = "annotationIdentifier"
     private var currentLocation: CLLocation?
     
-    private var test: Int?
-    static var events = [Event]()
+    // MARK: Static properties
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        print("3333")
-        super.init(nibName: nil, bundle: nil)
+    static var events = [Event]()
+    static var shered: MapViewController {
+        let instance = MapViewController(events: events)
+        return instance
     }
     
-    init(events: [Event]) {
-        MapViewController.events = events
-        self.test = 5
-        print("11111111")
+    // MARK: Initialaser
+    
+    private init(events: [Event]) {
         super.init(nibName: nil, bundle: nil)
+        MapViewController.events = events
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
+    // MARK: Lifecycle
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        mapView.reloadInputViews()
+        self.showEvents(events: MapViewController.events)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(MapViewController.events)
-        print("222222222")
-        mapView.delegate = self
-        mapView.showsUserLocation = true
+        
+        self.mapView.delegate = self
+        self.mapView.showsUserLocation = true
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
@@ -52,23 +56,14 @@ class MapViewController: UIViewController {
         }
     }
     
-    func showEvents(events: [Event]) {
+    private func showEvents(events: [Event]) {
         mapManager.setupEventMarks(events: events, mapView: mapView)
     }
 }
 
+// MARK: - Extensions
+
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
-    
-    // Show User location
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        showEvents(events: MapViewController.events)
-        defer { currentLocation = locations.last }
-        
-        if currentLocation == nil {
-            guard let mapView = self.mapView else {return}
-            mapManager.showUserLocation(mapView: mapView)
-        }
-    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else {return nil}
@@ -84,15 +79,6 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
         return annotationView
-    }
-    
-    // Style of line on the map
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = .blue
-        renderer.lineWidth = 7
-        
-        return renderer
     }
 }
 
