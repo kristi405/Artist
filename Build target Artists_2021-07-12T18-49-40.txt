@@ -1,0 +1,6 @@
+
+Showing Recent Messages
+Failed to register bundle identifier: The app identifier "Artists" cannot be registered to your development team because it is not available. Change your bundle identifier to a unique string to try again.
+
+No profiles for 'Artists' were found: Xcode couldn't find any iOS App Development provisioning profiles matching 'Artists'.
+

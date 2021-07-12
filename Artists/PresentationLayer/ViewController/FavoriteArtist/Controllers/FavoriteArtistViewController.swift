@@ -6,7 +6,6 @@ final class FavoriteArtist: UICollectionViewController {
     
     private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
     private var networkServices = NetworkServices()
-    private var favoriteCell = FavoriteCell()
     private var realm: Realm {
         get {
             do {
@@ -20,7 +19,6 @@ final class FavoriteArtist: UICollectionViewController {
         }
     }
     private var events: [Event]?
-    private var eventVC = EventVC()
     
     // MARK:  Public Properties
     
@@ -38,7 +36,6 @@ final class FavoriteArtist: UICollectionViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.barTintColor = Const.color
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         collectionView.backgroundColor = Const.color
     }
@@ -46,33 +43,29 @@ final class FavoriteArtist: UICollectionViewController {
     // MARK: IBActions
     
     // Choosing an option for a favorite
-      @IBAction private func showAlert(_ sender: UITapGestureRecognizer) {
-          if let sender = sender as? CustomTapGesture {
-              guard let indexPath = sender.indexPath else {return}
-            guard let artists = artists else {return}
-            let attributedString = NSAttributedString(string: artists[indexPath.row].name ?? Const.all,
-                                                        attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black])
-              
-            let ac = UIAlertController(title: "", message: Const.chooseAction, preferredStyle: .alert)
-              ac.setValue(attributedString, forKey: "attributedTitle")
-              
-            let showDetale = UIAlertAction(title: Const.showEvent, style: .default) { show in
-                  self.showAlertEvent(indexPath: indexPath)
-              }
-              
-            let deleteAction = UIAlertAction(title: Const.delete, style: .default) { delete in
-                  self.deleteFavoriteArtist(indexPath: indexPath)
-              }
-              
-            let cencelButton = UIAlertAction(title: Const.cancel, style: .cancel, handler: nil)
-              
-              ac.addAction(showDetale)
-              ac.addAction(deleteAction)
-              ac.addAction(cencelButton)
-              
-              self.present(ac, animated: true, completion: nil)
-          }
-      }
+    private func showAlert(artist: FavoriteArtists) {
+        let attributedString = NSAttributedString(string: artist.name ?? Const.all,
+                                                  attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black])
+        
+        let ac = UIAlertController(title: "", message: Const.chooseAction, preferredStyle: .alert)
+        ac.setValue(attributedString, forKey: "attributedTitle")
+        
+        let showDetale = UIAlertAction(title: Const.showEvent, style: .default) { show in
+            self.showAlertEvent(artist: artist)
+        }
+        
+        let deleteAction = UIAlertAction(title: Const.delete, style: .default) { delete in
+            self.deleteFavoriteArtist(artist: artist)
+        }
+        
+        let cencelButton = UIAlertAction(title: Const.cancel, style: .cancel, handler: nil)
+        
+        ac.addAction(showDetale)
+        ac.addAction(deleteAction)
+        ac.addAction(cencelButton)
+        
+        self.present(ac, animated: true, completion: nil)
+    }
     
     // MARK:  Private Methods
     
@@ -101,11 +94,9 @@ final class FavoriteArtist: UICollectionViewController {
     }
     
     // Removing an artist from the database Realm
-    private func deleteFavoriteArtist(indexPath: IndexPath) {
+    private func deleteFavoriteArtist(artist: FavoriteArtists) {
         do {
             try? realm.write {
-                guard let artists = artists else {return}
-                let artist = artists[indexPath.row]
                 realm.delete(artist)
                 collectionView.reloadData()
             }
@@ -113,15 +104,14 @@ final class FavoriteArtist: UICollectionViewController {
     }
     
     // Сhoose the time of the event: all, past, upcoming
-    private func showAlertEvent(indexPath: IndexPath) {
-        guard let artists = artists else {return}
-        let attributedString = NSAttributedString(string: artists[indexPath.row].name ?? Const.all,
+    private func showAlertEvent(artist: FavoriteArtists) {
+        let attributedString = NSAttributedString(string: artist.name ?? Const.all,
                                                   attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .largeTitle), NSAttributedString.Key.foregroundColor: UIColor.black])
-        let alertEvent = UIAlertController(title: artists[indexPath.row].name!, message: Const.nameAlert, preferredStyle: .actionSheet)
+        let alertEvent = UIAlertController(title: artist.name, message: Const.nameAlert, preferredStyle: .actionSheet)
         alertEvent.setValue(attributedString, forKey: "attributedTitle")
         
         let allEvent = UIAlertAction(title: Const.allEvents, style: .default) { _ in
-            self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.all) { currentEvent in
+            self.networkServices.fetchEvent(artist: artist.name ?? Const.all, date: Const.all) { currentEvent in
                 self.events = nil
                 self.events = currentEvent
                 
@@ -137,7 +127,7 @@ final class FavoriteArtist: UICollectionViewController {
             }
         }
         let pastEvent = UIAlertAction(title: Const.pastEvents, style: .default) { (past) in
-            self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.past) { currentEvent in
+            self.networkServices.fetchEvent(artist: artist.name ?? Const.all, date: Const.past) { currentEvent in
                 self.events = nil
                 self.events = currentEvent
                 
@@ -152,7 +142,7 @@ final class FavoriteArtist: UICollectionViewController {
             }
         }
         let upcomingEvent = UIAlertAction(title: Const.upcomingEvents, style: .default) { (upcoming) in
-            self.networkServices.fetchEvent(artist: artists[indexPath.row].name ?? Const.all, date: Const.upcoming) { currentEvent in
+            self.networkServices.fetchEvent(artist: artist.name ?? Const.all, date: Const.upcoming) { currentEvent in
                 self.events = nil
                 self.events = currentEvent
                 
@@ -232,19 +222,44 @@ extension FavoriteArtist {
         if let favoriteArtistCell = cell as? FavoriteCell {
             setupConstraints(cell: favoriteArtistCell, image: favoriteArtistCell.imageFavoriteArtist, label: favoriteArtistCell.labelFavoriteArtist)
             
-            favoriteCell.configureCell(cell: favoriteArtistCell, indexPath: indexPath)
+            guard let artists = self.artists else {return favoriteArtistCell}
+            let artist = artists[indexPath.row]
             
-            let tapGesture = CustomTapGesture(target: self, action: #selector(showAlert(_:)))
-            tapGesture.indexPath = indexPath
-            cell.addGestureRecognizer(tapGesture)
+            favoriteArtistCell.configureCell(artist: artist)
         }
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let artists = self.artists else {return}
+        let artist = artists[indexPath.row]
+        showAlert(artist: artist)
     }
 }
 
 
 //MARK: - UICollectionViewDelegateFlowLayout
 extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
+    
+    // Setting cell sizes
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
+        let item = Const.item
+        let spasing = Const.spasingBetweenItems * (item + Const.one)
+        let freeWidth = collectionView.frame.width - spasing
+        Const.widthItem = freeWidth / item
+        return CGSize(width: Const.widthItem, height: Const.widthItem)
+    }
+    
+    // Set the distance between cells
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: Const.spacingVertical,
+                     left: Const.spasing / (Const.item + Const.one),
+                     bottom: Const.spacingVertical,
+                     right: Const.spasing / (Const.item + Const.one))
+    }
+}
+
+extension FavoriteArtist {
     
     // Constants
     private enum Const {
@@ -268,23 +283,6 @@ extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
         static let showEvent: String = "Показать событие"
         static let delete: String = "Удалить"
         static let chooseAction: String = "Выберите действие"
-    }
-    
-    // Setting cell sizes
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        let item = Const.item
-        let spasing = Const.spasingBetweenItems * (item + Const.one)
-        let freeWidth = collectionView.frame.width - spasing
-        Const.widthItem = freeWidth / item
-        return CGSize(width: Const.widthItem, height: Const.widthItem)
-    }
-    
-    // Set the distance between cells
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: Const.spacingVertical,
-                     left: Const.spasing / (Const.item + Const.one),
-                     bottom: Const.spacingVertical,
-                     right: Const.spasing / (Const.item + Const.one))
     }
 }
 

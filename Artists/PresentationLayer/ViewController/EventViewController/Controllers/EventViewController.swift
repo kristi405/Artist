@@ -3,7 +3,7 @@ import UIKit
 class EventVC: UITableViewController {
     // MARK: Constants
     
-    private enum Const {
+    private enum Constants {
         static let borderWidth: CGFloat = 0.2
         static let shadowRadius: CGFloat = 7
         static let heightForRow: CGFloat = 100
@@ -25,7 +25,7 @@ class EventVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.backgroundColor = Const.color
+        tableView.backgroundColor = Constants.color
     }
     
     // MARK: IBActions
@@ -49,10 +49,10 @@ class EventVC: UITableViewController {
     }
     
     private func castomCell(cell: EventCell) {
-        cell.layer.borderWidth = Const.borderWidth
+        cell.layer.borderWidth = Constants.borderWidth
         cell.layer.borderColor = UIColor.gray.cgColor
         cell.layer.shadowColor = UIColor.gray.cgColor
-        cell.layer.shadowRadius = Const.shadowRadius
+        cell.layer.shadowRadius = Constants.shadowRadius
     }
 
     // MARK: Navigations segue
@@ -77,15 +77,17 @@ class EventVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
         if let eventCell = cell as? EventCell {
-            eventCell.configureCell(cell: eventCell, indexPath: indexPath, events: self.events)
+            let event = events[indexPath.row]
+            eventCell.configureCell(event: event)
             castomCell(cell: eventCell)
-            eventCell.backgroundColor = Const.color
+            eventCell.backgroundColor = Constants.color
         }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        Const.heightForRow
+        Constants.heightForRow
     }
 }
