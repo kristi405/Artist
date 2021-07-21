@@ -5,8 +5,8 @@ import CoreLocation
 final class MapEvents: UIViewController {
    // MARK: IBOutlets
     
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var routeButton: UIButton!
+    @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var routeButton: UIButton!
     
     // MARK: Private Properties
     
@@ -26,8 +26,8 @@ final class MapEvents: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBarController?.tabBar.barTintColor = Const.color
-        routeButton.layer.cornerRadius = 7
+        tabBarController?.tabBar.barTintColor = Constants.backgroundColor
+        routeButton.layer.cornerRadius = Constants.cornerRadius
         mapView.delegate = self
         mapView.showsUserLocation = true
         locationManager = CLLocationManager()
@@ -47,7 +47,7 @@ final class MapEvents: UIViewController {
     
     // Button of build a route on the map
     @IBAction private func showRote() {
-        let sourceLocation = CLLocationCoordinate2D(latitude: Const.latitude, longitude: Const.longitude)
+        let sourceLocation = CLLocationCoordinate2D(latitude: Constants.latitude, longitude: Constants.longitude)
 
         if let latitudeString = event?.venue?.latitude {
             let latitudeDouble = Double(latitudeString)
@@ -112,8 +112,8 @@ final class MapEvents: UIViewController {
     
     // Show alert if we can not build the route
     private func showErrorAlert() {
-        let alert = UIAlertController(title: "Ошибка", message: "Невозможно построить маршрут", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        let alert = UIAlertController(title: Constants.error, message: Constants.canNotBuildRote, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: Constants.ok, style: .cancel, handler: nil)
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
     }
@@ -154,7 +154,7 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = .blue
-        renderer.lineWidth = Const.lineWidth
+        renderer.lineWidth = Constants.roteLineWidth
         
         return renderer
     }
@@ -163,11 +163,15 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
 // MARK: Constants
 
 extension MapEvents {
-    private enum Const {
-        static let lineWidth: CGFloat = 4.0
+    private enum Constants {
+        static let ok = "ОК"
+        static let canNotBuildRote = "Невозможно построить маршрут"
+        static let error = "Ошибка"
+        static let cornerRadius: CGFloat = 7
+        static let roteLineWidth: CGFloat = 4.0
         static let latitude: Double = 53
         static let longitude: Double = 29
-        static let color = UIColor(named: "Color")
+        static let backgroundColor = UIColor(named: "Color")
     }
 }
 

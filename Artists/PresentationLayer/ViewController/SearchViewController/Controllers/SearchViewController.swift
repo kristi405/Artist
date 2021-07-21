@@ -4,14 +4,14 @@ import RealmSwift
 final class SearchViewController: UIViewController {
     // MARK: IBOutlets
     
-    @IBOutlet weak private var image: UIImageView!
-    @IBOutlet weak private var label: UILabel!
-    @IBOutlet weak private var button: UIButton!
-    @IBOutlet weak private var webButton: UIButton!
+    @IBOutlet private weak var image: UIImageView!
+    @IBOutlet private weak var label: UILabel!
+    @IBOutlet private weak var button: UIButton!
+    @IBOutlet private weak var webButton: UIButton!
     
     // MARK: Private Properties
     
-    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
+    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: Constants.keyPathName, ascending: true)
     private var networkServices = NetworkServices()
     private var currentArtistFavorite: CurrentArtist?
     private var onComplition: ((CurrentArtist) -> Void)?
@@ -27,14 +27,23 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Const.color
-        navigationController?.navigationBar.barTintColor = Const.color
+        view.backgroundColor = Constants.backgroundColor
+        navigationController?.navigationBar.barTintColor = Constants.backgroundColor
         navigationController?.navigationItem.largeTitleDisplayMode = .always
-        tabBarController?.tabBar.barTintColor = Const.tabBarColor
+        tabBarController?.tabBar.barTintColor = Constants.tabBarColor
         image.contentMode = .scaleAspectFit
         customBatton()
         searchArtist()
         setupSearchController()
+    }
+    
+    // MARK: Navigations segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.segueIdentifire {
+            let webVC = segue.destination as! WebViewController
+            webVC.eventURL = currentArtistFavorite?.url ?? Constants.enterURL
+        }
     }
     
     // MARK: Actions with buttons
@@ -43,21 +52,12 @@ final class SearchViewController: UIViewController {
     @IBAction private func buttonPressed(_ sender: UIButton) {
         if !isContains() {
             favoriteVC.saveArtist()
-            sender.setImage(image: Const.redHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
-            sender.setTitle(Const.removeFromFavorits, for: .normal)
+            sender.setImage(image: Constants.redHeart, leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
+            sender.setTitle(Constants.removeFromFavorits, for: .normal)
         } else {
             favoriteVC.deleteArtistFromButton()
-            sender.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
-            sender.setTitle(Const.addToFavorits, for: .normal)
-        }
-    }
-    
-    // MARK: Navigations segue
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showWebView" {
-            let webVC = segue.destination as! WebViewController
-            webVC.eventURL = currentArtistFavorite?.url ?? "Введите url"
+            sender.setImage(image: Constants.whiteHeart, leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
+            sender.setTitle(Constants.addToFavorits, for: .normal)
         }
     }
     
@@ -78,7 +78,7 @@ final class SearchViewController: UIViewController {
         }
         //Get data from url
         DispatchQueue.global().async {
-            guard let dataUrl = URL(string: artist.imageURL ?? "url") else {return}
+            guard let dataUrl = URL(string: artist.imageURL ?? Constants.enterURL) else {return}
             guard let imageData = try? Data(contentsOf: dataUrl) else {return}
             
             DispatchQueue.main.async {
@@ -113,11 +113,37 @@ final class SearchViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = Const.enterTheName
+        searchController.searchBar.placeholder = Constants.enterTheName
         searchController.searchBar.searchTextField.backgroundColor = .white
         self.searchController = searchController
         
         searchController.searchBar.delegate = self
+    }
+    
+    // Hidden or not hidden labels
+    private func labelIsHidden() {
+        label.isHidden = true
+        image.isHidden = true
+        button.isHidden = true
+        webButton.isHidden = true
+    }
+    
+    private func labelIsNotHidden() {
+        label.isHidden = false
+        image.isHidden = false
+        button.isHidden = false
+        webButton.isHidden = false
+    }
+    
+    // we check is the artist conteins in Realm
+    private func checkArtistsConteins() {
+        if !isContains() {
+            button.setTitle(Constants.addToFavorits, for: .normal)
+            button.setImage(image: Constants.whiteHeart, leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
+        } else {
+            button.setTitle(Constants.removeFromFavorits, for: .normal)
+            button.setImage(image: Constants.redHeart, leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
+        }
     }
 }
 
@@ -135,30 +161,18 @@ extension SearchViewController: UISearchBarDelegate {
         timer.cancel()
         guard let text = self.text else {return}
         if text.count == .zero {
-            self.searchController.searchBar.placeholder = Const.enterTheName
-        } else if text.count <= Const.searchTextCount {
-            self.searchController.searchBar.searchTextField.text = Const.enterTheName
-            label.isHidden = true
-            image.isHidden = true
-            button.isHidden = true
-            webButton.isHidden = true
+            self.searchController.searchBar.placeholder = Constants.enterTheName
+        } else if text.count <= Constants.searchTextCount {
+            self.searchController.searchBar.searchTextField.text = Constants.enterTheName
+            labelIsHidden()
             self.currentArtistFavorite = nil
         } else {
             self.networkServices.fetchArtist(artist: text, complition: { currentArtist in
                 self.onComplition?(currentArtist)
                 self.currentArtistFavorite = currentArtist
                 DispatchQueue.main.async {
-                    self.label.isHidden = false
-                    self.image.isHidden = false
-                    self.button.isHidden = false
-                    self.webButton.isHidden = false
-                    if !self.isContains() {
-                        self.button.setTitle(Const.addToFavorits, for: .normal)
-                        self.button.setImage(image: Const.whiteHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
-                    } else {
-                        self.button.setTitle(Const.removeFromFavorits, for: .normal)
-                        self.button.setImage(image: Const.redHeart, leadingAnchor: Const.leadingAnchor, heightAnchor: Const.heightAnchor)
-                    }
+                    self.labelIsNotHidden()
+                    self.checkArtistsConteins()
                 }
             })
         }
@@ -167,16 +181,19 @@ extension SearchViewController: UISearchBarDelegate {
 
 // MARK: - Constants
 extension SearchViewController {
-    private enum Const {
+    private enum Constants {
+        static let enterURL = "Введите url"
+        static let segueIdentifire = "showWebView"
+        static let keyPathName = "name"
         static let searchTextCount = 2
         static let addToFavorits = "Добавить в фавориты"
         static let removeFromFavorits = "Удалить из фаворитов"
         static let enterTheName = "Нужно ввести имя"
-        static let leadingAnchor: CGFloat = -4
-        static let heightAnchor: CGFloat = 28
+        static let leadingAnchorOfImage: CGFloat = -4
+        static let heightAnchorOfImage: CGFloat = 28
         static let whiteHeart: UIImage = #imageLiteral(resourceName: "whHeart")
         static let redHeart: UIImage = #imageLiteral(resourceName: "redHeart1")
-        static let color = UIColor(named: "Color")
+        static let backgroundColor = UIColor(named: "Color")
         static let tabBarColor = UIColor(named: "BackgroundColor")
     }
 }

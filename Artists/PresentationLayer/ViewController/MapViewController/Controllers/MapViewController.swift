@@ -2,48 +2,36 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController {
+final class MapViewController: UIViewController {
     // MARK: IBOutlets
 
     @IBOutlet weak var mapView: MKMapView!
     
     // MARK: Private properties
     
+    private var currentLocation: CLLocation?
     private var locationManager: CLLocationManager?
     private let mapManager = LocationManager()
     private let annotationIdentifier = "annotationIdentifier"
-    private var currentLocation: CLLocation?
     
-    // MARK: Static properties
+    // MARK: Public properties
     
-    static var events = [Event]()
-    static var shered: MapViewController {
-        let instance = MapViewController(events: events)
-        return instance
-    }
-    
-    // MARK: Initialaser
-    
-    private init(events: [Event]) {
-        super.init(nibName: nil, bundle: nil)
-        MapViewController.events = events
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
+    var events = [Event]()
+    var annotations: [MKAnnotation]?
+
     // MARK: Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.showEvents(events: MapViewController.events)
+        mapManager.setupEventMarks(events: events, mapView: mapView)
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(events)
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
         locationManager = CLLocationManager()
@@ -54,10 +42,6 @@ class MapViewController: UIViewController {
             locationManager?.requestWhenInUseAuthorization()
             locationManager?.startUpdatingLocation()
         }
-    }
-    
-    private func showEvents(events: [Event]) {
-        mapManager.setupEventMarks(events: events, mapView: mapView)
     }
 }
 
@@ -78,7 +62,7 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         } else {
             annotationView?.annotation = annotation
         }
+        self.annotations = annotation as? [MKAnnotation]
         return annotationView
     }
 }
-

@@ -4,7 +4,7 @@ class EventVC: UITableViewController {
     // MARK: Constants
     
     private enum Constants {
-        static let borderWidth: CGFloat = 0.2
+        static let borderWidthOfCell: CGFloat = 0.2
         static let shadowRadius: CGFloat = 7
         static let heightForRow: CGFloat = 100
         static let color = UIColor(named: "Color")
@@ -49,7 +49,7 @@ class EventVC: UITableViewController {
     }
     
     private func castomCell(cell: EventCell) {
-        cell.layer.borderWidth = Constants.borderWidth
+        cell.layer.borderWidth = Constants.borderWidthOfCell
         cell.layer.borderColor = UIColor.gray.cgColor
         cell.layer.shadowColor = UIColor.gray.cgColor
         cell.layer.shadowRadius = Constants.shadowRadius

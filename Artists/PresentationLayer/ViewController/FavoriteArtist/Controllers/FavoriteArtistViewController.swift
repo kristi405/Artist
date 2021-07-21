@@ -4,7 +4,7 @@ import RealmSwift
 final class FavoriteArtist: UICollectionViewController {
     // MARK:  Private Properties
     
-    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: "name", ascending: true)
+    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: Constants.keyPathName, ascending: true)
     private var networkServices = NetworkServices()
     private var realm: Realm {
         get {
@@ -35,30 +35,30 @@ final class FavoriteArtist: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.barTintColor = Const.color
+        navigationController?.navigationBar.barTintColor = Constants.color
         navigationController?.navigationBar.prefersLargeTitles = true
-        collectionView.backgroundColor = Const.color
+        collectionView.backgroundColor = Constants.color
     }
     
     // MARK: IBActions
     
     // Choosing an option for a favorite
     private func showAlert(artist: FavoriteArtists) {
-        let attributedString = NSAttributedString(string: artist.name ?? Const.all,
+        let attributedString = NSAttributedString(string: artist.name ?? Constants.all,
                                                   attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black])
         
-        let ac = UIAlertController(title: "", message: Const.chooseAction, preferredStyle: .alert)
-        ac.setValue(attributedString, forKey: "attributedTitle")
+        let ac = UIAlertController(title: nil, message: Constants.chooseAction, preferredStyle: .alert)
+        ac.setValue(attributedString, forKey: Constants.atributedStringKey)
         
-        let showDetale = UIAlertAction(title: Const.showEvent, style: .default) { show in
+        let showDetale = UIAlertAction(title: Constants.showEvent, style: .default) { show in
             self.showAlertEvent(artist: artist)
         }
         
-        let deleteAction = UIAlertAction(title: Const.delete, style: .default) { delete in
+        let deleteAction = UIAlertAction(title: Constants.delete, style: .default) { delete in
             self.deleteFavoriteArtist(artist: artist)
         }
         
-        let cencelButton = UIAlertAction(title: Const.cancel, style: .cancel, handler: nil)
+        let cencelButton = UIAlertAction(title: Constants.cancel, style: .cancel, handler: nil)
         
         ac.addAction(showDetale)
         ac.addAction(deleteAction)
@@ -69,95 +69,53 @@ final class FavoriteArtist: UICollectionViewController {
     
     // MARK:  Private Methods
     
-    // setting сonstraints for image and label
-    private func setupConstraints(cell: FavoriteCell, image: UIImageView, label: UILabel) {
-        image.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFill
-        label.textColor = .black
-        
-        NSLayoutConstraint.activate([
-            image.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
-            image.topAnchor.constraint(equalTo: cell.topAnchor),
-            image.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
-            image.widthAnchor.constraint(equalToConstant: Const.widthItem),
-            image.heightAnchor.constraint(equalToConstant: Const.widthItem - (Const.widthItem / Const.five))
-        ])
-        
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
-            label.topAnchor.constraint(equalTo: image.bottomAnchor, constant: Const.spacingHorizontal),
-            label.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
-            label.bottomAnchor.constraint(equalTo: cell.bottomAnchor),
-            label.widthAnchor.constraint(equalToConstant: Const.widthItem)
-        ])
-    }
-    
     // Removing an artist from the database Realm
     private func deleteFavoriteArtist(artist: FavoriteArtists) {
-        do {
-            try? realm.write {
-                realm.delete(artist)
-                collectionView.reloadData()
-            }
+        do { try? realm.write {
+            realm.delete(artist)
+            collectionView.reloadData()}
+        }
+    }
+    
+    // Sent events to MapViewController
+    private func sentEvents(currentEvents: [Event]) {
+        DispatchQueue.main.async {
+            let mapViewController = self.tabBarController?.viewControllers?.last as? MapViewController
+            guard let mapVC = mapViewController else {return}
+            mapVC.events = currentEvents
+            self.performSegue(withIdentifier: Constants.segueIdentifire, sender: self)
+            guard let annotation = mapVC.annotations else {return}
+            mapVC.mapView.removeAnnotations(annotation)
         }
     }
     
     // Сhoose the time of the event: all, past, upcoming
     private func showAlertEvent(artist: FavoriteArtists) {
-        let attributedString = NSAttributedString(string: artist.name ?? Const.all,
+        let attributedString = NSAttributedString(string: artist.name ?? Constants.all,
                                                   attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .largeTitle), NSAttributedString.Key.foregroundColor: UIColor.black])
-        let alertEvent = UIAlertController(title: artist.name, message: Const.nameAlert, preferredStyle: .actionSheet)
-        alertEvent.setValue(attributedString, forKey: "attributedTitle")
+        let alertEvent = UIAlertController(title: artist.name, message: Constants.nameAlert, preferredStyle: .actionSheet)
+        alertEvent.setValue(attributedString, forKey: Constants.atributedStringKey)
         
-        let allEvent = UIAlertAction(title: Const.allEvents, style: .default) { _ in
-            self.networkServices.fetchEvent(artist: artist.name ?? Const.all, date: Const.all) { currentEvent in
-                self.events = nil
+        let allEvent = UIAlertAction(title: Constants.allEvents, style: .default) { _ in
+            self.networkServices.fetchEvent(artist: artist.name ?? Constants.all, date: Constants.all) { currentEvent in
                 self.events = currentEvent
-                
-                DispatchQueue.main.async {
-                    MapViewController.events = currentEvent
-                    let _ = MapViewController.shered
-                    
-                }
-                
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showEvent", sender: self)
-                }
+                self.sentEvents(currentEvents: currentEvent)
             }
         }
-        let pastEvent = UIAlertAction(title: Const.pastEvents, style: .default) { (past) in
-            self.networkServices.fetchEvent(artist: artist.name ?? Const.all, date: Const.past) { currentEvent in
-                self.events = nil
+        let pastEvent = UIAlertAction(title: Constants.pastEvents, style: .default) { (past) in
+            self.networkServices.fetchEvent(artist: artist.name ?? Constants.all, date: Constants.past) { currentEvent in
                 self.events = currentEvent
-                
-                DispatchQueue.main.async {
-                    let _ = MapViewController.shered
-                    MapViewController.events = currentEvent
-                }
-                
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showEvent", sender: self)
-                }
+                self.sentEvents(currentEvents: currentEvent)
             }
         }
-        let upcomingEvent = UIAlertAction(title: Const.upcomingEvents, style: .default) { (upcoming) in
-            self.networkServices.fetchEvent(artist: artist.name ?? Const.all, date: Const.upcoming) { currentEvent in
-                self.events = nil
+        let upcomingEvent = UIAlertAction(title: Constants.upcomingEvents, style: .default) { (upcoming) in
+            self.networkServices.fetchEvent(artist: artist.name ?? Constants.all, date: Constants.upcoming) { currentEvent in
                 self.events = currentEvent
-                
-                DispatchQueue.main.async {
-                    let _ = MapViewController.shered
-                    MapViewController.events = currentEvent
-                }
-                
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showEvent", sender: self)
-                }
+                self.sentEvents(currentEvents: currentEvent)
             }
         }
         
-        let cencelButton = UIAlertAction(title: Const.cancel, style: .cancel, handler: nil)
+        let cencelButton = UIAlertAction(title: Constants.cancel, style: .cancel, handler: nil)
         
         alertEvent.addAction(allEvent)
         alertEvent.addAction(pastEvent)
@@ -169,7 +127,7 @@ final class FavoriteArtist: UICollectionViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEvent" {
+        if segue.identifier == Constants.segueIdentifire {
             let eventVC = segue.destination as! EventVC
             guard let events = self.events else {return}
             eventVC.events = events
@@ -180,29 +138,25 @@ final class FavoriteArtist: UICollectionViewController {
     
     // delete Artist from search screan
     func deleteArtistFromButton() {
-        do {
-            try? realm.write {
-                guard let artists = artists else {return}
-                for artist in artists {
-                    if currentArtist?.name == artist.name {
-                        realm.delete(artist)
-                    }
+        do { try? realm.write {
+            guard let artists = artists else {return}
+            for artist in artists {
+                if currentArtist?.name == artist.name {
+                    realm.delete(artist)
                 }
             }
-        }
+        }}
     }
     
     // save to the database Realm
     func saveArtist() {
-        do {
-            try? realm.write {
-                let newArtist = FavoriteArtists()
-                newArtist.name = currentArtist?.name
-                newArtist.image = currentArtist?.imageURL
-                realm.add(newArtist)
-                self.favoriteArtist = newArtist
-            }
-        }
+        do { try? realm.write {
+            let newArtist = FavoriteArtists()
+            newArtist.name = currentArtist?.name
+            newArtist.image = currentArtist?.imageURL
+            realm.add(newArtist)
+            self.favoriteArtist = newArtist
+        }}
     }
 }
 
@@ -217,11 +171,9 @@ extension FavoriteArtist {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellIdentifire, for: indexPath)
         
         if let favoriteArtistCell = cell as? FavoriteCell {
-            setupConstraints(cell: favoriteArtistCell, image: favoriteArtistCell.imageFavoriteArtist, label: favoriteArtistCell.labelFavoriteArtist)
-            
             guard let artists = self.artists else {return favoriteArtistCell}
             let artist = artists[indexPath.row]
             
@@ -243,34 +195,36 @@ extension FavoriteArtist: UICollectionViewDelegateFlowLayout {
     
     // Setting cell sizes
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        let item = Const.item
-        let spasing = Const.spasingBetweenItems * (item + Const.one)
+        let item = Constants.item
+        let spasing = Constants.spasingBetweenItems * (item + Constants.one)
         let freeWidth = collectionView.frame.width - spasing
-        Const.widthItem = freeWidth / item
-        return CGSize(width: Const.widthItem, height: Const.widthItem)
+        Constants.widthItem = freeWidth / item
+        return CGSize(width: Constants.widthItem, height: Constants.widthItem)
     }
     
     // Set the distance between cells
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: Const.spacingVertical,
-                     left: Const.spasing / (Const.item + Const.one),
-                     bottom: Const.spacingVertical,
-                     right: Const.spasing / (Const.item + Const.one))
+        UIEdgeInsets(top: Constants.cellSpacingVertical,
+                     left: Constants.cellSpasing / (Constants.item + Constants.one),
+                     bottom: Constants.cellSpacingVertical,
+                     right: Constants.cellSpasing / (Constants.item + Constants.one))
     }
 }
 
 extension FavoriteArtist {
     
     // Constants
-    private enum Const {
-        static let spacingVertical: CGFloat = 30.0
-        static let spacingHorizontal: CGFloat = 10
+    private enum Constants {
+        static let atributedStringKey = "attributedTitle"
+        static let cellIdentifire = "FavoriteCell"
+        static let segueIdentifire = "showEvent"
+        static let keyPathName = "name"
+        static let cellSpacingVertical: CGFloat = 30.0
         static var widthItem: CGFloat = .zero
         static let item: CGFloat = 2.0
-        static let spasing: CGFloat = 40
+        static let cellSpasing: CGFloat = 40
         static let spasingBetweenItems: CGFloat = 20
         static let one: CGFloat = 1
-        static let five: CGFloat = 5
         static let color = UIColor(named: "Color")
         static let allEvents: String = "Все"
         static let pastEvents: String = "Прошедшие"

@@ -4,19 +4,23 @@ import WebKit
 final class WebViewController: UIViewController {
     // MARK: Constants
     
-    private enum Const {
+    private enum Constants {
         static let withDuration: CGFloat = 0.5
         static let alphaProgressView: CGFloat = 1
+        static let progressView: Float = 1
+        static let keyPath = "estimatedProgress"
+        static let duration: TimeInterval = 3
+        static let emptyString = ""
     }
     
     // MARK: IBOutlets
     
-    @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet private weak var progressView: UIProgressView!
+    @IBOutlet private weak var webView: WKWebView!
     
     // MARK: Public Properties
     
-    var eventURL = ""
+    var eventURL = Constants.emptyString
     
     // MARK: Lifecycle
     
@@ -29,8 +33,8 @@ final class WebViewController: UIViewController {
                              options: .new,
                              context: nil)
         webView.navigationDelegate = self
-        UIView.animate(withDuration: 3) {
-            self.progressView.setProgress(1.0, animated: true)
+        UIView.animate(withDuration: Constants.duration) {
+            self.progressView.setProgress(Constants.progressView, animated: true)
         }
     }
     
@@ -42,7 +46,7 @@ final class WebViewController: UIViewController {
                                change: [NSKeyValueChangeKey : Any]?,
                                context: UnsafeMutableRawPointer?) {
         
-        if keyPath == "estimatedProgress" {
+        if keyPath == Constants.keyPath {
             progressView?.progress = Float(webView?.estimatedProgress ?? .zero)
         }
     }
@@ -59,14 +63,14 @@ final class WebViewController: UIViewController {
     
     // Display progressView
     private func showProgressView() {
-        UIView.animate(withDuration: TimeInterval(Const.withDuration), delay: .zero, options: .curveEaseInOut, animations: {
-            self.progressView?.alpha = Const.alphaProgressView
+        UIView.animate(withDuration: TimeInterval(Constants.withDuration), delay: .zero, options: .curveEaseInOut, animations: {
+            self.progressView?.alpha = Constants.alphaProgressView
         }, completion: nil)
     }
     
     // Hide progressView
     private func hideProgressView() {
-        UIView.animate(withDuration: TimeInterval(Const.withDuration), delay: .zero, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: TimeInterval(Constants.withDuration), delay: .zero, options: .curveEaseInOut, animations: {
             self.progressView?.alpha = .zero
         }, completion: nil)
     }
