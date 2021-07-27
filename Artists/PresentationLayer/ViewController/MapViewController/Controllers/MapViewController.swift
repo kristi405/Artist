@@ -5,7 +5,7 @@ import CoreLocation
 final class MapViewController: UIViewController {
     // MARK: IBOutlets
 
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet private weak var mapView: MKMapView!
     
     // MARK: Private properties
     
@@ -25,7 +25,6 @@ final class MapViewController: UIViewController {
         super.viewWillAppear(animated)
         
         mapManager.setupEventMarks(events: events, mapView: mapView)
-        
     }
     
     override func viewDidLoad() {

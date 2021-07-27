@@ -43,7 +43,7 @@ class EventVC: UITableViewController {
     // MARK:  Private Methods
     
     private func getIndexPath(sender: UIButton) {
-        let cell = sender.superview?.superview as! EventCell
+        guard let cell = sender.superview?.superview as? EventCell else {return}
         let indexPath = self.tableView.indexPath(for: cell)
         self.indexPath = indexPath?.row
     }
@@ -60,10 +60,10 @@ class EventVC: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMap" {
             guard let indexPath = self.indexPath else {return}
-            let mapVC = segue.destination as! MapEvents
+            guard let mapVC = segue.destination as? MapEvents else {return}
             mapVC.event = events[indexPath]
         } else if segue.identifier == "showWeb" {
-            let webVC = segue.destination as! WebViewController
+            guard let webVC = segue.destination as? WebViewController else {return}
             guard let indexPath = self.indexPath else {return}
             webVC.eventURL = events[indexPath].url
         }

@@ -128,7 +128,7 @@ final class FavoriteArtist: UICollectionViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.segueIdentifire {
-            let eventVC = segue.destination as! EventVC
+            guard let eventVC = segue.destination as? EventVC else {return}
             guard let events = self.events else {return}
             eventVC.events = events
         }

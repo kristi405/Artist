@@ -41,7 +41,7 @@ final class SearchViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.segueIdentifire {
-            let webVC = segue.destination as! WebViewController
+            guard let webVC = segue.destination as? WebViewController else {return}
             webVC.eventURL = currentArtistFavorite?.url ?? Constants.enterURL
         }
     }
