@@ -34,10 +34,11 @@ final class FavoriteArtist: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.barTintColor = Constants.color
+
         navigationController?.navigationBar.prefersLargeTitles = true
         collectionView.backgroundColor = Constants.color
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.tintColor = .black
     }
     
     // MARK: IBActions

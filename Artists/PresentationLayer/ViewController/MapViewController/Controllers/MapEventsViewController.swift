@@ -25,7 +25,7 @@ final class MapEvents: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tabBarController?.tabBar.barTintColor = Constants.backgroundColor
         routeButton.layer.cornerRadius = Constants.cornerRadius
         mapView.delegate = self
@@ -41,6 +41,7 @@ final class MapEvents: UIViewController {
         }
         guard let event = event else {return}
         mapManager.setupEventMark(event: event, mapView: mapView)
+        
     }
     
     // MARK: Actions

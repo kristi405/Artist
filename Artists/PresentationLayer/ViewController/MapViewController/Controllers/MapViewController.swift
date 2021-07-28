@@ -5,7 +5,7 @@ import CoreLocation
 final class MapViewController: UIViewController {
     // MARK: IBOutlets
 
-    @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet weak var mapView: MKMapView!
     
     // MARK: Private properties
     

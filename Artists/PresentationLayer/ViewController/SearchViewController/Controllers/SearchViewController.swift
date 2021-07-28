@@ -29,8 +29,8 @@ final class SearchViewController: UIViewController {
         
         view.backgroundColor = Constants.backgroundColor
         navigationController?.navigationBar.barTintColor = Constants.backgroundColor
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
         tabBarController?.tabBar.barTintColor = Constants.tabBarColor
+        tabBarController?.tabBar.tintColor = .black
         image.contentMode = .scaleAspectFit
         customBatton()
         searchArtist()
