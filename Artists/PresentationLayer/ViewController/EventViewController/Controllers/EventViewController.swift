@@ -1,15 +1,6 @@
 import UIKit
 
 class EventVC: UITableViewController {
-    // MARK: Constants
-    
-    private enum Constants {
-        static let borderWidthOfCell: CGFloat = 0.2
-        static let shadowRadius: CGFloat = 7
-        static let heightForRow: CGFloat = 100
-        static let color = UIColor(named: "Color")
-    }
-    
     // MARK:  Public Properties
     
     var events = [Event]()
@@ -18,26 +9,25 @@ class EventVC: UITableViewController {
     
     private var currentEvent: Event?
     private var indexPath: Int?
-    private var eventCell = EventCell()
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.backgroundColor = Constants.color
+        tableView.backgroundColor = R.color.color()
     }
     
     // MARK: IBActions
     
     @IBAction func showMap(_ sender: UIButton) {
         getIndexPath(sender: sender)
-        self.performSegue(withIdentifier: "showMap", sender: self)
+        self.performSegue(withIdentifier: R.segue.eventVC.showMap, sender: self)
     }
     
     @IBAction func showWeb(_ sender: UIButton) {
         getIndexPath(sender: sender)
-        self.performSegue(withIdentifier: "showWeb", sender: self)
+        self.performSegue(withIdentifier: R.segue.eventVC.showWeb, sender: self)
     }
     
     // MARK:  Private Methods
@@ -58,15 +48,14 @@ class EventVC: UITableViewController {
     // MARK: Navigations segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showMap" {
-            guard let indexPath = self.indexPath else {return}
-            guard let mapVC = segue.destination as? MapEvents else {return}
-            mapVC.event = events[indexPath]
-        } else if segue.identifier == "showWeb" {
-            guard let webVC = segue.destination as? WebViewController else {return}
-            guard let indexPath = self.indexPath else {return}
-            webVC.eventURL = events[indexPath].url
-        }
+        guard segue.identifier == Constants.segueShowMap else {return}
+        guard let indexPath = self.indexPath else {return}
+        guard let mapVC = segue.destination as? MapEvents else {return}
+        mapVC.event = events[indexPath]
+        guard segue.identifier == Constants.segueShowWeb else {return}
+        guard let webVC = segue.destination as? WebViewController else {return}
+        guard let indexPath = self.indexPath else {return}
+        webVC.eventURL = events[indexPath].url
     }
 
     // MARK: - Table view data source
@@ -76,18 +65,31 @@ class EventVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: Constants.reuseIdentifire, for: indexPath)
         
         if let eventCell = cell as? EventCell {
             let event = events[indexPath.row]
             eventCell.configureCell(event: event)
             castomCell(cell: eventCell)
-            eventCell.backgroundColor = Constants.color
+            eventCell.backgroundColor = R.color.color()
         }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constants.heightForRow
+    }
+}
+
+extension EventVC {
+    // MARK: Constants
+    
+    private enum Constants {
+        static let borderWidthOfCell: CGFloat = 0.2
+        static let shadowRadius: CGFloat = 7
+        static let heightForRow: CGFloat = 100
+        static let segueShowMap = "showMap"
+        static let segueShowWeb = "showWeb"
+        static let reuseIdentifire = "cell"
     }
 }

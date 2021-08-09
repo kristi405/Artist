@@ -1,5 +1,4 @@
 import UIKit
-import RealmSwift
 
 final class FavoriteCell: UICollectionViewCell {
     // MARK: IBOutlets

@@ -2,17 +2,6 @@ import UIKit
 import WebKit
 
 final class WebViewController: UIViewController {
-    // MARK: Constants
-    
-    private enum Constants {
-        static let withDuration: CGFloat = 0.5
-        static let alphaProgressView: CGFloat = 1
-        static let progressView: Float = 1
-        static let keyPath = "estimatedProgress"
-        static let duration: TimeInterval = 3
-        static let emptyString = ""
-    }
-    
     // MARK: IBOutlets
     
     @IBOutlet private weak var progressView: UIProgressView!
@@ -90,5 +79,18 @@ extension WebViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         hideProgressView()
+    }
+}
+
+extension WebViewController {
+    // MARK: Constants
+    
+    private enum Constants {
+        static let withDuration: CGFloat = 0.5
+        static let alphaProgressView: CGFloat = 1
+        static let progressView: Float = 1
+        static let keyPath = "estimatedProgress"
+        static let duration: TimeInterval = 3
+        static let emptyString = ""
     }
 }

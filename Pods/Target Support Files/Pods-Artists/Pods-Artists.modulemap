@@ -1,6 +1,0 @@
-framework module Pods_Artists {
-  umbrella header "Pods-Artists-umbrella.h"
-
-  export *
-  module * { export * }
-}

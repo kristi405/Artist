@@ -27,9 +27,9 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Constants.backgroundColor
-        navigationController?.navigationBar.barTintColor = Constants.backgroundColor
-        tabBarController?.tabBar.barTintColor = Constants.tabBarColor
+        view.backgroundColor = R.color.color()
+        navigationController?.navigationBar.barTintColor = R.color.color()
+        tabBarController?.tabBar.barTintColor = R.color.backgroundColor()
         tabBarController?.tabBar.tintColor = .black
         image.contentMode = .scaleAspectFit
         customBatton()
@@ -52,11 +52,11 @@ final class SearchViewController: UIViewController {
     @IBAction private func buttonPressed(_ sender: UIButton) {
         if !isContains() {
             favoriteVC.saveArtist()
-            sender.setImage(image: Constants.redHeart, leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
+            sender.setImage(image: R.image.redHeart(), leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
             sender.setTitle(Constants.removeFromFavorits, for: .normal)
         } else {
             favoriteVC.deleteArtistFromButton()
-            sender.setImage(image: Constants.whiteHeart, leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
+            sender.setImage(image: R.image.whHeart(), leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
             sender.setTitle(Constants.addToFavorits, for: .normal)
         }
     }
@@ -139,10 +139,10 @@ final class SearchViewController: UIViewController {
     private func checkArtistsConteins() {
         if !isContains() {
             button.setTitle(Constants.addToFavorits, for: .normal)
-            button.setImage(image: Constants.whiteHeart, leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
+            button.setImage(image: R.image.whHeart(), leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
         } else {
             button.setTitle(Constants.removeFromFavorits, for: .normal)
-            button.setImage(image: Constants.redHeart, leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
+            button.setImage(image: R.image.redHeart(), leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
         }
     }
 }
@@ -191,10 +191,6 @@ extension SearchViewController {
         static let enterTheName = "Нужно ввести имя"
         static let leadingAnchorOfImage: CGFloat = -4
         static let heightAnchorOfImage: CGFloat = 28
-        static let whiteHeart: UIImage = #imageLiteral(resourceName: "whHeart")
-        static let redHeart: UIImage = #imageLiteral(resourceName: "redHeart1")
-        static let backgroundColor = UIColor(named: "Color")
-        static let tabBarColor = UIColor(named: "BackgroundColor")
     }
 }
 

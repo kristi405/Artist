@@ -36,7 +36,7 @@ final class FavoriteArtist: UICollectionViewController {
         super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = true
-        collectionView.backgroundColor = Constants.color
+        collectionView.backgroundColor = R.color.color()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.tintColor = .black
     }
@@ -84,7 +84,7 @@ final class FavoriteArtist: UICollectionViewController {
             let mapViewController = self.tabBarController?.viewControllers?.last as? MapViewController
             guard let mapVC = mapViewController else {return}
             mapVC.events = currentEvents
-            self.performSegue(withIdentifier: Constants.segueIdentifire, sender: self)
+            self.performSegue(withIdentifier: R.segue.favoriteArtist.showEvent, sender: self)
             guard let annotation = mapVC.annotations else {return}
             mapVC.mapView.removeAnnotations(annotation)
         }
@@ -167,7 +167,7 @@ extension FavoriteArtist {
     // MARK:  UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let artists = artists else {return 1}
+        guard let artists = artists else {return .zero}
         return artists.count
     }
     
@@ -226,7 +226,6 @@ extension FavoriteArtist {
         static let cellSpasing: CGFloat = 40
         static let spasingBetweenItems: CGFloat = 20
         static let one: CGFloat = 1
-        static let color = UIColor(named: "Color")
         static let allEvents: String = "Все"
         static let pastEvents: String = "Прошедшие"
         static let upcomingEvents: String = "Предстоящие"

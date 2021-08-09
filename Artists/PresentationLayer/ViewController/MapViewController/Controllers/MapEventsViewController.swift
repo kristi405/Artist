@@ -20,13 +20,14 @@ final class MapEvents: UIViewController {
     // MARK: Public Properties
     
     var event: Event?
+    var didUpdateUserLocation = false
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBarController?.tabBar.barTintColor = Constants.backgroundColor
+        tabBarController?.tabBar.barTintColor = R.color.color()
         routeButton.layer.cornerRadius = Constants.cornerRadius
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -124,14 +125,14 @@ final class MapEvents: UIViewController {
 // MARK: - Extensions CLLocationManager Delegate and MKMapView Delegate
 
 extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
-    
     // Show User location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         defer { currentLocation = locations.last }
-        
+
         if currentLocation == nil {
             guard let mapView = self.mapView else {return}
             mapManager.showUserLocation(mapView: mapView)
+            self.didUpdateUserLocation = true
         }
     }
     
@@ -161,9 +162,8 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 }
 
-// MARK: Constants
-
 extension MapEvents {
+    // MARK: Constants
     private enum Constants {
         static let ok = "ОК"
         static let canNotBuildRote = "Невозможно построить маршрут"
@@ -172,7 +172,6 @@ extension MapEvents {
         static let roteLineWidth: CGFloat = 4.0
         static let latitude: Double = 53
         static let longitude: Double = 29
-        static let backgroundColor = UIColor(named: "Color")
     }
 }
 

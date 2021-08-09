@@ -1,4 +1,5 @@
 import UIKit
+import Rswift
 
 extension UIButton {
     // MARK: Constants
@@ -8,7 +9,6 @@ extension UIButton {
         static let goToButtonHaightAnchor: CGFloat = 15
         static let borderWidth: CGFloat = 0.3
         static let shadowRadius: CGFloat = 10
-        static let goTo: UIImage = #imageLiteral(resourceName: "goOver")
         static let cornerRadius: CGFloat = 10
         static let goToText: String = "Перейти"
         static let shadowRadiusButton: CGFloat = 3
@@ -19,7 +19,7 @@ extension UIButton {
     // MARK: Set Buttons
     
     // Set image on button on the search screan
-    func setImage(image: UIImage, leadingAnchor: CGFloat, heightAnchor: CGFloat) {
+    func setImage(image: UIImage?, leadingAnchor: CGFloat, heightAnchor: CGFloat) {
         let buttonImage = UIImageView()
         buttonImage.image = image
         buttonImage.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,7 @@ extension UIButton {
     // Set image on button on event screan
     func setGoOverImage() {
         let buttonImage = UIImageView()
-        buttonImage.image = Const.goTo
+        buttonImage.image = R.image.goOver()
         buttonImage.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(buttonImage)
         NSLayoutConstraint.activate([
@@ -58,7 +58,7 @@ extension UIButton {
     
     func searchVCBattons(button: UIButton) {
         button.isHidden = true
-        button.backgroundColor = UIColor(named: "BackgroundColor")
+        button.backgroundColor = R.color.backgroundColor()
         button.layer.borderWidth = Const.borderWidth
         button.layer.shadowColor = UIColor.blue.cgColor
         button.layer.shadowRadius = Const.shadowRadius

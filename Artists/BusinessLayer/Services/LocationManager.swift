@@ -39,6 +39,7 @@ final class LocationManager {
                 annotation.coordinate = placemarkLocation.coordinate
                 self.placeCoordinate = placemarkLocation.coordinate
                 
+                mapView.setCenter(mapView.centerCoordinate, animated: false)
                 mapView.selectAnnotation(annotation, animated: true)
                 mapView.showAnnotations([annotation], animated: true)
             }

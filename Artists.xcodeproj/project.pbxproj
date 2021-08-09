@@ -28,7 +28,8 @@
 		01EE093D261E13FD001C330C /* ParsingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EE093C261E13FD001C330C /* ParsingService.swift */; };
 		01EE093F261E150B001C330C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EE093E261E150B001C330C /* GlobalConstants.swift */; };
 		01F029B3259F85B8004AB24F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F029B2259F85B8004AB24F /* SearchViewController.swift */; };
-		6D4FC9AC26530A06006F81F0 /* Pods_Artists.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF977FC7C093542802B9017 /* Pods_Artists.framework */; };
+		6D23D80B26BC8B6900FB8AF7 /* Pods_Artists.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF977FC7C093542802B9017 /* Pods_Artists.framework */; };
+		6D6B00B326BDA44100656881 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6B00B226BDA44100656881 /* R.generated.swift */; };
 		6D9C21B326613865003F17DE /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9C21B226613865003F17DE /* EventViewController.swift */; };
 		6D9C21B5266138C5003F17DE /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9C21B4266138C5003F17DE /* EventCell.swift */; };
 		6D9C21B7267CF1DD003F17DE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9C21B6267CF1DD003F17DE /* MapViewController.swift */; };
@@ -59,6 +60,7 @@
 		01EE093E261E150B001C330C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		01F029B2259F85B8004AB24F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		6CF977FC7C093542802B9017 /* Pods_Artists.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Artists.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D6B00B226BDA44100656881 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		6D9C21B226613865003F17DE /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		6D9C21B4266138C5003F17DE /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		6D9C21B6267CF1DD003F17DE /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -71,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D4FC9AC26530A06006F81F0 /* Pods_Artists.framework in Frameworks */,
+				6D23D80B26BC8B6900FB8AF7 /* Pods_Artists.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				01978DE725558DB700CA17FD /* Assets.xcassets */,
+				6D6B00B226BDA44100656881 /* R.generated.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 			buildConfigurationList = 01978DEF25558DB700CA17FD /* Build configuration list for PBXNativeTarget "Artists" */;
 			buildPhases = (
 				CFB094943A1FA5293FD1C208 /* [CP] Check Pods Manifest.lock */,
+				6D23D80426BC5E9E00FB8AF7 /* Rswift */,
 				01978DD725558DB500CA17FD /* Sources */,
 				01978DD825558DB500CA17FD /* Frameworks */,
 				01978DD925558DB500CA17FD /* Resources */,
@@ -406,6 +410,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6D23D80426BC5E9E00FB8AF7 /* Rswift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			name = Rswift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
+		};
 		CFB094943A1FA5293FD1C208 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -461,6 +485,7 @@
 				6D9C21B326613865003F17DE /* EventViewController.swift in Sources */,
 				0112857E256D6E2A00C9557A /* LocationManager.swift in Sources */,
 				01978E0125559A3F00CA17FD /* CurrentArtist.swift in Sources */,
+				6D6B00B326BDA44100656881 /* R.generated.swift in Sources */,
 				01978DFF255599FD00CA17FD /* NetworkServices.swift in Sources */,
 				0142FE9B25596B4E0041672E /* UIButton+extension.swift in Sources */,
 				0142FE9725592EE70041672E /* FavoriteArtistViewController.swift in Sources */,
@@ -501,6 +526,7 @@
 		01978DED25558DB700CA17FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -537,6 +563,7 @@
 				ENABLE_TESTABILITY = YES;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -566,6 +593,7 @@
 		01978DEE25558DB700CA17FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -601,6 +629,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -627,6 +656,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CFTJPS6ZYY;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Artists/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -649,6 +680,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CFTJPS6ZYY;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Artists/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
