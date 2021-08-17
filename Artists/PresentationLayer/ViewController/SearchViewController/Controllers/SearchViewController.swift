@@ -1,5 +1,6 @@
 import UIKit
 import RealmSwift
+import Moya
 
 final class SearchViewController: UIViewController {
     // MARK: IBOutlets
@@ -12,7 +13,6 @@ final class SearchViewController: UIViewController {
     // MARK: Private Properties
     
     private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: Constants.keyPathName, ascending: true)
-    private var networkServices = NetworkServices()
     private var currentArtistFavorite: CurrentArtist?
     private var onComplition: ((CurrentArtist) -> Void)?
     private var favoriteVC = FavoriteArtist()
@@ -21,6 +21,7 @@ final class SearchViewController: UIViewController {
         self.performSearch()
     }
     private var searchController = UISearchController()
+    private let provider = MoyaProvider<MoyaService>()
     
     // MARK: Lifecycle
     
@@ -33,8 +34,8 @@ final class SearchViewController: UIViewController {
         tabBarController?.tabBar.tintColor = .black
         image.contentMode = .scaleAspectFit
         customBatton()
-        searchArtist()
         setupSearchController()
+        searchArtist()
     }
     
     // MARK: Navigations segue
@@ -79,6 +80,7 @@ final class SearchViewController: UIViewController {
         //Get data from url
         DispatchQueue.global().async {
             guard let dataUrl = URL(string: artist.imageURL ?? Constants.enterURL) else {return}
+            
             guard let imageData = try? Data(contentsOf: dataUrl) else {return}
             
             DispatchQueue.main.async {
@@ -161,20 +163,29 @@ extension SearchViewController: UISearchBarDelegate {
         timer.cancel()
         guard let text = self.text else {return}
         if text.count == .zero {
+            labelIsHidden()
             self.searchController.searchBar.placeholder = Constants.enterTheName
         } else if text.count <= Constants.searchTextCount {
             self.searchController.searchBar.searchTextField.text = Constants.enterTheName
             labelIsHidden()
-            self.currentArtistFavorite = nil
         } else {
-            self.networkServices.fetchArtist(artist: text, complition: { currentArtist in
-                self.onComplition?(currentArtist)
-                self.currentArtistFavorite = currentArtist
-                DispatchQueue.main.async {
-                    self.labelIsNotHidden()
-                    self.checkArtistsConteins()
+            self.provider.request(.getArtist(artist: text)) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let artistResponse = try? JSONDecoder().decode(CurrentArtist.self, from: response.data)
+                        guard let currentArtist = artistResponse else {return}
+                        self.onComplition?(currentArtist)
+                        self.currentArtistFavorite = currentArtist
+                        DispatchQueue.main.async {
+                            self.labelIsNotHidden()
+                            self.checkArtistsConteins()
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            })
+            }
         }
     }
 }

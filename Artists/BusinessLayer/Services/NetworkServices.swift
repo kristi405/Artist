@@ -1,41 +1,53 @@
 import Foundation
+import Moya
 
-final class NetworkServices {
-    // MARK: Getting data on the artist
+enum MoyaService {
+    case getArtist(artist: String)
+    case getEvent(artist: String, date: String)
+}
+
+extension MoyaService: TargetType {
+    var baseURL: URL {
+        return URL(string: "https://rest.bandsintown.com")!
+    }
     
-    func fetchArtist(artist: String, complition: @escaping (CurrentArtist)->()) {
-        let urlString = returnArtistURL(artist: artist)
-        guard let url = URL(string: urlString) else {return}
-        let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: url) { data, response, error in
-            guard let data = data else {return}
-            if let currentArtist = ParsingService.parseJSON(forData: data) {
-                complition(currentArtist)
-            }
+    var path: String {
+        switch self {
+        case .getArtist(let artist):
+            return "/artists/\(artist)"
+        case .getEvent(let artist, _):
+            return "/artists/\(artist)/events"
         }
-        task.resume()
     }
     
-    // MARK: We get data on events
-    func fetchEvent(artist: String, date: String, complition: @escaping ([Event])->()) {
-        let urlString = returnEventURL(artist: artist, date: date)
-        guard let url = URL(string: urlString) else {return}
-        let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: url) { data, response, error in
-            guard let data = data else {return}
-            if let currentEvent = ParsingService.parseJSONEvent(forData: data) {
-                complition(currentEvent)
-            }
+    var method: Moya.Method {
+        switch self {
+        case .getArtist:
+            return .get
+        case .getEvent:
+            return .get
         }
-        task.resume()
     }
     
-    // MARK: URL formation
-    func returnArtistURL(artist: String) -> String {
-        return GlobalConstants.baseURL + "/artists/\(artist)?app_id=\(GlobalConstants.apiKey)"
+    var sampleData: Data {
+        switch self {
+        case .getArtist:
+            return Data()
+        case .getEvent:
+            return Data()
+        }
     }
     
-    func returnEventURL(artist: String, date: String) -> String {
-        return GlobalConstants.baseURL + "/artists/\(artist)/events?app_id=\(GlobalConstants.apiKey)&date=\(date)"
+    var task: Task {
+        switch self {
+        case .getArtist:
+            return .requestParameters(parameters: ["app_id": "ccd11757-c148-4587-a813-7e887084b536"], encoding: URLEncoding.queryString)
+        case .getEvent(_, let date):
+            return .requestParameters(parameters: ["app_id": "ccd11757-c148-4587-a813-7e887084b536", "date": "\(date)"], encoding: URLEncoding.queryString)
+        }
+    }
+    
+    var headers: [String : String]? {
+        return ["Content-type": "application/json"]
     }
 }

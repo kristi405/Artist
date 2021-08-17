@@ -1,14 +1,28 @@
-import Foundation
+import UIKit
 
-struct CurrentArtist {
+struct CurrentArtist: Decodable {
     
-    let name: String?
-    let imageURL: String?
-    let url: String?
+    var name: String?
+    var imageURL: String?
+    var url: String?
     
-    init?(artist: Artist) {
-        name = artist.name
-        imageURL = artist.imageURL
-        url = artist.url
+    enum CodingKeys: String, CodingKey {
+        case name
+        case imageURL = "image_url"
+        case url
+    }
+    
+    struct Options: Codable {
+        let displayListenUnit: Bool?
+        
+        enum CodingKeys: String, CodingKey {
+            case displayListenUnit = "display_listen_unit"
+        }
+    }
+    
+    init(name: String?, imageURL: String?, url: String?) {
+        self.name = name
+        self.imageURL = imageURL
+        self.url = url
     }
 }

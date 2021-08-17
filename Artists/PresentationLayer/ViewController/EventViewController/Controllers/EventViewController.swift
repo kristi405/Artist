@@ -48,14 +48,15 @@ class EventVC: UITableViewController {
     // MARK: Navigations segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == Constants.segueShowMap else {return}
-        guard let indexPath = self.indexPath else {return}
-        guard let mapVC = segue.destination as? MapEvents else {return}
-        mapVC.event = events[indexPath]
-        guard segue.identifier == Constants.segueShowWeb else {return}
-        guard let webVC = segue.destination as? WebViewController else {return}
-        guard let indexPath = self.indexPath else {return}
-        webVC.eventURL = events[indexPath].url
+        if segue.identifier == Constants.segueShowMap {
+            guard let indexPath = self.indexPath else {return}
+            guard let mapVC = segue.destination as? MapEvents else {return}
+            mapVC.event = events[indexPath]
+        } else if segue.identifier == "showWeb" {
+            guard let webVC = segue.destination as? WebViewController else {return}
+            guard let indexPath = self.indexPath else {return}
+            webVC.eventURL = events[indexPath].url
+        }
     }
 
     // MARK: - Table view data source

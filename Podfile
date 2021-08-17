@@ -12,5 +12,6 @@ pod 'R.swift'
 pod 'SDWebImage', '~> 5.0'
 pod 'RealmSwift'
 pod 'Realm'
+pod 'Moya', '~> 14.0'
 
 end

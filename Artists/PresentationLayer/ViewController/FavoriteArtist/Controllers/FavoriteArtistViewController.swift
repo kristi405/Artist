@@ -1,11 +1,11 @@
 import UIKit
 import RealmSwift
+import Moya
 
 final class FavoriteArtist: UICollectionViewController {
     // MARK:  Private Properties
     
     private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: Constants.keyPathName, ascending: true)
-    private var networkServices = NetworkServices()
     private var realm: Realm {
         get {
             do {
@@ -19,10 +19,11 @@ final class FavoriteArtist: UICollectionViewController {
         }
     }
     private var events: [Event]?
+    private let provider = MoyaProvider<MoyaService>()
     
     // MARK:  Public Properties
     
-    var favoriteArtist = FavoriteArtists()
+    var favoriteArtist: FavoriteArtists?
     var currentArtist: CurrentArtist?
     
     // MARK: Lifecycle
@@ -41,7 +42,18 @@ final class FavoriteArtist: UICollectionViewController {
         navigationController?.navigationBar.tintColor = .black
     }
     
-    // MARK: IBActions
+    // MARK: Overrade methods
+    
+    // Move to another screen
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.segueIdentifire {
+            guard let eventVC = segue.destination as? EventVC else {return}
+            guard let events = self.events else {return}
+            eventVC.events = events
+        }
+    }
+    
+    // MARK: Private methods
     
     // Choosing an option for a favorite
     private func showAlert(artist: FavoriteArtists) {
@@ -90,30 +102,39 @@ final class FavoriteArtist: UICollectionViewController {
         }
     }
     
+    // Get artist's events
+    private func getEvent(artist: String, date: String) {
+        self.provider.request(.getEvent(artist: artist, date: date)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let eventResponse = try? JSONDecoder().decode([Event].self, from: response.data)
+                    guard let events = eventResponse else {return}
+                    self.events = events
+                    self.sentEvents(currentEvents: events)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     // Сhoose the time of the event: all, past, upcoming
     private func showAlertEvent(artist: FavoriteArtists) {
         let attributedString = NSAttributedString(string: artist.name ?? Constants.all,
                                                   attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .largeTitle), NSAttributedString.Key.foregroundColor: UIColor.black])
+        
         let alertEvent = UIAlertController(title: artist.name, message: Constants.nameAlert, preferredStyle: .actionSheet)
         alertEvent.setValue(attributedString, forKey: Constants.atributedStringKey)
         
         let allEvent = UIAlertAction(title: Constants.allEvents, style: .default) { _ in
-            self.networkServices.fetchEvent(artist: artist.name ?? Constants.all, date: Constants.all) { currentEvent in
-                self.events = currentEvent
-                self.sentEvents(currentEvents: currentEvent)
-            }
+            self.getEvent(artist: artist.name ?? Constants.all, date: Constants.all)
         }
         let pastEvent = UIAlertAction(title: Constants.pastEvents, style: .default) { (past) in
-            self.networkServices.fetchEvent(artist: artist.name ?? Constants.all, date: Constants.past) { currentEvent in
-                self.events = currentEvent
-                self.sentEvents(currentEvents: currentEvent)
-            }
+            self.getEvent(artist: artist.name ?? Constants.all, date: Constants.past)
         }
         let upcomingEvent = UIAlertAction(title: Constants.upcomingEvents, style: .default) { (upcoming) in
-            self.networkServices.fetchEvent(artist: artist.name ?? Constants.all, date: Constants.upcoming) { currentEvent in
-                self.events = currentEvent
-                self.sentEvents(currentEvents: currentEvent)
-            }
+            self.getEvent(artist: artist.name ?? Constants.all, date: Constants.upcoming)
         }
         
         let cencelButton = UIAlertAction(title: Constants.cancel, style: .cancel, handler: nil)
@@ -125,14 +146,6 @@ final class FavoriteArtist: UICollectionViewController {
         
         alertEvent.view.addSubview(UIView())
         present(alertEvent, animated: false, completion: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.segueIdentifire {
-            guard let eventVC = segue.destination as? EventVC else {return}
-            guard let events = self.events else {return}
-            eventVC.events = events
-        }
     }
     
     // MARK:  Public Methods
