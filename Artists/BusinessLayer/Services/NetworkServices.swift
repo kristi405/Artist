@@ -8,7 +8,7 @@ enum MoyaService {
 
 extension MoyaService: TargetType {
     var baseURL: URL {
-        return URL(string: "https://rest.bandsintown.com")!
+        return URL(string: GlobalConstants.baseURL)!
     }
     
     var path: String {
@@ -41,13 +41,20 @@ extension MoyaService: TargetType {
     var task: Task {
         switch self {
         case .getArtist:
-            return .requestParameters(parameters: ["app_id": "ccd11757-c148-4587-a813-7e887084b536"], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: [Constants.appiID: GlobalConstants.apiKey], encoding: URLEncoding.queryString)
         case .getEvent(_, let date):
-            return .requestParameters(parameters: ["app_id": "ccd11757-c148-4587-a813-7e887084b536", "date": "\(date)"], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: [Constants.appiID: GlobalConstants.apiKey, Constants.date: "\(date)"], encoding: URLEncoding.queryString)
         }
     }
     
     var headers: [String : String]? {
-        return ["Content-type": "application/json"]
+        return nil
+    }
+}
+
+extension MoyaService {
+    enum Constants {
+        static let appiID = "app_id"
+        static let date = "date"
     }
 }

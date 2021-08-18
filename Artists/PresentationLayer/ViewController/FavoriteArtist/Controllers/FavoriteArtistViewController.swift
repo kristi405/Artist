@@ -36,7 +36,6 @@ final class FavoriteArtist: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.prefersLargeTitles = true
         collectionView.backgroundColor = R.color.color()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.tintColor = .black
