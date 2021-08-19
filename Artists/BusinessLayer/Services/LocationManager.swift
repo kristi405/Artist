@@ -9,6 +9,7 @@ final class LocationManager {
     }
     
     // MARK:  Properties
+    
     private let locationManager = CLLocationManager()
     private var placeCoordinate: CLLocationCoordinate2D?
     

@@ -19,7 +19,7 @@ final class FavoriteArtist: UICollectionViewController {
         }
     }
     private var events: [Event]?
-    private let provider = MoyaProvider<MoyaService>()
+    private let artistService = ArtistService()
     
     // MARK:  Public Properties
     
@@ -103,18 +103,12 @@ final class FavoriteArtist: UICollectionViewController {
     
     // Get artist's events
     private func getEvent(artist: String, date: String) {
-        self.provider.request(.getEvent(artist: artist, date: date)) { result in
-            switch result {
-            case .success(let response):
-                do {
-                    let eventResponse = try? JSONDecoder().decode([Event].self, from: response.data)
-                    guard let events = eventResponse else {return}
-                    self.events = events
-                    self.sentEvents(currentEvents: events)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+        let name = GetArtistName(name: artist)
+        let date = GetDate(date: date)
+        
+        artistService.getEvents(artist: name, date: date) { events in
+            self.events = events
+            self.sentEvents(currentEvents: events)
         }
     }
     

@@ -21,7 +21,7 @@ final class SearchViewController: UIViewController {
         self.performSearch()
     }
     private var searchController = UISearchController()
-    private let provider = MoyaProvider<MoyaService>()
+    private let artistService = ArtistService()
     
     // MARK: Lifecycle
     
@@ -155,7 +155,7 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Checking the number of entered characters in the search string
         timer.activate()
-        self.text = searchText
+        text = searchText
     }
     
     // logic of request artist and view of search screan
@@ -164,26 +164,18 @@ extension SearchViewController: UISearchBarDelegate {
         guard let text = self.text else {return}
         if text.count == .zero {
             labelIsHidden()
-            self.searchController.searchBar.placeholder = Constants.enterTheName
+            searchController.searchBar.placeholder = Constants.enterTheName
         } else if text.count <= Constants.searchTextCount {
-            self.searchController.searchBar.searchTextField.text = Constants.enterTheName
+            searchController.searchBar.searchTextField.text = Constants.enterTheName
             labelIsHidden()
         } else {
-            self.provider.request(.getArtist(artist: text)) { result in
-                switch result {
-                case .success(let response):
-                    do {
-                        let artistResponse = try? JSONDecoder().decode(CurrentArtist.self, from: response.data)
-                        guard let currentArtist = artistResponse else {return}
-                        self.onComplition?(currentArtist)
-                        self.currentArtistFavorite = currentArtist
-                        DispatchQueue.main.async {
-                            self.labelIsNotHidden()
-                            self.checkArtistsConteins()
-                        }
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
+            let name = GetArtistName(name: text)
+            artistService.getArtist(artist: name) { currentArtist in
+                self.onComplition?(currentArtist)
+                self.currentArtistFavorite = currentArtist
+                DispatchQueue.main.async {
+                    self.labelIsNotHidden()
+                    self.checkArtistsConteins()
                 }
             }
         }
