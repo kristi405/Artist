@@ -4,7 +4,7 @@ final class AutosearchTimer {
     // MARK: Constants
     
     private enum Const {
-        static let delay: TimeInterval = 1.5
+        static let delay: TimeInterval = 2.5
     }
     
     // MARK: Private Properties

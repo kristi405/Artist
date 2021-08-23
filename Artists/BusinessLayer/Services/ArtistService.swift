@@ -12,20 +12,22 @@ class ArtistService {
     // MARK: Public Methods
     
     // Request to get Artist
-    public func getArtist(artist: GetArtistName, completion: @escaping (CurrentArtist) -> Void, callBack: @escaping (UIAlertController) -> ()) {
+    public func getArtist(artist: GetArtistName, completion: @escaping (CurrentArtist) -> Void, completionError: @escaping (UIAlertController) -> ()) {
         request = Request.getArtist(artist: artist)
         guard let request = request else {return}
         
         NetworkManager.shered.request(target: request, model: CurrentArtist.self) { result in
-            
+
             switch result {
             case .success(let response):
                 completion(response)
             case .failure(let error):
                 print(error.localizedDescription)
             }
-        } callBack: { alert in
-            callBack(alert)
+        } completionError: { error in
+            guard let errorDescription = error.errorDescription else {return}
+            let alert = self.errorAlert(message: errorDescription)
+            completionError(alert)
         }
     }
     
@@ -42,8 +44,26 @@ class ArtistService {
             case .failure(let error):
                 print(error.localizedDescription)
             }
-        }  callBack: { alert in
-            print(alert)
+        } completionError: { error in
+            print(error.localizedDescription)
         }
+    }
+    
+    private func errorAlert(message: String) -> UIAlertController {
+        let alert = UIAlertController(title: Constants.alertTitle, message: "\(message)", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: Constants.okButtonTitle, style: .cancel)
+        alert.addAction(okAction)
+        
+        return alert
+    }
+}
+
+// MARK: Extention
+
+extension ArtistService {
+    enum Constants {
+        static let alertTitle = "Ошибка"
+        static let okButtonTitle = "Ok"
     }
 }

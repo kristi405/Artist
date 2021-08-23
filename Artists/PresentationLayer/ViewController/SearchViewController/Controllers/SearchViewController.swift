@@ -178,8 +178,10 @@ extension SearchViewController: UISearchBarDelegate {
                     self.labelIsNotHidden()
                     self.checkArtistsConteins()
                 }
-            } callBack: { alert in
+            } completionError: { alert in
+                self.labelIsHidden()
                 self.present(alert, animated: true, completion: nil)
+                self.searchController.searchBar.text = ""
             }
         }
     }

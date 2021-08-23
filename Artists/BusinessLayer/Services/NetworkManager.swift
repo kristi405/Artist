@@ -18,7 +18,7 @@ public final class NetworkManager {
     
     // MARK: Public Method
     
-    public func request<T: TargetType, U: Decodable>(target: T, model: U.Type, completion: @escaping (Result<U, Error>) -> Void, callBack: @escaping (UIAlertController) ->()) {
+    func request<T: TargetType, U: Decodable>(target: T, model: U.Type, completion: @escaping (Result<U, Error>) -> Void, completionError: @escaping (LocalizedError) -> ()) {
         let provider = networkProvider
         
         provider.request(MultiTarget(target)) { [weak self] result in
@@ -28,24 +28,14 @@ public final class NetworkManager {
             case .success(let response):
                 do {
                     let response = try? response.map(model, using: self.decoder)
-                    guard let artist = response else {
-                        let alert = self.errorAlert()
-                        callBack(alert)
-                        return}
+                    guard let artist = response else { completionError(Errors.artistNotFound)
+                        return
+                    }
                     completion(.success(artist))
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
-    }
-    
-    private func errorAlert() -> UIAlertController {
-        let alert = UIAlertController(title: "Ошибка", message: "Такого Артиста не существует", preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "Ok", style: .cancel)
-        alert.addAction(okAction)
-        
-        return alert
     }
 }
