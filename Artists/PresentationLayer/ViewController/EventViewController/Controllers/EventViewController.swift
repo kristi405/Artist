@@ -52,7 +52,7 @@ class EventVC: UITableViewController {
             guard let indexPath = self.indexPath else {return}
             guard let mapVC = segue.destination as? MapEvents else {return}
             mapVC.event = events[indexPath]
-        } else if segue.identifier == "showWeb" {
+        } else if segue.identifier == Constants.segueShowWeb {
             guard let webVC = segue.destination as? WebViewController else {return}
             guard let indexPath = self.indexPath else {return}
             webVC.eventURL = events[indexPath].url

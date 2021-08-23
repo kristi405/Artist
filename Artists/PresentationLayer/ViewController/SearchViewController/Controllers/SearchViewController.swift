@@ -64,6 +64,8 @@ final class SearchViewController: UIViewController {
     
     // MARK: BusinessLogic
     
+//  
+    
     // Send a request to find an artist
     private func searchArtist() {
         self.onComplition = { currentArtist in
@@ -80,7 +82,6 @@ final class SearchViewController: UIViewController {
         //Get data from url
         DispatchQueue.global().async {
             guard let dataUrl = URL(string: artist.imageURL ?? Constants.enterURL) else {return}
-            
             guard let imageData = try? Data(contentsOf: dataUrl) else {return}
             
             DispatchQueue.main.async {
@@ -177,6 +178,8 @@ extension SearchViewController: UISearchBarDelegate {
                     self.labelIsNotHidden()
                     self.checkArtistsConteins()
                 }
+            } callBack: { alert in
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }

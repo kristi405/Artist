@@ -12,7 +12,7 @@ class ArtistService {
     // MARK: Public Methods
     
     // Request to get Artist
-    public func getArtist(artist: GetArtistName, completion: @escaping(CurrentArtist) -> Void) {
+    public func getArtist(artist: GetArtistName, completion: @escaping (CurrentArtist) -> Void, callBack: @escaping (UIAlertController) -> ()) {
         request = Request.getArtist(artist: artist)
         guard let request = request else {return}
         
@@ -24,6 +24,8 @@ class ArtistService {
             case .failure(let error):
                 print(error.localizedDescription)
             }
+        } callBack: { alert in
+            callBack(alert)
         }
     }
     
@@ -40,6 +42,8 @@ class ArtistService {
             case .failure(let error):
                 print(error.localizedDescription)
             }
+        }  callBack: { alert in
+            print(alert)
         }
     }
 }
