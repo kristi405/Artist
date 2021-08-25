@@ -42,7 +42,6 @@ final class MapEvents: UIViewController {
         }
         guard let event = event else {return}
         mapManager.setupEventMark(event: event, mapView: mapView)
-        
     }
     
     // MARK: Actions

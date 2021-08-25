@@ -7,12 +7,14 @@ final class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
+    
     // MARK: Private properties
     
     private var currentLocation: CLLocation?
-    private var locationManager: CLLocationManager?
+    private var locationManager = CLLocationManager()
     private let mapManager = LocationManager()
     private let annotationIdentifier = "annotationIdentifier"
+    private var didUpdateUserLocation = false
     
     // MARK: Public properties
     
@@ -24,22 +26,23 @@ final class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        mapManager.setupEventMarks(events: events, mapView: mapView)
+        mapManager.setupEventMarks(events: events, mapView: mapView, completion: { annotations in
+            self.annotations = annotations
+        })
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(events)
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
         locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         if CLLocationManager.locationServicesEnabled() {
-            locationManager?.requestWhenInUseAuthorization()
-            locationManager?.startUpdatingLocation()
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
         }
     }
 }
@@ -61,7 +64,8 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         } else {
             annotationView?.annotation = annotation
         }
-        self.annotations = annotation as? [MKAnnotation]
+
+        self.annotations?.append(annotation)
         return annotationView
     }
 }

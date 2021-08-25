@@ -12,22 +12,20 @@ final class LocationManager {
     
     private let locationManager = CLLocationManager()
     private var placeCoordinate: CLLocationCoordinate2D?
+//    private let mapVC = MapViewController()
     
     // set a marker on the map
-    func setupEventMarks(events: [Event], mapView: MKMapView) {
-        
+    func setupEventMarks(events: [Event], mapView: MKMapView, completion: @escaping ([MKAnnotation]) -> ()) {
         for event in events {
             guard let location = event.venue?.city else {return}
             
             let geocoder = CLGeocoder()
             geocoder.geocodeAddressString(location) { (placemarks, error) in
                 if let error = error {
-                    print(error)
-                    return
-                }
+                    print(error.localizedDescription)
+                    return }
                 
                 guard let placemarks = placemarks else {return}
-                
                 let placemark = placemarks.first
                 
                 let annotation = MKPointAnnotation()
@@ -40,6 +38,8 @@ final class LocationManager {
                 annotation.coordinate = placemarkLocation.coordinate
                 self.placeCoordinate = placemarkLocation.coordinate
                 
+                completion([annotation])
+                mapView.addAnnotations([annotation])
                 mapView.setCenter(mapView.centerCoordinate, animated: false)
                 mapView.selectAnnotation(annotation, animated: true)
                 mapView.showAnnotations([annotation], animated: true)
@@ -53,7 +53,7 @@ final class LocationManager {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(location) { (placemarks, error) in
             if let error = error {
-                print(error)
+                print(error.localizedDescription)
                 return
             }
             
@@ -71,6 +71,7 @@ final class LocationManager {
             annotation.coordinate = placemarkLocation.coordinate
             self.placeCoordinate = placemarkLocation.coordinate
             
+            mapView.addAnnotation(annotation)
             mapView.selectAnnotation(annotation, animated: true)
             mapView.showAnnotations([annotation], animated: true)
         }

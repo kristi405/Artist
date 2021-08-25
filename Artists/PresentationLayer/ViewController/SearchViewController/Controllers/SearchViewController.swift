@@ -63,9 +63,7 @@ final class SearchViewController: UIViewController {
     }
     
     // MARK: BusinessLogic
-    
-//  
-    
+
     // Send a request to find an artist
     private func searchArtist() {
         self.onComplition = { currentArtist in

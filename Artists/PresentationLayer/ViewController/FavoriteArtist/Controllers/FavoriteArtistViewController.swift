@@ -25,6 +25,7 @@ final class FavoriteArtist: UICollectionViewController {
     
     var favoriteArtist: FavoriteArtists?
     var currentArtist: CurrentArtist?
+    var mapVC = MapViewController()
     
     // MARK: Lifecycle
     
@@ -94,10 +95,18 @@ final class FavoriteArtist: UICollectionViewController {
         DispatchQueue.main.async {
             let mapViewController = self.tabBarController?.viewControllers?.last as? MapViewController
             guard let mapVC = mapViewController else {return}
-            mapVC.events = currentEvents
+            if mapVC.events.isEmpty == true {
+                mapVC.events = currentEvents
+                print("1111")
+            } else {
+                mapVC.events = []
+                guard let annotation = mapVC.annotations else {return}
+                mapVC.mapView.removeAnnotations(annotation)
+                print("2222")
+                mapVC.events = currentEvents
+                print("3333")
+            }
             self.performSegue(withIdentifier: R.segue.favoriteArtist.showEvent, sender: self)
-            guard let annotation = mapVC.annotations else {return}
-            mapVC.mapView.removeAnnotations(annotation)
         }
     }
     

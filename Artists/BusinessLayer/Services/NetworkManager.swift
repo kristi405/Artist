@@ -4,14 +4,14 @@ import Moya
 public final class NetworkManager {
     // MARK: Properties
     
-    public static let shered = NetworkManager()
+    static let shered = NetworkManager()
     
     private let decoder: JSONDecoder
     private lazy var networkProvider: MoyaProvider<MultiTarget> = MoyaProvider<MultiTarget>(stubClosure: MoyaProvider.neverStub)
     
     // MARK: Initialization
 
-    init() {
+    private init() {
         let decoder = JSONDecoder()
         self.decoder = decoder
     }
