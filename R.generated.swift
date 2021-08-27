@@ -327,8 +327,8 @@ struct R: Rswift.Validatable {
   struct reuseIdentifier {
     /// Reuse identifier `FavoriteCell`.
     static let favoriteCell: Rswift.ReuseIdentifier<FavoriteCell> = Rswift.ReuseIdentifier(identifier: "FavoriteCell")
-    /// Reuse identifier `cell`.
-    static let cell: Rswift.ReuseIdentifier<EventCell> = Rswift.ReuseIdentifier(identifier: "cell")
+    /// Reuse identifier `eventCell`.
+    static let eventCell: Rswift.ReuseIdentifier<EventCell> = Rswift.ReuseIdentifier(identifier: "eventCell")
 
     fileprivate init() {}
   }

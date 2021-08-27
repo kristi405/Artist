@@ -40,8 +40,7 @@ final class MapEvents: UIViewController {
             locationManager?.requestWhenInUseAuthorization()
             locationManager?.startUpdatingLocation()
         }
-        guard let event = event else {return}
-        mapManager.setupEventMark(event: event, mapView: mapView)
+        setupEventMark(mapView: mapView)
     }
     
     // MARK: Actions
@@ -67,6 +66,35 @@ final class MapEvents: UIViewController {
     }
     
     // MARK: Private Methods
+    
+    private func setupEventMark(mapView: MKMapView) {
+        guard let artistEvent = event else {return}
+        guard let location = artistEvent.venue?.city else {return}
+        
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(location) { (placemarks, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            
+            guard let placemarks = placemarks else {return}
+            
+            let placemark = placemarks.first
+            
+            let annotation = MKPointAnnotation()
+            guard let city = artistEvent.venue?.city, let name = artistEvent.venue?.name else {return}
+            annotation.title = String(city + ", " + name)
+            annotation.subtitle = artistEvent.welcomeDescription
+            
+            guard let placemarkLocation = placemark?.location else {return}
+            
+            annotation.coordinate = placemarkLocation.coordinate
+            mapView.addAnnotation(annotation)
+            mapView.selectAnnotation(annotation, animated: true)
+            mapView.showAnnotations([annotation], animated: true)
+        }
+    }
     
     // Build route on the map
     private func showRoutOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {

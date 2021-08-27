@@ -11,71 +11,8 @@ final class LocationManager {
     // MARK:  Properties
     
     private let locationManager = CLLocationManager()
-    private var placeCoordinate: CLLocationCoordinate2D?
-//    private let mapVC = MapViewController()
     
-    // set a marker on the map
-    func setupEventMarks(events: [Event], mapView: MKMapView, completion: @escaping ([MKAnnotation]) -> ()) {
-        for event in events {
-            guard let location = event.venue?.city else {return}
-            
-            let geocoder = CLGeocoder()
-            geocoder.geocodeAddressString(location) { (placemarks, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return }
-                
-                guard let placemarks = placemarks else {return}
-                let placemark = placemarks.first
-                
-                let annotation = MKPointAnnotation()
-                guard let city = event.venue?.city, let name = event.venue?.name else {return}
-                annotation.title = String(city + ", " + name)
-                annotation.subtitle = event.welcomeDescription
-                
-                guard let placemarkLocation = placemark?.location else {return}
-                
-                annotation.coordinate = placemarkLocation.coordinate
-                self.placeCoordinate = placemarkLocation.coordinate
-                
-                completion([annotation])
-                mapView.addAnnotations([annotation])
-                mapView.setCenter(mapView.centerCoordinate, animated: false)
-                mapView.selectAnnotation(annotation, animated: true)
-                mapView.showAnnotations([annotation], animated: true)
-            }
-        }
-    }
-    
-    func setupEventMark(event: Event, mapView: MKMapView) {
-        guard let location = event.venue?.city else {return}
-        
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(location) { (placemarks, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard let placemarks = placemarks else {return}
-            
-            let placemark = placemarks.first
-            
-            let annotation = MKPointAnnotation()
-            guard let city = event.venue?.city, let name = event.venue?.name else {return}
-            annotation.title = String(city + ", " + name)
-            annotation.subtitle = event.welcomeDescription
-            
-            guard let placemarkLocation = placemark?.location else {return}
-            
-            annotation.coordinate = placemarkLocation.coordinate
-            self.placeCoordinate = placemarkLocation.coordinate
-            
-            mapView.addAnnotation(annotation)
-            mapView.selectAnnotation(annotation, animated: true)
-            mapView.showAnnotations([annotation], animated: true)
-        }
-    }
+    // MARK:  Methods
     
     // showing the user's location on the map
     func showUserLocation(mapView: MKMapView) {
@@ -91,7 +28,7 @@ final class LocationManager {
     func getCenterLocation(for mapView: MKMapView) -> CLLocation {
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude
-        
+
         return CLLocation(latitude: latitude, longitude: longitude)
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 import Moya
 
-public final class NetworkManager {
+final class NetworkManager {
     // MARK: Properties
     
     static let shered = NetworkManager()
@@ -34,6 +34,7 @@ public final class NetworkManager {
                     completion(.success(artist))
                 }
             case .failure(let error):
+                completionError(Errors.serverError)
                 print(error.localizedDescription)
             }
         }

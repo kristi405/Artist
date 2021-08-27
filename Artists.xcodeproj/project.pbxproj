@@ -212,6 +212,7 @@
 				013D031D255AADB1005AE518 /* FavoriteArtists.swift */,
 				031C070F26CD441C006C33D9 /* GetArtistName.swift */,
 				031C071326CE434E006C33D9 /* GetDate.swift */,
+				031C071726D3B370006C33D9 /* Errors.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -231,8 +232,6 @@
 		01978DFD255599CD00CA17FD /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				01978DFE255599FD00CA17FD /* ArtistAPI.swift */,
-				031C071726D3B370006C33D9 /* Errors.swift */,
 				031C071126CD45B6006C33D9 /* NetworkManager.swift */,
 				031C070D26CD4371006C33D9 /* ArtistService.swift */,
 				0112857D256D6E2A00C9557A /* LocationManager.swift */,
@@ -317,6 +316,7 @@
 		01D84B2E2610E1B5009053D4 /* BusinessLayer */ = {
 			isa = PBXGroup;
 			children = (
+				031C075926D8C9EB006C33D9 /* Api */,
 				01D84B2D2610E185009053D4 /* ApplicationLayer */,
 				01978DFB2555984300CA17FD /* Model */,
 				01978DFD255599CD00CA17FD /* Services */,
@@ -333,6 +333,14 @@
 				013D031A255A8C66005AE518 /* Protocols */,
 			);
 			path = PresentationLayer;
+			sourceTree = "<group>";
+		};
+		031C075926D8C9EB006C33D9 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				01978DFE255599FD00CA17FD /* ArtistAPI.swift */,
+			);
+			path = Api;
 			sourceTree = "<group>";
 		};
 		A89835019FD4CC0A8DA50DF0 /* Pods */ = {

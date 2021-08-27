@@ -25,7 +25,6 @@ final class FavoriteArtist: UICollectionViewController {
     
     var favoriteArtist: FavoriteArtists?
     var currentArtist: CurrentArtist?
-    var mapVC = MapViewController()
     
     // MARK: Lifecycle
     
@@ -97,14 +96,11 @@ final class FavoriteArtist: UICollectionViewController {
             guard let mapVC = mapViewController else {return}
             if mapVC.events.isEmpty == true {
                 mapVC.events = currentEvents
-                print("1111")
             } else {
                 mapVC.events = []
                 guard let annotation = mapVC.annotations else {return}
                 mapVC.mapView.removeAnnotations(annotation)
-                print("2222")
                 mapVC.events = currentEvents
-                print("3333")
             }
             self.performSegue(withIdentifier: R.segue.favoriteArtist.showEvent, sender: self)
         }
@@ -187,15 +183,17 @@ extension FavoriteArtist {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellIdentifire, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.favoriteCell, for: indexPath)
+        var favoriteCell = FavoriteCell()
         
-        if let favoriteArtistCell = cell as? FavoriteCell {
+        if let favoriteArtistCell = cell {
             guard let artists = self.artists else {return favoriteArtistCell}
             let artist = artists[indexPath.row]
+            favoriteCell = favoriteArtistCell
             
             favoriteArtistCell.configureCell(artist: artist)
         }
-        return cell
+        return favoriteCell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

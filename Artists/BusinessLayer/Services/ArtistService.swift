@@ -6,13 +6,13 @@ class ArtistService {
     
     // MARK: Properties
     
-    public var request: Request?
+    var request: Request?
     private let provider = MoyaProvider<ArtistAPI>()
     
     // MARK: Public Methods
     
     // Request to get Artist
-    public func getArtist(artist: GetArtistName, completion: @escaping (CurrentArtist) -> Void, completionError: @escaping (UIAlertController) -> ()) {
+    func getArtist(artist: GetArtistName, completion: @escaping (CurrentArtist) -> Void, completionError: @escaping (UIAlertController) -> ()) {
         request = Request.getArtist(artist: artist)
         guard let request = request else {return}
         
@@ -32,7 +32,7 @@ class ArtistService {
     }
     
     // Request to get Events
-    public func getEvents(artist: GetArtistName, date: GetDate, completion: @escaping([Event]) -> Void) {
+    func getEvents(artist: GetArtistName, date: GetDate, completion: @escaping([Event]) -> Void) {
         request = Request.getEvent(artist: artist, date: date)
         guard let request = request else {return}
         
@@ -49,6 +49,7 @@ class ArtistService {
         }
     }
     
+    // Alert with errors
     private func errorAlert(message: String) -> UIAlertController {
         let alert = UIAlertController(title: Constants.alertTitle, message: "\(message)", preferredStyle: .alert)
         

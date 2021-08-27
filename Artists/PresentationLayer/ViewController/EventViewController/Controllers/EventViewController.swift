@@ -66,15 +66,17 @@ class EventVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: Constants.reuseIdentifire, for: indexPath)
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.eventCell, for: indexPath)
+        var eventsCell = EventCell()
         
-        if let eventCell = cell as? EventCell {
+        if let eventCell = cell {
             let event = events[indexPath.row]
             eventCell.configureCell(event: event)
             castomCell(cell: eventCell)
             eventCell.backgroundColor = R.color.color()
+            eventsCell = eventCell
         }
-        return cell
+        return eventsCell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -91,6 +93,5 @@ extension EventVC {
         static let heightForRow: CGFloat = 100
         static let segueShowMap = "showMap"
         static let segueShowWeb = "showWeb"
-        static let reuseIdentifire = "cell"
     }
 }

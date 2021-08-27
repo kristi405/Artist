@@ -7,14 +7,12 @@ final class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
-    
     // MARK: Private properties
     
     private var currentLocation: CLLocation?
     private var locationManager = CLLocationManager()
     private let mapManager = LocationManager()
     private let annotationIdentifier = "annotationIdentifier"
-    private var didUpdateUserLocation = false
     
     // MARK: Public properties
     
@@ -26,9 +24,7 @@ final class MapViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        mapManager.setupEventMarks(events: events, mapView: mapView, completion: { annotations in
-            self.annotations = annotations
-        })
+        setupEventMarks(mapView: mapView)
     }
     
     override func viewDidLoad() {
@@ -43,6 +39,40 @@ final class MapViewController: UIViewController {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
+        }
+    }
+    
+    // MARK: Private Methods
+    
+    private func setupEventMarks(mapView: MKMapView) {
+        for event in events {
+            guard let location = event.venue?.city else {return}
+            
+            let geocoder = CLGeocoder()
+            geocoder.geocodeAddressString(location) { (placemarks, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return }
+                
+                guard let placemarks = placemarks else {return}
+                for placemark in placemarks {
+                    
+                    let annotations = MKPointAnnotation()
+                    guard let city = event.venue?.city, let name = event.venue?.name else {return}
+                    annotations.title = String(city + ", " + name)
+                    annotations.subtitle = event.welcomeDescription
+                    annotations.coordinate = placemark.location!.coordinate
+                    
+                    guard let placemarkLocation = placemark.location else {return}
+                    
+                    annotations.coordinate = placemarkLocation.coordinate
+                    mapView.selectAnnotation(annotations, animated: true)
+                    mapView.addAnnotations([annotations])
+                    mapView.setCenter(mapView.centerCoordinate, animated: false)
+                    mapView.showAnnotations([annotations], animated: true)
+                    self.annotations = [annotations]
+                }
+            }
         }
     }
 }
