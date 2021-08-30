@@ -28,7 +28,7 @@
                                 <color key="trackTintColor" name="BackgroundColor"/>
                             </progressView>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ges-c8-C6R">
-                                <rect key="frame" x="0.0" y="147" width="414" height="715"/>
+                                <rect key="frame" x="0.0" y="147" width="414" height="666"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -104,7 +104,7 @@
                                     <constraint firstAttribute="width" secondItem="qxQ-pF-YWO" secondAttribute="height" multiplier="6:1" id="ptf-iA-cGH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Перейти на страницу">
+                                <state key="normal" title="Go to page">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -262,7 +262,7 @@
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="LRw-Z2-Ti8"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                            <state key="normal" title="Перейти ⏎">
+                                            <state key="normal" title="Go to ⏎">
                                                 <color key="titleColor" systemColor="labelColor"/>
                                             </state>
                                             <connections>
@@ -331,7 +331,7 @@
                                 <rect key="frame" x="0.0" y="140" width="414" height="756"/>
                             </mapView>
                             <button opaque="NO" alpha="0.69999998807907104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdQ-9z-mA1">
-                                <rect key="frame" x="344" y="627" width="35" height="35"/>
+                                <rect key="frame" x="344" y="578" width="35" height="35"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="o2x-eS-LWE"/>
@@ -482,7 +482,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tt2-hW-eNE"/>
+        <segue reference="tPb-uX-NNv"/>
         <segue reference="OFF-FX-GgF"/>
     </inferredMetricsTieBreakers>
     <resources>

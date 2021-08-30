@@ -12,7 +12,7 @@ final class SearchViewController: UIViewController {
     
     // MARK: Private Properties
     
-    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: Constants.keyPathName, ascending: true)
+    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: SearchVCString.name.rawValue, ascending: true)
     private var currentArtistFavorite: CurrentArtist?
     private var onComplition: ((CurrentArtist) -> Void)?
     private var favoriteVC = FavoriteArtist()
@@ -41,9 +41,9 @@ final class SearchViewController: UIViewController {
     // MARK: Navigations segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.segueIdentifire {
+        if segue.identifier == SearchVCString.showWebView.rawValue {
             guard let webVC = segue.destination as? WebViewController else {return}
-            webVC.eventURL = currentArtistFavorite?.url ?? Constants.enterURL
+            webVC.eventURL = currentArtistFavorite?.url ?? SearchVCString.enterTheName.rawValue
         }
     }
     
@@ -54,11 +54,11 @@ final class SearchViewController: UIViewController {
         if !isContains() {
             favoriteVC.saveArtist()
             sender.setImage(image: R.image.redHeart(), leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
-            sender.setTitle(Constants.removeFromFavorits, for: .normal)
+            sender.setTitle(SearchVCString.removeFromFavorites.rawValue.stringValue, for: .normal)
         } else {
             favoriteVC.deleteArtistFromButton()
             sender.setImage(image: R.image.whHeart(), leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
-            sender.setTitle(Constants.addToFavorits, for: .normal)
+            sender.setTitle(SearchVCString.addToFavorites.rawValue.stringValue, for: .normal)
         }
     }
     
@@ -79,7 +79,7 @@ final class SearchViewController: UIViewController {
         }
         //Get data from url
         DispatchQueue.global().async {
-            guard let dataUrl = URL(string: artist.imageURL ?? Constants.enterURL) else {return}
+            guard let dataUrl = URL(string: artist.imageURL ?? SearchVCString.enterTheName.rawValue) else {return}
             guard let imageData = try? Data(contentsOf: dataUrl) else {return}
             
             DispatchQueue.main.async {
@@ -114,7 +114,7 @@ final class SearchViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = Constants.enterTheName
+        searchController.searchBar.placeholder = SearchVCString.enterTheName.rawValue.stringValue
         searchController.searchBar.searchTextField.backgroundColor = .white
         self.searchController = searchController
         
@@ -139,10 +139,10 @@ final class SearchViewController: UIViewController {
     // we check is the artist conteins in Realm
     private func checkArtistsConteins() {
         if !isContains() {
-            button.setTitle(Constants.addToFavorits, for: .normal)
+            button.setTitle(SearchVCString.addToFavorites.rawValue.stringValue, for: .normal)
             button.setImage(image: R.image.whHeart(), leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
         } else {
-            button.setTitle(Constants.removeFromFavorits, for: .normal)
+            button.setTitle(SearchVCString.removeFromFavorites.rawValue.stringValue, for: .normal)
             button.setImage(image: R.image.redHeart(), leadingAnchor: Constants.leadingAnchorOfImage, heightAnchor: Constants.heightAnchorOfImage)
         }
     }
@@ -163,9 +163,9 @@ extension SearchViewController: UISearchBarDelegate {
         guard let text = self.text else {return}
         if text.count == .zero {
             labelIsHidden()
-            searchController.searchBar.placeholder = Constants.enterTheName
+            searchController.searchBar.placeholder = SearchVCString.enterTheName.rawValue.stringValue
         } else if text.count <= Constants.searchTextCount {
-            searchController.searchBar.searchTextField.text = Constants.enterTheName
+            searchController.searchBar.searchTextField.text = SearchVCString.enterTheName.rawValue.stringValue
             labelIsHidden()
         } else {
             let name = GetArtistName(name: text)
@@ -188,13 +188,7 @@ extension SearchViewController: UISearchBarDelegate {
 // MARK: - Constants
 extension SearchViewController {
     private enum Constants {
-        static let enterURL = "Введите url"
-        static let segueIdentifire = "showWebView"
-        static let keyPathName = "name"
         static let searchTextCount = 2
-        static let addToFavorits = "Добавить в фавориты"
-        static let removeFromFavorits = "Удалить из фаворитов"
-        static let enterTheName = "Нужно ввести имя"
         static let leadingAnchorOfImage: CGFloat = -4
         static let heightAnchorOfImage: CGFloat = 28
     }

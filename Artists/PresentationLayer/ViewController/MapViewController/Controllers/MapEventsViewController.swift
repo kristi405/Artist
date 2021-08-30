@@ -141,8 +141,8 @@ final class MapEvents: UIViewController {
     
     // Show alert if we can not build the route
     private func showErrorAlert() {
-        let alert = UIAlertController(title: Constants.error, message: Constants.canNotBuildRote, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: Constants.ok, style: .cancel, handler: nil)
+        let alert = UIAlertController(title: MapVCString.error.rawValue, message: MapVCString.unableToBuildARoute.rawValue.stringValue, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: MapVCString.ok.rawValue, style: .cancel, handler: nil)
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
     }
@@ -192,9 +192,6 @@ extension MapEvents: CLLocationManagerDelegate, MKMapViewDelegate {
 extension MapEvents {
     // MARK: Constants
     private enum Constants {
-        static let ok = "ОК"
-        static let canNotBuildRote = "Невозможно построить маршрут"
-        static let error = "Ошибка"
         static let cornerRadius: CGFloat = 7
         static let roteLineWidth: CGFloat = 4.0
         static let latitude: Double = 53

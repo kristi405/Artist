@@ -5,7 +5,7 @@ import Moya
 final class FavoriteArtist: UICollectionViewController {
     // MARK:  Private Properties
     
-    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: Constants.keyPathName, ascending: true)
+    private var artists = try? Realm().objects(FavoriteArtists.self).sorted(byKeyPath: SearchVCString.name.rawValue, ascending: true)
     private var realm: Realm {
         get {
             do {
@@ -45,7 +45,7 @@ final class FavoriteArtist: UICollectionViewController {
     
     // Move to another screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.segueIdentifire {
+        if segue.identifier == FaviritsVCString.showEvent.rawValue {
             guard let eventVC = segue.destination as? EventVC else {return}
             guard let events = self.events else {return}
             eventVC.events = events
@@ -56,21 +56,21 @@ final class FavoriteArtist: UICollectionViewController {
     
     // Choosing an option for a favorite
     private func showAlert(artist: FavoriteArtists) {
-        let attributedString = NSAttributedString(string: artist.name ?? Constants.all,
+        let attributedString = NSAttributedString(string: artist.name ?? FaviritsVCString.all.rawValue,
                                                   attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .headline), NSAttributedString.Key.foregroundColor: UIColor.black])
         
-        let ac = UIAlertController(title: nil, message: Constants.chooseAction, preferredStyle: .alert)
-        ac.setValue(attributedString, forKey: Constants.atributedStringKey)
+        let ac = UIAlertController(title: nil, message: FaviritsVCString.chooseTheAction.rawValue.stringValue, preferredStyle: .alert)
+        ac.setValue(attributedString, forKey: FaviritsVCString.attributedTitle.rawValue)
         
-        let showDetale = UIAlertAction(title: Constants.showEvent, style: .default) { show in
+        let showDetale = UIAlertAction(title: FaviritsVCString.showTheEvents.rawValue.stringValue, style: .default) { show in
             self.showAlertEvent(artist: artist)
         }
         
-        let deleteAction = UIAlertAction(title: Constants.delete, style: .default) { delete in
+        let deleteAction = UIAlertAction(title: FaviritsVCString.delete.rawValue, style: .default) { delete in
             self.deleteFavoriteArtist(artist: artist)
         }
         
-        let cencelButton = UIAlertAction(title: Constants.cancel, style: .cancel, handler: nil)
+        let cencelButton = UIAlertAction(title: FaviritsVCString.cancel.rawValue, style: .cancel, handler: nil)
         
         ac.addAction(showDetale)
         ac.addAction(deleteAction)
@@ -119,23 +119,23 @@ final class FavoriteArtist: UICollectionViewController {
     
     // Сhoose the time of the event: all, past, upcoming
     private func showAlertEvent(artist: FavoriteArtists) {
-        let attributedString = NSAttributedString(string: artist.name ?? Constants.all,
+        let attributedString = NSAttributedString(string: artist.name ?? FaviritsVCString.all.rawValue,
                                                   attributes: [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .largeTitle), NSAttributedString.Key.foregroundColor: UIColor.black])
         
-        let alertEvent = UIAlertController(title: artist.name, message: Constants.nameAlert, preferredStyle: .actionSheet)
-        alertEvent.setValue(attributedString, forKey: Constants.atributedStringKey)
+        let alertEvent = UIAlertController(title: artist.name, message: FaviritsVCString.chooseTheTime.rawValue.stringValue, preferredStyle: .actionSheet)
+        alertEvent.setValue(attributedString, forKey: FaviritsVCString.attributedTitle.rawValue)
         
-        let allEvent = UIAlertAction(title: Constants.allEvents, style: .default) { _ in
-            self.getEvent(artist: artist.name ?? Constants.all, date: Constants.all)
+        let allEvent = UIAlertAction(title: FaviritsVCString.all.rawValue, style: .default) { _ in
+            self.getEvent(artist: artist.name ?? FaviritsVCString.all.rawValue, date: FaviritsVCString.all.rawValue)
         }
-        let pastEvent = UIAlertAction(title: Constants.pastEvents, style: .default) { (past) in
-            self.getEvent(artist: artist.name ?? Constants.all, date: Constants.past)
+        let pastEvent = UIAlertAction(title: FaviritsVCString.past.rawValue, style: .default) { (past) in
+            self.getEvent(artist: artist.name ?? FaviritsVCString.all.rawValue, date: FaviritsVCString.past.rawValue)
         }
-        let upcomingEvent = UIAlertAction(title: Constants.upcomingEvents, style: .default) { (upcoming) in
-            self.getEvent(artist: artist.name ?? Constants.all, date: Constants.upcoming)
+        let upcomingEvent = UIAlertAction(title: FaviritsVCString.upcoming.rawValue, style: .default) { (upcoming) in
+            self.getEvent(artist: artist.name ?? FaviritsVCString.all.rawValue, date: FaviritsVCString.upcoming.rawValue)
         }
         
-        let cencelButton = UIAlertAction(title: Constants.cancel, style: .cancel, handler: nil)
+        let cencelButton = UIAlertAction(title: FaviritsVCString.cancel.rawValue, style: .cancel, handler: nil)
         
         alertEvent.addAction(allEvent)
         alertEvent.addAction(pastEvent)
@@ -229,27 +229,17 @@ extension FavoriteArtist {
     
     // Constants
     private enum Constants {
-        static let atributedStringKey = "attributedTitle"
-        static let cellIdentifire = "FavoriteCell"
-        static let segueIdentifire = "showEvent"
-        static let keyPathName = "name"
         static let cellSpacingVertical: CGFloat = 30.0
         static var widthItem: CGFloat = .zero
         static let item: CGFloat = 2.0
         static let cellSpasing: CGFloat = 40
         static let spasingBetweenItems: CGFloat = 20
         static let one: CGFloat = 1
-        static let allEvents: String = "Все"
-        static let pastEvents: String = "Прошедшие"
-        static let upcomingEvents: String = "Предстоящие"
-        static let all: String = "all"
-        static let past: String = "past"
-        static let upcoming: String = "upcoming"
-        static let cancel: String = "Отмена"
-        static let nameAlert: String = "Выберите время события"
-        static let showEvent: String = "Показать событие"
-        static let delete: String = "Удалить"
-        static let chooseAction: String = "Выберите действие"
+//        static let cancel: String = "Отмена"
+//        static let nameAlert: String = "Выберите время события"
+//        static let showEvent: String = "Показать событие"
+//        static let delete: String = "Удалить"
+//        static let chooseAction: String = "Выберите действие"
     }
 }
 

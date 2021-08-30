@@ -9,7 +9,7 @@ final class WebViewController: UIViewController {
     
     // MARK: Public Properties
     
-    var eventURL = Constants.emptyString
+    var eventURL = ""
     
     // MARK: Lifecycle
     
@@ -35,7 +35,7 @@ final class WebViewController: UIViewController {
                                change: [NSKeyValueChangeKey : Any]?,
                                context: UnsafeMutableRawPointer?) {
         
-        if keyPath == Constants.keyPath {
+        if keyPath == WebVCString.estimatedProgress.rawValue {
             progressView?.progress = Float(webView?.estimatedProgress ?? .zero)
         }
     }
@@ -89,8 +89,6 @@ extension WebViewController {
         static let withDuration: CGFloat = 0.5
         static let alphaProgressView: CGFloat = 1
         static let progressView: Float = 1
-        static let keyPath = "estimatedProgress"
         static let duration: TimeInterval = 3
-        static let emptyString = ""
     }
 }

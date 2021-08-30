@@ -12,7 +12,7 @@ final class MapViewController: UIViewController {
     private var currentLocation: CLLocation?
     private var locationManager = CLLocationManager()
     private let mapManager = LocationManager()
-    private let annotationIdentifier = "annotationIdentifier"
+    private let annotationIdentifier = MapVCString.annotationIdentifier.rawValue
     
     // MARK: Public properties
     
@@ -53,7 +53,7 @@ final class MapViewController: UIViewController {
                 if let error = error {
                     print(error.localizedDescription)
                     return }
-                
+
                 guard let placemarks = placemarks else {return}
                 for placemark in placemarks {
                     
@@ -66,8 +66,8 @@ final class MapViewController: UIViewController {
                     guard let placemarkLocation = placemark.location else {return}
                     
                     annotations.coordinate = placemarkLocation.coordinate
+            mapView.addAnnotations([annotations])
                     mapView.selectAnnotation(annotations, animated: true)
-                    mapView.addAnnotations([annotations])
                     mapView.setCenter(mapView.centerCoordinate, animated: false)
                     mapView.showAnnotations([annotations], animated: true)
                     self.annotations = [annotations]
@@ -88,7 +88,6 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-            
             annotationView?.animatesDrop = true
             annotationView?.canShowCallout = true
         } else {

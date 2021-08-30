@@ -1,0 +1,33 @@
+
+/* Class = "UIButton"; normalTitle = "Перейти ⏎"; ObjectID = "0PL-jB-zws"; */
+"0PL-jB-zws.normalTitle" = "Перейти ⏎";
+
+/* Class = "UINavigationItem"; title = "My favorite Artists"; ObjectID = "7EX-SS-hhy"; */
+"7EX-SS-hhy.title" = "My favorite Artists";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "EKW-Y6-PjD"; */
+"EKW-Y6-PjD.title" = "Item";
+
+/* Class = "UITabBarItem"; title = "Search"; ObjectID = "ExC-Dw-bBj"; */
+"ExC-Dw-bBj.title" = "Search";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "IeS-i8-ZMr"; */
+"IeS-i8-ZMr.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "QDz-3k-8YS"; */
+"QDz-3k-8YS.text" = "Label";
+
+/* Class = "UITabBarItem"; title = "Favorits"; ObjectID = "UtW-eL-KOO"; */
+"UtW-eL-KOO.title" = "Favorits";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "W1A-It-eJN"; */
+"W1A-It-eJN.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Events"; ObjectID = "mb7-JU-ihw"; */
+"mb7-JU-ihw.title" = "Events";
+
+/* Class = "UIButton"; normalTitle = "Перейти на страницу"; ObjectID = "qxQ-pF-YWO"; */
+"qxQ-pF-YWO.normalTitle" = "Перейти на страницу";
+
+/* Class = "UITabBarItem"; title = "Map"; ObjectID = "rg9-NJ-f8c"; */
+"rg9-NJ-f8c.title" = "Map";
